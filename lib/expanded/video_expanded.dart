@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pal/expanded/video_container.dart';
 import 'package:pal/widgets/user_card/user_card.dart';
 import 'package:video_player/video_player.dart';
+
+import 'video_listener.dart';
 
 class VideoExpanded extends StatefulWidget {
   final String videoAsset;
@@ -9,6 +12,10 @@ class VideoExpanded extends StatefulWidget {
   final String userName;
   final String companyTitle;
   final String? avatarUrl;
+  final Duration triggerEndRemaining;
+  final Function? onEndAction;
+  final VideoPlayerController? videoPlayerController;
+  final bool testMode;
 
   const VideoExpanded({
     Key? key,
@@ -17,28 +24,64 @@ class VideoExpanded extends StatefulWidget {
     this.onSkipText,
     required this.userName,
     required this.companyTitle,
+    this.triggerEndRemaining = const Duration(seconds: 0),
+    this.onEndAction,
     this.avatarUrl,
+    this.videoPlayerController,
+    this.testMode = false,
   }) : super(key: key);
 
   @override
-  _VideoExpandedState createState() => _VideoExpandedState();
+  VideoExpandedState createState() => VideoExpandedState();
 }
 
-class _VideoExpandedState extends State<VideoExpanded> {
-  late VideoPlayerController _videoPlayerController;
+@visibleForTesting
+class VideoExpandedState extends State<VideoExpanded> {
+  late VideoPlayerController videoPlayerController;
+  late VideoListener videoListener;
 
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset(widget.videoAsset);
+    videoPlayerController = widget.videoPlayerController ??
+        VideoPlayerController.asset(widget.videoAsset);
+    videoListener = VideoListener(
+      videoPlayerController,
+      onPositionChanged: _onPositionChangedListener,
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    videoListener.init();
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    videoListener.dispose();
   }
 
   Future _initVideo() async {
-    await Future.delayed(const Duration(milliseconds: 100));
-    await _videoPlayerController.initialize();
-    await _videoPlayerController.setLooping(true);
-    await _videoPlayerController.setVolume(0);
-    await _videoPlayerController.play();
+    try {
+      await videoPlayerController.setLooping(false);
+      await videoPlayerController.setVolume(1);
+      await Future.delayed(const Duration(milliseconds: 100));
+      await videoPlayerController.initialize();
+      await videoPlayerController.play();
+    } catch (e, d) {
+      debugPrint("Error while playing video: $e, $d");
+    }
+  }
+
+  _onPositionChangedListener(Duration remaining) {
+    if (widget.onEndAction == null) {
+      return;
+    }
+    if (remaining <= widget.triggerEndRemaining) {
+      widget.onEndAction!();
+    }
   }
 
   @override
@@ -50,53 +93,48 @@ class _VideoExpandedState extends State<VideoExpanded> {
           // log error
           return Container();
         }
-        return FractionallySizedBox(
-          heightFactor: 0.75,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-            child: AspectRatio(
-              aspectRatio: _videoPlayerController.value.aspectRatio,
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: VideoPlayer(
-                      _videoPlayerController,
-                    ),
+        return VideoContainer(
+          child: AspectRatio(
+            aspectRatio: videoPlayerController.value.aspectRatio,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: widget.testMode
+                      ? Container()
+                      : VideoPlayer(
+                          videoPlayerController,
+                        ),
+                ),
+                Positioned(
+                  left: 24,
+                  right: 24,
+                  bottom: 24,
+                  child: UserCard.black(
+                    userName: widget.userName,
+                    companyTitle: widget.companyTitle,
+                    imageUrl: widget.avatarUrl,
                   ),
+                ),
+                if (widget.onSkip != null)
                   Positioned(
-                    left: 24,
                     right: 24,
-                    bottom: 24,
-                    child: UserCard(
-                      userName: widget.userName,
-                      companyTitle: widget.companyTitle,
-                      imageUrl: widget.avatarUrl,
-                    ),
-                  ),
-                  if (widget.onSkip != null)
-                    Positioned(
-                      right: 24,
-                      top: 16,
-                      child: ElevatedButton(
-                        style: raisedButtonStyle,
-                        onPressed: () {
-                          widget.onSkip!();
-                        },
-                        child: Text(
-                          widget.onSkipText ?? 'SKIP',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14,
-                          ),
+                    top: 16,
+                    child: ElevatedButton(
+                      style: raisedButtonStyle,
+                      onPressed: () {
+                        widget.onSkip!();
+                      },
+                      child: Text(
+                        widget.onSkipText ?? 'SKIP',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14,
                         ),
                       ),
-                    )
-                ],
-              ),
+                    ),
+                  )
+              ],
             ),
           ),
         );

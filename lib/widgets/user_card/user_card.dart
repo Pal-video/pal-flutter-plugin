@@ -1,16 +1,70 @@
 import 'package:flutter/material.dart';
 
 class UserCard extends StatefulWidget {
-  final String userName;
-  final String companyTitle;
+  final Text userName;
+  final Text companyTitle;
+  final Color bgColor;
   final String? imageUrl;
 
   const UserCard({
     Key? key,
     required this.userName,
     required this.companyTitle,
+    required this.bgColor,
     this.imageUrl,
   }) : super(key: key);
+
+  factory UserCard.black({
+    required String userName,
+    required String companyTitle,
+    required String? imageUrl,
+  }) =>
+      UserCard(
+        bgColor: Colors.black,
+        imageUrl: imageUrl,
+        userName: Text(
+          userName,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        companyTitle: Text(
+          companyTitle,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w200,
+            fontSize: 14,
+          ),
+        ),
+      );
+
+  factory UserCard.grey({
+    required String userName,
+    required String companyTitle,
+    required String? imageUrl,
+  }) =>
+      UserCard(
+        bgColor: const Color(0xFF2D3645),
+        imageUrl: imageUrl,
+        userName: Text(
+          userName,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        companyTitle: Text(
+          companyTitle,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w200,
+            fontSize: 14,
+          ),
+        ),
+      );
 
   @override
   _UserCardState createState() => _UserCardState();
@@ -21,11 +75,11 @@ class _UserCardState extends State<UserCard> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
           Radius.circular(16),
         ),
-        color: Colors.black,
+        color: widget.bgColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -40,23 +94,9 @@ class _UserCardState extends State<UserCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                widget.userName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
+              widget.userName,
               const SizedBox(height: 8),
-              Text(
-                widget.companyTitle,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w200,
-                  fontSize: 14,
-                ),
-              ),
+              widget.companyTitle,
             ],
           )
         ],
