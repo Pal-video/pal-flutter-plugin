@@ -36,7 +36,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     Future.delayed(const Duration(milliseconds: 500), () async {
       // await PalPlugin.instance.showVideoAsset(context, 'assets/me.mp4');
-      await PalPlugin.instance.showExpandedVideoAsset(context, 'assets/me.mp4');
+      await PalPlugin.instance.showExpandedVideoAsset(
+        context: context,
+        videoAsset: 'assets/me.mp4',
+        avatarUrl: 'assets/avatar.jpg',
+      );
     });
   }
 

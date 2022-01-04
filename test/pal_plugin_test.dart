@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/miniature/video_miniature.dart';
 import 'package:pal/pal_plugin.dart';
 
@@ -42,6 +43,6 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     await tester.tap(find.byType(VideoMiniature));
     await tester.pump(const Duration(milliseconds: 500));
-    // expect(find.byType(VideoExpanded), findsOneWidget);
+    expect(find.byType(VideoExpanded), findsOneWidget);
   });
 }

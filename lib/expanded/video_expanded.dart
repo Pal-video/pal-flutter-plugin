@@ -5,6 +5,8 @@ import 'package:video_player/video_player.dart';
 
 import 'video_listener.dart';
 
+const defaultBgColor = Color(0xFF191E26);
+
 class VideoExpanded extends StatefulWidget {
   final String videoAsset;
   final Function? onSkip;
@@ -16,6 +18,7 @@ class VideoExpanded extends StatefulWidget {
   final Function? onEndAction;
   final VideoPlayerController? videoPlayerController;
   final bool testMode;
+  final Color bgColor;
 
   const VideoExpanded({
     Key? key,
@@ -29,6 +32,7 @@ class VideoExpanded extends StatefulWidget {
     this.avatarUrl,
     this.videoPlayerController,
     this.testMode = false,
+    this.bgColor = defaultBgColor,
   }) : super(key: key);
 
   @override
@@ -36,9 +40,22 @@ class VideoExpanded extends StatefulWidget {
 }
 
 @visibleForTesting
-class VideoExpandedState extends State<VideoExpanded> {
+class VideoExpandedState extends State<VideoExpanded>
+    with TickerProviderStateMixin {
+  GlobalKey layoutKey = GlobalKey();
+  double? layoutHeight;
+
   late VideoPlayerController videoPlayerController;
   late VideoListener videoListener;
+
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+  late final fadeAnimation = CurvedAnimation(
+    parent: _animationController,
+    curve: Curves.easeIn,
+  );
 
   @override
   void initState() {
@@ -61,12 +78,13 @@ class VideoExpandedState extends State<VideoExpanded> {
   void deactivate() {
     super.deactivate();
     videoListener.dispose();
+    _animationController.dispose();
   }
 
   Future _initVideo() async {
     try {
       await videoPlayerController.setLooping(false);
-      await videoPlayerController.setVolume(1);
+      await videoPlayerController.setVolume(0);
       await Future.delayed(const Duration(milliseconds: 100));
       await videoPlayerController.initialize();
       await videoPlayerController.play();
@@ -79,7 +97,9 @@ class VideoExpandedState extends State<VideoExpanded> {
     if (widget.onEndAction == null) {
       return;
     }
-    if (remaining <= widget.triggerEndRemaining) {
+    if (remaining <= widget.triggerEndRemaining &&
+        _animationController.status == AnimationStatus.dismissed) {
+      _animationController.forward();
       widget.onEndAction!();
     }
   }
@@ -105,14 +125,41 @@ class VideoExpandedState extends State<VideoExpanded> {
                           videoPlayerController,
                         ),
                 ),
+                Positioned.fill(
+                  child: FadeTransition(
+                    opacity: fadeAnimation,
+                    child: Container(
+                      key: layoutKey,
+                      color: widget.bgColor,
+                    ),
+                  ),
+                ),
                 Positioned(
                   left: 24,
                   right: 24,
                   bottom: 24,
-                  child: UserCard.black(
-                    userName: widget.userName,
-                    companyTitle: widget.companyTitle,
-                    imageUrl: widget.avatarUrl,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return AnimatedBuilder(
+                        animation: fadeAnimation,
+                        builder: (context, child) {
+                          // this calculates the height of the layout as we don't know it
+                          layoutHeight ??= getWidgetHeight(layoutKey);
+                          return Transform.translate(
+                            offset: Offset(
+                              0,
+                              -fadeAnimation.value * (layoutHeight! - 200),
+                            ),
+                            child: child!,
+                          );
+                        },
+                        child: UserCard.black(
+                          userName: widget.userName,
+                          companyTitle: widget.companyTitle,
+                          imageUrl: widget.avatarUrl,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 if (widget.onSkip != null)
@@ -133,13 +180,23 @@ class VideoExpandedState extends State<VideoExpanded> {
                         ),
                       ),
                     ),
-                  )
+                  ),
               ],
             ),
           ),
         );
       },
     );
+  }
+
+  Offset getWidgetPosition(GlobalKey key) {
+    RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
+    return box.localToGlobal(Offset.zero);
+  }
+
+  double getWidgetHeight(GlobalKey key) {
+    RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
+    return box.size.height;
   }
 
   ButtonStyle get raisedButtonStyle => ElevatedButton.styleFrom(
