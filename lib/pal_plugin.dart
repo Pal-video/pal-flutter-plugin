@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/pal.dart';
 
 import 'utils/overlay_helper.dart';
@@ -10,7 +11,10 @@ class PalPlugin {
 
   PalPlugin._();
 
-  Future<void> showVideoAsset(BuildContext context, String asset) async {
+  Future<void> showVideoAsset(
+    BuildContext context,
+    String asset,
+  ) async {
     _overlayHelper.showHelper(
       context,
       (context) => Material(
@@ -26,6 +30,27 @@ class PalPlugin {
               videoAsset: asset,
               radius: 80,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> showExpandedVideoAsset(
+    BuildContext context,
+    String asset,
+  ) async {
+    _overlayHelper.showHelper(
+      context,
+      (context) => Material(
+        color: Colors.transparent,
+        type: MaterialType.transparency,
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: VideoExpanded(
+            videoAsset: asset,
+            companyTitle: "CEO",
+            userName: 'Marty Mcfly',
           ),
         ),
       ),

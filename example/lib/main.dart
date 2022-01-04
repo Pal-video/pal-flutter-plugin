@@ -35,7 +35,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 500), () async {
-      await PalPlugin.instance.showVideoAsset(context, 'assets/me.mp4');
+      // await PalPlugin.instance.showVideoAsset(context, 'assets/me.mp4');
+      await PalPlugin.instance.showExpandedVideoAsset(context, 'assets/me.mp4');
     });
   }
 
@@ -48,13 +49,13 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Column(
           children: [
-            ListTile(title: Text('Lorem ipsum')),
-            ListTile(title: Text('Lorem ipsum')),
-            ListTile(title: Text('Lorem ipsum')),
-            ListTile(title: Text('Lorem ipsum')),
-            ListTile(title: Text('Lorem ipsum')),
+            const ListTile(title: Text('Lorem ipsum')),
+            const ListTile(title: Text('Lorem ipsum')),
+            const ListTile(title: Text('Lorem ipsum')),
+            const ListTile(title: Text('Lorem ipsum')),
+            const ListTile(title: Text('Lorem ipsum')),
             ListTile(
-              title: Text('Lorem ipsum'),
+              title: const Text('Lorem ipsum'),
               onTap: () {
                 print("pressed");
               },

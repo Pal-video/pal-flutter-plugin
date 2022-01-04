@@ -28,6 +28,7 @@ class _VideoMiniatureState extends State<VideoMiniature> {
     await Future.delayed(const Duration(milliseconds: 100));
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    await _videoPlayerController.setVolume(0);
     await _videoPlayerController.play();
   }
 
