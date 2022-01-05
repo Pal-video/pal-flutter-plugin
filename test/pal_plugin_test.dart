@@ -32,6 +32,8 @@ void main() {
     await PalPlugin.instance.showVideoAsset(
       context: _context!,
       videoAsset: 'assets/me.mp4',
+      userName: 'Gautier',
+      companyTitle: 'Apparence.io CTO',
     );
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(VideoMiniature), findsOneWidget);
@@ -45,9 +47,14 @@ void main() {
     await PalPlugin.instance.showVideoAsset(
       context: _context!,
       videoAsset: 'assets/me.mp4',
+      userName: 'Gautier',
+      companyTitle: 'Apparence.io CTO',
     );
     await tester.pump(const Duration(milliseconds: 500));
-    await tester.tap(find.byType(VideoMiniature));
+    await tester.ensureVisible(find.byType(VideoMiniature));
+    final miniature =
+        find.byType(VideoMiniature).evaluate().first.widget as VideoMiniature;
+    miniature.onTap();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(VideoExpanded), findsOneWidget);
   });

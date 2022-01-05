@@ -15,6 +15,8 @@ class PalPlugin {
   Future<void> showVideoAsset({
     required BuildContext context,
     required String videoAsset,
+    required String userName,
+    required String companyTitle,
   }) async {
     _overlayHelper.showHelper(
       context,
@@ -35,6 +37,8 @@ class PalPlugin {
                 showExpandedVideoAsset(
                   context: context,
                   videoAsset: videoAsset,
+                  userName: userName,
+                  companyTitle: companyTitle,
                 );
               },
             ),
@@ -47,6 +51,8 @@ class PalPlugin {
   Future<void> showExpandedVideoAsset({
     required BuildContext context,
     required String videoAsset,
+    required String companyTitle,
+    required String userName,
     String? avatarUrl,
   }) async {
     _overlayHelper.showHelper(
@@ -58,8 +64,8 @@ class PalPlugin {
           alignment: Alignment.bottomLeft,
           child: VideoExpanded(
             videoAsset: videoAsset,
-            companyTitle: "CEO",
-            userName: 'Marty Mcfly',
+            companyTitle: companyTitle,
+            userName: userName,
             avatarUrl: avatarUrl,
             onEndAction: () {},
             triggerEndRemaining: const Duration(seconds: 1),

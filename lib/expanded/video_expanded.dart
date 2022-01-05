@@ -103,7 +103,7 @@ class VideoExpandedState extends State<VideoExpanded>
     }
     if (remaining <= widget.triggerEndRemaining &&
         _animationController.status == AnimationStatus.dismissed) {
-      // _animationController.forward();
+      _animationController.forward();
       widget.onEndAction!();
     }
   }

@@ -38,6 +38,8 @@ class _HomePageState extends State<HomePage> {
       await PalPlugin.instance.showVideoAsset(
         context: context,
         videoAsset: 'assets/me.mp4',
+        userName: 'Gautier',
+        companyTitle: 'Apparence.io CTO',
       );
     });
   }
