@@ -29,7 +29,10 @@ void main() {
   testWidgets('call showVideoAsset => shows a video within miniature',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalPlugin.instance.showVideoAsset(_context!, 'assets/me.mp4');
+    await PalPlugin.instance.showVideoAsset(
+      context: _context!,
+      videoAsset: 'assets/me.mp4',
+    );
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(VideoMiniature), findsOneWidget);
     await tester.pump(const Duration(milliseconds: 500));
@@ -39,7 +42,10 @@ void main() {
       'call showVideoAsset, tap on miniature => expanded video is shown',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalPlugin.instance.showVideoAsset(_context!, 'assets/me.mp4');
+    await PalPlugin.instance.showVideoAsset(
+      context: _context!,
+      videoAsset: 'assets/me.mp4',
+    );
     await tester.pump(const Duration(milliseconds: 500));
     await tester.tap(find.byType(VideoMiniature));
     await tester.pump(const Duration(milliseconds: 500));

@@ -6,14 +6,19 @@ typedef OnPositionChanged = void Function(Duration duration);
 class VideoListener {
   final OnPositionChanged onPositionChanged;
   VideoPlayerController controller;
+  bool hasInit;
 
   VideoListener(
     this.controller, {
     required this.onPositionChanged,
-  });
+  }) : hasInit = false;
 
   init() {
+    if (hasInit) {
+      return;
+    }
     controller.addListener(onPositionChangedListener);
+    hasInit = true;
   }
 
   dispose() {

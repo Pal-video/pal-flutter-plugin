@@ -42,9 +42,6 @@ class VideoExpanded extends StatefulWidget {
 @visibleForTesting
 class VideoExpandedState extends State<VideoExpanded>
     with TickerProviderStateMixin {
-  GlobalKey layoutKey = GlobalKey();
-  double? layoutHeight;
-
   late VideoPlayerController videoPlayerController;
   late VideoListener videoListener;
 
@@ -56,6 +53,10 @@ class VideoExpandedState extends State<VideoExpanded>
     parent: _animationController,
     curve: Curves.easeIn,
   );
+  late final fadeOutAnimation = Tween<double>(
+    begin: 1.0,
+    end: 0.0,
+  ).animate(_animationController);
 
   @override
   void initState() {
@@ -71,7 +72,6 @@ class VideoExpandedState extends State<VideoExpanded>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    videoListener.init();
   }
 
   @override
@@ -81,16 +81,20 @@ class VideoExpandedState extends State<VideoExpanded>
     _animationController.dispose();
   }
 
-  Future _initVideo() async {
+  Future<bool> _initVideo() async {
     try {
       await videoPlayerController.setLooping(false);
       await videoPlayerController.setVolume(0);
-      await Future.delayed(const Duration(milliseconds: 100));
       await videoPlayerController.initialize();
+      await Future.delayed(const Duration(milliseconds: 300));
       await videoPlayerController.play();
+      await videoPlayerController.seekTo(Duration.zero);
+      videoListener.init();
+      return true;
     } catch (e, d) {
       debugPrint("Error while playing video: $e, $d");
     }
+    return false;
   }
 
   _onPositionChangedListener(Duration remaining) {
@@ -99,7 +103,7 @@ class VideoExpandedState extends State<VideoExpanded>
     }
     if (remaining <= widget.triggerEndRemaining &&
         _animationController.status == AnimationStatus.dismissed) {
-      _animationController.forward();
+      // _animationController.forward();
       widget.onEndAction!();
     }
   }
@@ -113,90 +117,76 @@ class VideoExpandedState extends State<VideoExpanded>
           // log error
           return Container();
         }
-        return VideoContainer(
-          child: AspectRatio(
-            aspectRatio: videoPlayerController.value.aspectRatio,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: widget.testMode
-                      ? Container()
-                      : VideoPlayer(
-                          videoPlayerController,
-                        ),
-                ),
-                Positioned.fill(
-                  child: FadeTransition(
-                    opacity: fadeAnimation,
-                    child: Container(
-                      key: layoutKey,
-                      color: widget.bgColor,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 24,
-                  right: 24,
-                  bottom: 24,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return AnimatedBuilder(
-                        animation: fadeAnimation,
-                        builder: (context, child) {
-                          // this calculates the height of the layout as we don't know it
-                          layoutHeight ??= getWidgetHeight(layoutKey);
-                          return Transform.translate(
-                            offset: Offset(
-                              0,
-                              -fadeAnimation.value * (layoutHeight! - 200),
-                            ),
-                            child: child!,
-                          );
-                        },
-                        child: UserCard.black(
-                          userName: widget.userName,
-                          companyTitle: widget.companyTitle,
-                          imageUrl: widget.avatarUrl,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                if (widget.onSkip != null)
-                  Positioned(
-                    right: 24,
-                    top: 16,
-                    child: ElevatedButton(
-                      style: raisedButtonStyle,
-                      onPressed: () {
-                        widget.onSkip!();
-                      },
-                      child: Text(
-                        widget.onSkipText ?? 'SKIP',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 14,
-                        ),
+        if (!snap.hasData) {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        }
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: widget.testMode
+                  ? Container()
+                  : VideoContainer(
+                      ratio: videoPlayerController.value.aspectRatio,
+                      contentSize: videoPlayerController.value.size,
+                      child: VideoPlayer(
+                        videoPlayerController,
                       ),
                     ),
-                  ),
-              ],
             ),
-          ),
+            Positioned.fill(
+              child: FadeTransition(
+                opacity: fadeAnimation,
+                child: Container(
+                  color: widget.bgColor,
+                ),
+              ),
+            ),
+            if (widget.onSkip != null)
+              Positioned(
+                right: 24,
+                top: 40,
+                child: ElevatedButton(
+                  style: raisedButtonStyle,
+                  onPressed: () {
+                    widget.onSkip!();
+                  },
+                  child: Text(
+                    widget.onSkipText ?? 'SKIP',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+            Positioned(
+              left: 24,
+              right: 24,
+              bottom: 24,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return AnimatedBuilder(
+                    animation: fadeOutAnimation,
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: fadeOutAnimation.value,
+                        child: child,
+                      );
+                    },
+                    child: UserCard.black(
+                      userName: widget.userName,
+                      companyTitle: widget.companyTitle,
+                      imageUrl: widget.avatarUrl,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         );
       },
     );
-  }
-
-  Offset getWidgetPosition(GlobalKey key) {
-    RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
-    return box.localToGlobal(Offset.zero);
-  }
-
-  double getWidgetHeight(GlobalKey key) {
-    RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
-    return box.size.height;
   }
 
   ButtonStyle get raisedButtonStyle => ElevatedButton.styleFrom(

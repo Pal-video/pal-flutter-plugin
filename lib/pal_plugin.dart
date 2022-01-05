@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/pal.dart';
@@ -11,10 +12,10 @@ class PalPlugin {
 
   PalPlugin._();
 
-  Future<void> showVideoAsset(
-    BuildContext context,
-    String asset,
-  ) async {
+  Future<void> showVideoAsset({
+    required BuildContext context,
+    required String videoAsset,
+  }) async {
     _overlayHelper.showHelper(
       context,
       (context) => Material(
@@ -27,8 +28,15 @@ class PalPlugin {
               left: 32.0,
             ),
             child: VideoMiniature(
-              videoAsset: asset,
+              videoAsset: videoAsset,
               radius: 80,
+              onTap: () {
+                Navigator.of(context).pop();
+                showExpandedVideoAsset(
+                  context: context,
+                  videoAsset: videoAsset,
+                );
+              },
             ),
           ),
         ),

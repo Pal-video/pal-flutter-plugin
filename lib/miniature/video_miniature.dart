@@ -4,11 +4,13 @@ import 'package:video_player/video_player.dart';
 class VideoMiniature extends StatefulWidget {
   final String videoAsset;
   final double radius;
+  final Function onTap;
 
   const VideoMiniature({
     Key? key,
     required this.videoAsset,
     required this.radius,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -25,11 +27,15 @@ class _VideoMiniatureState extends State<VideoMiniature> {
   }
 
   Future _initVideo() async {
-    await Future.delayed(const Duration(milliseconds: 100));
-    await _videoPlayerController.initialize();
-    await _videoPlayerController.setLooping(true);
-    await _videoPlayerController.setVolume(0);
-    await _videoPlayerController.play();
+    try {
+      await Future.delayed(const Duration(milliseconds: 100));
+      await _videoPlayerController.initialize();
+      await _videoPlayerController.setLooping(true);
+      await _videoPlayerController.setVolume(0);
+      await _videoPlayerController.play();
+    } catch (_) {
+      debugPrint("cannot load video");
+    }
   }
 
   @override
@@ -41,14 +47,17 @@ class _VideoMiniatureState extends State<VideoMiniature> {
           // log error
           return Container();
         }
-        return ClipOval(
-          clipper: _CenterClip(widget.radius),
-          child: SizedBox(
-            width: widget.radius,
-            child: AspectRatio(
-              aspectRatio: _videoPlayerController.value.aspectRatio,
-              child: VideoPlayer(
-                _videoPlayerController,
+        return GestureDetector(
+          onTap: () => widget.onTap(),
+          child: ClipOval(
+            clipper: _CenterClip(widget.radius),
+            child: SizedBox(
+              width: widget.radius,
+              child: AspectRatio(
+                aspectRatio: _videoPlayerController.value.aspectRatio,
+                child: VideoPlayer(
+                  _videoPlayerController,
+                ),
               ),
             ),
           ),
