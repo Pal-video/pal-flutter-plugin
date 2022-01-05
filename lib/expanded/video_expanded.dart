@@ -19,6 +19,7 @@ class VideoExpanded extends StatefulWidget {
   final VideoPlayerController? videoPlayerController;
   final bool testMode;
   final Color bgColor;
+  final Widget? child;
 
   const VideoExpanded({
     Key? key,
@@ -33,6 +34,7 @@ class VideoExpanded extends StatefulWidget {
     this.videoPlayerController,
     this.testMode = false,
     this.bgColor = defaultBgColor,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -138,6 +140,7 @@ class VideoExpandedState extends State<VideoExpanded>
                 opacity: fadeAnimation,
                 child: Container(
                   color: widget.bgColor,
+                  child: widget.child,
                 ),
               ),
             ),

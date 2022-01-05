@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/pal.dart';
 
+import 'surveys/single_choice/single_choice.dart';
 import 'utils/overlay_helper.dart';
 
 class PalPlugin {
@@ -20,7 +21,7 @@ class PalPlugin {
   }) async {
     _overlayHelper.showHelper(
       context,
-      (context) => Material(
+      (ctx) => Material(
         color: Colors.transparent,
         type: MaterialType.transparency,
         child: Align(
@@ -33,12 +34,24 @@ class PalPlugin {
               videoAsset: videoAsset,
               radius: 80,
               onTap: () {
-                Navigator.of(context).pop();
+                _overlayHelper.popHelper();
                 showExpandedVideoAsset(
-                  context: context,
+                  context: ctx,
                   videoAsset: videoAsset,
                   userName: userName,
                   companyTitle: companyTitle,
+                  child: SingleChoiceForm(
+                    question: 'my question lorem ipsum lorem',
+                    choices: const [
+                      Choice(id: 'a', text: 'lorem A'),
+                      Choice(id: 'b', text: 'lorem B'),
+                      Choice(id: 'c', text: 'lorem C'),
+                      Choice(id: 'd', text: 'lorem D'),
+                    ],
+                    onTap: (choice) {
+                      _overlayHelper.popHelper();
+                    },
+                  ),
                 );
               },
             ),
@@ -54,6 +67,7 @@ class PalPlugin {
     required String companyTitle,
     required String userName,
     String? avatarUrl,
+    Widget? child,
   }) async {
     _overlayHelper.showHelper(
       context,
@@ -70,6 +84,7 @@ class PalPlugin {
             onEndAction: () {},
             triggerEndRemaining: const Duration(seconds: 1),
             onSkip: () {},
+            child: child,
           ),
         ),
       ),
