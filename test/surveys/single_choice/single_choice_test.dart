@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pal/pal.dart';
 import 'package:pal/surveys/single_choice/single_choice.dart';
 
 void main() {

@@ -1,8 +1,8 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/pal.dart';
 
+import 'animations/bouncing_background.dart';
 import 'surveys/single_choice/single_choice.dart';
 import 'utils/overlay_helper.dart';
 
@@ -24,36 +24,39 @@ class PalPlugin {
       (ctx) => Material(
         color: Colors.transparent,
         type: MaterialType.transparency,
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 32.0,
-            ),
-            child: VideoMiniature(
-              videoAsset: videoAsset,
-              radius: 80,
-              onTap: () {
-                _overlayHelper.popHelper();
-                showExpandedVideoAsset(
-                  context: ctx,
+        child: SafeArea(
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 32.0),
+              child: BouncingCircleBg(
+                radius: 40,
+                child: VideoMiniature(
                   videoAsset: videoAsset,
-                  userName: userName,
-                  companyTitle: companyTitle,
-                  child: SingleChoiceForm(
-                    question: 'my question lorem ipsum lorem',
-                    choices: const [
-                      Choice(id: 'a', text: 'lorem A'),
-                      Choice(id: 'b', text: 'lorem B'),
-                      Choice(id: 'c', text: 'lorem C'),
-                      Choice(id: 'd', text: 'lorem D'),
-                    ],
-                    onTap: (choice) {
-                      _overlayHelper.popHelper();
-                    },
-                  ),
-                );
-              },
+                  radius: 80,
+                  onTap: () {
+                    _overlayHelper.popHelper();
+                    showExpandedVideoAsset(
+                      context: ctx,
+                      videoAsset: videoAsset,
+                      userName: userName,
+                      companyTitle: companyTitle,
+                      child: SingleChoiceForm(
+                        question: 'my question lorem ipsum lorem',
+                        choices: const [
+                          Choice(id: 'a', text: 'lorem A'),
+                          Choice(id: 'b', text: 'lorem B'),
+                          Choice(id: 'c', text: 'lorem C'),
+                          Choice(id: 'd', text: 'lorem D'),
+                        ],
+                        onTap: (choice) {
+                          _overlayHelper.popHelper();
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ),

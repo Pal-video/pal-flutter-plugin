@@ -60,9 +60,7 @@ class _HomePageState extends State<HomePage> {
             const ListTile(title: Text('Lorem ipsum')),
             ListTile(
               title: const Text('Lorem ipsum'),
-              onTap: () {
-                print("pressed");
-              },
+              onTap: () {},
             ),
           ],
         ),
