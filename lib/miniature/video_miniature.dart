@@ -85,7 +85,9 @@ class _VideoMiniatureState extends State<VideoMiniature>
             opacityAnim: opacityAnimation,
             sizeAnim: sizeAnimation,
             child: GestureDetector(
-              onTap: () => widget.onTap(),
+              onTap: () => _fadeAnimController
+                  .reverse() //
+                  .then((value) => widget.onTap()),
               child: ClipOval(
                 clipBehavior: Clip.antiAlias,
                 clipper: _CenterClip(widget.radius),

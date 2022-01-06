@@ -37,7 +37,7 @@ class _BouncingCircleBgState extends State<BouncingCircleBg>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSkeleton(
+    return AnimatedBouncingBackground(
       circles: [
         BouncingCircle(
           Colors.blueGrey.withOpacity(.1),
@@ -64,12 +64,12 @@ class _BouncingCircleBgState extends State<BouncingCircleBg>
   }
 }
 
-class AnimatedSkeleton extends AnimatedWidget {
+class AnimatedBouncingBackground extends AnimatedWidget {
   final Widget? child;
   final List<BouncingCircle> circles;
   final Animation<double> animation;
 
-  AnimatedSkeleton({
+  AnimatedBouncingBackground({
     required AnimationController listenable,
     required this.circles,
     this.child,
