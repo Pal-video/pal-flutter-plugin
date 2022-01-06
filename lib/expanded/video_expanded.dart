@@ -47,18 +47,35 @@ class VideoExpandedState extends State<VideoExpanded>
   late VideoPlayerController videoPlayerController;
   late VideoListener videoListener;
 
-  late final AnimationController _animationController = AnimationController(
+  /// content fade animation
+  late final AnimationController _contentFadeController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 500),
   );
-  late final fadeAnimation = CurvedAnimation(
-    parent: _animationController,
+
+  late final contentFadeAnimation = CurvedAnimation(
+    parent: _contentFadeController,
     curve: Curves.easeIn,
   );
-  late final fadeOutAnimation = Tween<double>(
+
+  late final userCardFadeAnimation = Tween<double>(
     begin: 1.0,
     end: 0.0,
-  ).animate(_animationController);
+  ).animate(_contentFadeController);
+
+  /// full layout animation
+  late final AnimationController _layoutFadeController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+
+  late final layoutFadeAnimation = Tween<double>(
+    begin: 1.0,
+    end: 0.0,
+  ).animate(CurvedAnimation(
+    parent: _layoutFadeController,
+    curve: Curves.easeOut,
+  ));
 
   @override
   void initState() {
@@ -80,7 +97,8 @@ class VideoExpandedState extends State<VideoExpanded>
   void deactivate() {
     super.deactivate();
     videoListener.dispose();
-    _animationController.dispose();
+    _contentFadeController.dispose();
+    _layoutFadeController.dispose();
   }
 
   Future<bool> _initVideo() async {
@@ -88,10 +106,12 @@ class VideoExpandedState extends State<VideoExpanded>
       await videoPlayerController.setLooping(false);
       await videoPlayerController.setVolume(0);
       await videoPlayerController.initialize();
-      await Future.delayed(const Duration(milliseconds: 300));
-      await videoPlayerController.play();
       await videoPlayerController.seekTo(Duration.zero);
       videoListener.init();
+      await _layoutFadeController.forward();
+      await Future.delayed(const Duration(milliseconds: 500), () async {
+        await videoPlayerController.play();
+      });
       return true;
     } catch (e, d) {
       debugPrint("Error while playing video: $e, $d");
@@ -104,91 +124,104 @@ class VideoExpandedState extends State<VideoExpanded>
       return;
     }
     if (remaining <= widget.triggerEndRemaining &&
-        _animationController.status == AnimationStatus.dismissed) {
-      _animationController.forward();
+        _contentFadeController.status == AnimationStatus.dismissed) {
+      _contentFadeController.forward();
       widget.onEndAction!();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initVideo(),
-      builder: (context, snap) {
-        if (snap.hasError) {
-          // log error
-          return Container();
-        }
-        if (!snap.hasData) {
-          return const Center(child: CircularProgressIndicator.adaptive());
-        }
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: widget.testMode
-                  ? Container()
-                  : VideoContainer(
-                      ratio: videoPlayerController.value.aspectRatio,
-                      contentSize: videoPlayerController.value.size,
-                      child: VideoPlayer(
-                        videoPlayerController,
-                      ),
-                    ),
-            ),
-            Positioned.fill(
-              child: FadeTransition(
-                opacity: fadeAnimation,
-                child: Container(
-                  color: widget.bgColor,
-                  child: widget.child,
-                ),
+    return AnimatedBuilder(
+      animation: layoutFadeAnimation,
+      builder: (context, child) => Transform.translate(
+        offset: Offset(
+            0, MediaQuery.of(context).size.height * layoutFadeAnimation.value),
+        child: child!,
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: widget.testMode
+                ? Container()
+                : FutureBuilder(
+                    future: _initVideo(),
+                    builder: (context, snap) {
+                      if (snap.hasError) {
+                        // log error
+                        return Container(color: Colors.black);
+                      }
+                      if (!snap.hasData) {
+                        return Container(
+                          color: Colors.black,
+                          child: const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
+                        );
+                      }
+                      return VideoContainer(
+                        ratio: videoPlayerController.value.aspectRatio,
+                        contentSize: videoPlayerController.value.size,
+                        child: VideoPlayer(
+                          videoPlayerController,
+                        ),
+                      );
+                    },
+                  ),
+          ),
+          Positioned.fill(
+            child: FadeTransition(
+              opacity: contentFadeAnimation,
+              child: Container(
+                color: widget.bgColor,
+                child: widget.child,
               ),
             ),
-            if (widget.onSkip != null)
-              Positioned(
-                right: 24,
-                top: 40,
-                child: ElevatedButton(
-                  style: raisedButtonStyle,
-                  onPressed: () {
-                    widget.onSkip!();
-                  },
-                  child: Text(
-                    widget.onSkipText ?? 'SKIP',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 14,
-                    ),
+          ),
+          if (widget.onSkip != null)
+            Positioned(
+              right: 24,
+              top: 40,
+              child: ElevatedButton(
+                style: raisedButtonStyle,
+                onPressed: () {
+                  widget.onSkip!();
+                },
+                child: Text(
+                  widget.onSkipText ?? 'SKIP',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14,
                   ),
                 ),
               ),
-            Positioned(
-              left: 24,
-              right: 24,
-              bottom: 24,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return AnimatedBuilder(
-                    animation: fadeOutAnimation,
-                    builder: (context, child) {
-                      return Opacity(
-                        opacity: fadeOutAnimation.value,
-                        child: child,
-                      );
-                    },
-                    child: UserCard.black(
-                      userName: widget.userName,
-                      companyTitle: widget.companyTitle,
-                      imageUrl: widget.avatarUrl,
-                    ),
-                  );
-                },
-              ),
             ),
-          ],
-        );
-      },
+          Positioned(
+            left: 24,
+            right: 24,
+            bottom: 24,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return AnimatedBuilder(
+                  animation: userCardFadeAnimation,
+                  builder: (context, child) {
+                    return Opacity(
+                      opacity: userCardFadeAnimation.value,
+                      child: child,
+                    );
+                  },
+                  child: UserCard.black(
+                    userName: widget.userName,
+                    companyTitle: widget.companyTitle,
+                    imageUrl: widget.avatarUrl,
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 

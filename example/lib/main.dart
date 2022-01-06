@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pal/pal.dart';
+import 'package:pal/surveys/single_choice/single_choice.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -35,11 +36,20 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 500), () async {
-      await PalPlugin.instance.showVideoAsset(
+      await PalPlugin.instance.showSingleChoiceSurvey(
         context: context,
         videoAsset: 'assets/me.mp4',
         userName: 'Gautier',
         companyTitle: 'Apparence.io CTO',
+        question: 'my question lorem ipsum lorem',
+        choices: const [
+          Choice(id: 'a', text: 'lorem A'),
+          Choice(id: 'b', text: 'lorem B'),
+          Choice(id: 'c', text: 'lorem C'),
+          Choice(id: 'd', text: 'lorem D'),
+        ],
+        onTapChoice: (choice) {},
+        onVideoEndAction: () {},
       );
     });
   }

@@ -13,11 +13,51 @@ class PalPlugin {
 
   PalPlugin._();
 
+  Future<void> showSingleChoiceSurvey({
+    required BuildContext context,
+    required String videoAsset,
+    required String userName,
+    required String companyTitle,
+    String? avatarUrl,
+    required String question,
+    required List<Choice> choices,
+    required OnTapChoice onTapChoice,
+    required Function onVideoEndAction,
+    Function? onSkip,
+  }) async {
+    showVideoAsset(
+      context: context,
+      videoAsset: videoAsset,
+      userName: userName,
+      companyTitle: companyTitle,
+      avatarUrl: avatarUrl,
+      onVideoEndAction: onVideoEndAction,
+      onSkip: onSkip,
+      child: SingleChoiceForm(
+        question: 'my question lorem ipsum lorem',
+        choices: const [
+          Choice(id: 'a', text: 'lorem A'),
+          Choice(id: 'b', text: 'lorem B'),
+          Choice(id: 'c', text: 'lorem C'),
+          Choice(id: 'd', text: 'lorem D'),
+        ],
+        onTap: (choice) {
+          _overlayHelper.popHelper();
+          onTapChoice(choice);
+        },
+      ),
+    );
+  }
+
   Future<void> showVideoAsset({
     required BuildContext context,
     required String videoAsset,
     required String userName,
     required String companyTitle,
+    required Function onVideoEndAction,
+    String? avatarUrl,
+    Widget? child,
+    Function? onSkip,
   }) async {
     _overlayHelper.showHelper(
       context,
@@ -41,18 +81,14 @@ class PalPlugin {
                       videoAsset: videoAsset,
                       userName: userName,
                       companyTitle: companyTitle,
-                      child: SingleChoiceForm(
-                        question: 'my question lorem ipsum lorem',
-                        choices: const [
-                          Choice(id: 'a', text: 'lorem A'),
-                          Choice(id: 'b', text: 'lorem B'),
-                          Choice(id: 'c', text: 'lorem C'),
-                          Choice(id: 'd', text: 'lorem D'),
-                        ],
-                        onTap: (choice) {
-                          _overlayHelper.popHelper();
-                        },
-                      ),
+                      child: child,
+                      onVideoEndAction: onVideoEndAction,
+                      onSkip: () {
+                        _overlayHelper.popHelper();
+                        if (onSkip != null) {
+                          onSkip();
+                        }
+                      },
                     );
                   },
                 ),
@@ -67,8 +103,10 @@ class PalPlugin {
   Future<void> showExpandedVideoAsset({
     required BuildContext context,
     required String videoAsset,
-    required String companyTitle,
     required String userName,
+    required String companyTitle,
+    required Function onVideoEndAction,
+    Function? onSkip,
     String? avatarUrl,
     Widget? child,
   }) async {
@@ -84,9 +122,9 @@ class PalPlugin {
             companyTitle: companyTitle,
             userName: userName,
             avatarUrl: avatarUrl,
-            onEndAction: () {},
+            onEndAction: onVideoEndAction,
             triggerEndRemaining: const Duration(seconds: 1),
-            onSkip: () {},
+            onSkip: onSkip,
             child: child,
           ),
         ),

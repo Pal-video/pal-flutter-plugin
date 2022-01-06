@@ -34,6 +34,7 @@ void main() {
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
+      onVideoEndAction: () {},
     );
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(VideoMiniature), findsOneWidget);
@@ -49,6 +50,7 @@ void main() {
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
+      onVideoEndAction: () {},
     );
     await tester.pump(const Duration(milliseconds: 500));
     await tester.ensureVisible(find.byType(VideoMiniature));

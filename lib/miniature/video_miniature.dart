@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pal/animations/pop_anim.dart';
 import 'package:video_player/video_player.dart';
 
@@ -85,9 +86,10 @@ class _VideoMiniatureState extends State<VideoMiniature>
             opacityAnim: opacityAnimation,
             sizeAnim: sizeAnimation,
             child: GestureDetector(
-              onTap: () => _fadeAnimController
-                  .reverse() //
-                  .then((value) => widget.onTap()),
+              onTap: () => _fadeAnimController.reverse().then((value) {
+                HapticFeedback.mediumImpact();
+                widget.onTap();
+              }),
               child: ClipOval(
                 clipBehavior: Clip.antiAlias,
                 clipper: _CenterClip(widget.radius),
