@@ -21,7 +21,29 @@ class SingleChoiceForm extends StatefulWidget {
   _SingleChoiceFormState createState() => _SingleChoiceFormState();
 }
 
-class _SingleChoiceFormState extends State<SingleChoiceForm> {
+class _SingleChoiceFormState extends State<SingleChoiceForm>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _AnimController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+
+  late final _tweenAnim = Tween<double>(
+    begin: 0.0,
+    end: 1.0,
+  ).animate(CurvedAnimation(
+    parent: _AnimController,
+    curve: Curves.easeOut,
+  ));
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      _AnimController.forward();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -63,10 +85,42 @@ class _SingleChoiceFormState extends State<SingleChoiceForm> {
                     const SizedBox(height: 8),
               ),
             ),
+            const Flexible(
+              flex: 0,
+              child: SizedBox(height: 16),
+              fit: FlexFit.loose,
+            ),
           ],
         ),
       ),
     );
+  }
+}
+
+class FlowItemDelegate extends FlowDelegate {
+  FlowItemDelegate({required this.animation}) : super(repaint: animation);
+
+  final Animation<double> animation;
+
+  @override
+  bool shouldRepaint(FlowItemDelegate oldDelegate) {
+    return animation != oldDelegate.animation;
+  }
+
+  @override
+  void paintChildren(FlowPaintingContext context) {
+    double dx = 0.0;
+    for (int i = 0; i < context.childCount; ++i) {
+      dx = context.getChildSize(i)!.height * i;
+      context.paintChild(
+        i,
+        transform: Matrix4.translationValues(
+          0,
+          dx * animation.value,
+          0,
+        ),
+      );
+    }
   }
 }
 

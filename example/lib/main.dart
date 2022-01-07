@@ -36,21 +36,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 500), () async {
-      await PalPlugin.instance.showSingleChoiceSurvey(
-        context: context,
-        videoAsset: 'assets/me.mp4',
-        userName: 'Gautier',
-        companyTitle: 'Apparence.io CTO',
-        question: 'my question lorem ipsum lorem',
-        choices: const [
-          Choice(id: 'a', text: 'lorem A'),
-          Choice(id: 'b', text: 'lorem B'),
-          Choice(id: 'c', text: 'lorem C'),
-          Choice(id: 'd', text: 'lorem D'),
-        ],
-        onTapChoice: (choice) {},
-        onVideoEndAction: () {},
-      );
+      _showSingleChoicePopup();
     });
   }
 
@@ -59,22 +45,39 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Pal plugin - demo'),
         ),
         body: Column(
           children: [
-            const ListTile(title: Text('Lorem ipsum')),
-            const ListTile(title: Text('Lorem ipsum')),
-            const ListTile(title: Text('Lorem ipsum')),
-            const ListTile(title: Text('Lorem ipsum')),
-            const ListTile(title: Text('Lorem ipsum')),
             ListTile(
-              title: const Text('Lorem ipsum'),
-              onTap: () {},
+              title: const Text('Pal - feedback'),
+              subtitle: const Text('Video then request user feedback'),
+              leading: const Icon(Icons.video_camera_back),
+              onTap: () {
+                _showSingleChoicePopup();
+              },
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Future _showSingleChoicePopup() {
+    return PalPlugin.instance.showSingleChoiceSurvey(
+      context: context,
+      videoAsset: 'assets/me.mp4',
+      userName: 'Gautier',
+      companyTitle: 'Apparence.io CTO',
+      question: 'my question lorem ipsum lorem',
+      choices: const [
+        Choice(id: 'a', text: 'lorem A'),
+        Choice(id: 'b', text: 'lorem B'),
+        Choice(id: 'c', text: 'lorem C'),
+        Choice(id: 'd', text: 'lorem D'),
+      ],
+      onTapChoice: (choice) {},
+      onVideoEndAction: () {},
     );
   }
 }

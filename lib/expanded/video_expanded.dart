@@ -107,7 +107,7 @@ class VideoExpandedState extends State<VideoExpanded>
   Future<bool> _initVideo() async {
     try {
       await videoPlayerController.setLooping(false);
-      await videoPlayerController.setVolume(0);
+      await videoPlayerController.setVolume(1);
       await videoPlayerController.initialize();
       await videoPlayerController.seekTo(Duration.zero);
       videoListener.init();
