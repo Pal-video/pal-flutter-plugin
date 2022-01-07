@@ -3,8 +3,11 @@ import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/pal.dart';
 
 import 'animations/bouncing_background.dart';
+import 'expanded/state_actions.dart';
 import 'surveys/single_choice/single_choice.dart';
-import 'utils/overlay_helper.dart';
+import 'overlays/overlay_helper.dart';
+
+typedef OnTapChoice = void Function(Choice choice);
 
 class PalPlugin {
   final OverlayHelper _overlayHelper = OverlayHelper();
@@ -23,6 +26,7 @@ class PalPlugin {
     required List<Choice> choices,
     required OnTapChoice onTapChoice,
     required Function onVideoEndAction,
+    Function? onClose,
     Function? onSkip,
   }) async {
     showVideoAsset(
@@ -33,6 +37,7 @@ class PalPlugin {
       avatarUrl: avatarUrl,
       onVideoEndAction: onVideoEndAction,
       onSkip: onSkip,
+      onClose: onClose,
       child: SingleChoiceForm(
         question: 'my question lorem ipsum lorem',
         choices: const [
@@ -41,9 +46,12 @@ class PalPlugin {
           Choice(id: 'c', text: 'lorem C'),
           Choice(id: 'd', text: 'lorem D'),
         ],
-        onTap: (choice) {
-          _overlayHelper.popHelper();
+        onTap: (ctx, choice) {
           onTapChoice(choice);
+          Actions?.maybeInvoke(ctx, const CloseVideoIntent());
+          Future.delayed(const Duration(milliseconds: 500), () {
+            _overlayHelper.popHelper();
+          });
         },
       ),
     );
@@ -55,6 +63,7 @@ class PalPlugin {
     required String userName,
     required String companyTitle,
     required Function onVideoEndAction,
+    Function? onClose,
     String? avatarUrl,
     Widget? child,
     Function? onSkip,
@@ -83,6 +92,12 @@ class PalPlugin {
                       companyTitle: companyTitle,
                       child: child,
                       onVideoEndAction: onVideoEndAction,
+                      close: () {
+                        _overlayHelper.popHelper();
+                        if (onClose != null) {
+                          onClose();
+                        }
+                      },
                       onSkip: () {
                         _overlayHelper.popHelper();
                         if (onSkip != null) {
@@ -106,6 +121,7 @@ class PalPlugin {
     required String userName,
     required String companyTitle,
     required Function onVideoEndAction,
+    required Function close,
     Function? onSkip,
     String? avatarUrl,
     Widget? child,
@@ -126,6 +142,7 @@ class PalPlugin {
             triggerEndRemaining: const Duration(seconds: 1),
             onSkip: onSkip,
             child: child,
+            close: close,
           ),
         ),
       ),

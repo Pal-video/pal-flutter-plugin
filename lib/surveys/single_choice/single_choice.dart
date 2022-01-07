@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-typedef OnTapChoice = void Function(Choice choice);
+import 'single_choice_model.dart';
+
+typedef OnTapChoiceWithContext = void Function(
+    BuildContext context, Choice choice);
 
 class SingleChoiceForm extends StatefulWidget {
   final String question;
   final List<Choice> choices;
-  final OnTapChoice onTap;
+  final OnTapChoiceWithContext onTap;
 
   const SingleChoiceForm({
     Key? key,
@@ -67,20 +70,10 @@ class _SingleChoiceFormState extends State<SingleChoiceForm> {
   }
 }
 
-class Choice {
-  final String id;
-  final String text;
-
-  const Choice({
-    required this.id,
-    required this.text,
-  });
-}
-
 class ChoiceWidget extends StatelessWidget {
   final Choice choice;
   final Color bgColor, onTapColor;
-  final OnTapChoice onTap;
+  final OnTapChoiceWithContext onTap;
 
   const ChoiceWidget(
     this.choice, {
@@ -92,7 +85,7 @@ class ChoiceWidget extends StatelessWidget {
 
   factory ChoiceWidget.pal({
     required Choice choice,
-    required OnTapChoice onTap,
+    required OnTapChoiceWithContext onTap,
   }) =>
       ChoiceWidget(
         choice,
@@ -108,7 +101,7 @@ class ChoiceWidget extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Future.delayed(const Duration(milliseconds: 500), () {
-            onTap(choice);
+            onTap(context, choice);
           });
         },
         child: Ink(

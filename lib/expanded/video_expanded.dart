@@ -3,6 +3,7 @@ import 'package:pal/expanded/video_container.dart';
 import 'package:pal/widgets/user_card/user_card.dart';
 import 'package:video_player/video_player.dart';
 
+import 'state_actions.dart';
 import 'video_listener.dart';
 
 const defaultBgColor = Color(0xFF191E26);
@@ -15,6 +16,7 @@ class VideoExpanded extends StatefulWidget {
   final String companyTitle;
   final String? avatarUrl;
   final Duration triggerEndRemaining;
+  final Function? close;
   final Function? onEndAction;
   final VideoPlayerController? videoPlayerController;
   final bool testMode;
@@ -34,6 +36,7 @@ class VideoExpanded extends StatefulWidget {
     this.videoPlayerController,
     this.testMode = false,
     this.bgColor = defaultBgColor,
+    this.close,
     this.child,
   }) : super(key: key);
 
@@ -130,6 +133,21 @@ class VideoExpandedState extends State<VideoExpanded>
     }
   }
 
+  void _close([Intent? intent]) {
+    if (widget.close != null) {
+      _layoutFadeController //
+          .reverse() //
+          .then((_) => widget.close!());
+    }
+  }
+
+  _skipVideo() async {
+    if (widget.onSkip != null) {
+      await _layoutFadeController.reverse();
+      widget.onSkip!();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -174,7 +192,14 @@ class VideoExpandedState extends State<VideoExpanded>
               opacity: contentFadeAnimation,
               child: Container(
                 color: widget.bgColor,
-                child: widget.child,
+                child: Actions(
+                  actions: <Type, Action<Intent>>{
+                    CloseVideoIntent: CallbackAction<CloseVideoIntent>(
+                      onInvoke: _close,
+                    ),
+                  },
+                  child: widget.child ?? Container(),
+                ),
               ),
             ),
           ),
@@ -184,9 +209,7 @@ class VideoExpandedState extends State<VideoExpanded>
               top: 40,
               child: ElevatedButton(
                 style: raisedButtonStyle,
-                onPressed: () {
-                  widget.onSkip!();
-                },
+                onPressed: _skipVideo,
                 child: Text(
                   widget.onSkipText ?? 'SKIP',
                   style: const TextStyle(
