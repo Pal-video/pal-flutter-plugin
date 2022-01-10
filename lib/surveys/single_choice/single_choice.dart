@@ -23,7 +23,7 @@ class SingleChoiceForm extends StatefulWidget {
 
 class _SingleChoiceFormState extends State<SingleChoiceForm>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _AnimController = AnimationController(
+  late final AnimationController _animController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 500),
   );
@@ -32,16 +32,22 @@ class _SingleChoiceFormState extends State<SingleChoiceForm>
     begin: 0.0,
     end: 1.0,
   ).animate(CurvedAnimation(
-    parent: _AnimController,
+    parent: _animController,
     curve: Curves.easeOut,
   ));
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      _AnimController.forward();
-    });
+    // Future.delayed(const Duration(milliseconds: 1000), () {
+    //   _animController.forward();
+    // });
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
   }
 
   @override

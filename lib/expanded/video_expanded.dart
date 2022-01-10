@@ -97,8 +97,8 @@ class VideoExpandedState extends State<VideoExpanded>
   }
 
   @override
-  void deactivate() {
-    super.deactivate();
+  void dispose() {
+    super.dispose();
     videoListener.dispose();
     _contentFadeController.dispose();
     _layoutFadeController.dispose();
