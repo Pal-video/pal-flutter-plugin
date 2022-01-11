@@ -208,6 +208,7 @@ class VideoExpandedState extends State<VideoExpanded>
               right: 24,
               top: 40,
               child: ElevatedButton(
+                key: const ValueKey("palVideoSkip"),
                 style: raisedButtonStyle,
                 onPressed: _skipVideo,
                 child: Text(

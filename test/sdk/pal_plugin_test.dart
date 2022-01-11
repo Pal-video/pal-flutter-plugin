@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/miniature/video_miniature.dart';
-import 'package:pal/pal_plugin.dart';
+import 'package:pal/sdk/pal_plugin.dart';
 
 void main() {
   BuildContext? _context;

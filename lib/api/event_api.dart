@@ -1,32 +1,51 @@
+import 'package:pal/api/http_client.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
-class PalEvent {
-  final TargetPlatform? platform;
+import 'models/event.dart';
+import 'models/video_trigger.dart';
 
-  const PalEvent({
-    this.platform,
-  });
-}
+class PalEventApi {
+  final HttpClient _httpClient;
 
-class EventApi {
-  Future<void> login() {
+  PalEventApi(this._httpClient);
+
+  Future<void> logLogin() {
     throw "not implemented yet";
   }
 
-  Future<void> logout() {
+  Future<void> logSignout() {
     throw "not implemented yet";
   }
 
-  Future<void> signup() {
+  Future<void> logSignup() {
     throw "not implemented yet";
   }
 
-  Future<void> setCurrentScreen(String name) {
+  Future<PalVideoTrigger?> logCurrentScreen(String name) => _logEvent(
+        PalEvent(
+          event: PalEvents.setScreen,
+          attrs: <String, dynamic>{
+            'name': name,
+          },
+        ),
+      );
+
+  Future<void> logButtonClick(String name) {
     throw "not implemented yet";
   }
 
-  Future<void> logEvent(PalEvent event) {
-    throw "not implemented yet";
+  Future<PalVideoTrigger?> _logEvent(PalEvent event) async {
+    final eventContext = PalEventContext.fromEvent(
+      event,
+      defaultTargetPlatform,
+    );
+    final response = await _httpClient.post(
+      Uri.parse('/events'),
+      body: eventContext.toJson(),
+    );
+    if (response.body.isEmpty) {
+      return null;
+    }
+    return PalVideoTrigger.fromJson(response.body);
   }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/pal.dart';
 
-import 'animations/bouncing_background.dart';
-import 'expanded/state_actions.dart';
-import 'surveys/single_choice/single_choice.dart';
-import 'overlays/overlay_helper.dart';
+import '../animations/bouncing_background.dart';
+import '../expanded/state_actions.dart';
+import '../surveys/single_choice/single_choice.dart';
+import '../overlays/overlay_helper.dart';
 
 typedef OnTapChoice = void Function(Choice choice);
 
@@ -39,13 +39,8 @@ class PalPlugin {
       onSkip: onSkip,
       onClose: onClose,
       child: SingleChoiceForm(
-        question: 'my question lorem ipsum lorem',
-        choices: const [
-          Choice(id: 'a', text: 'lorem A'),
-          Choice(id: 'b', text: 'lorem B'),
-          Choice(id: 'c', text: 'lorem C'),
-          Choice(id: 'd', text: 'lorem D'),
-        ],
+        question: question,
+        choices: choices,
         onTap: (ctx, choice) {
           onTapChoice(choice);
           Actions?.maybeInvoke(ctx, const CloseVideoIntent());
