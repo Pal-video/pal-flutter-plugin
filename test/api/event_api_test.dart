@@ -11,9 +11,11 @@ import 'package:pal/api/http_client.dart';
 import 'package:pal/api/models/pal_options.dart';
 import 'package:pal/api/models/survey.dart';
 import 'package:pal/api/models/video_trigger.dart';
+import 'package:pal/api/models/video_trigger_event.dart';
 import 'package:pal/api/pal.dart';
 import 'package:pal/pal.dart';
 
+import '../test_utils.dart';
 import 'event_api_test.mocks.dart';
 
 @GenerateMocks([HttpClient])
@@ -41,7 +43,7 @@ void main() {
     (WidgetTester tester) async {
       beforeEach();
       when(httpClient.post(Uri.parse('/events'), body: anyNamed('body')))
-          .thenAnswer((_) => Future.value(Response('', 200))); //FIXME
+          .thenAnswer((_) => Future.value(Response('', 200)));
       var app = MaterialApp(
         home: Builder(builder: (context) {
           pal.logCurrentScreen(context, 'screen1');
@@ -126,22 +128,7 @@ void main() {
     ''',
     (WidgetTester tester) async {
       beforeEach();
-      final videoTriggerResponse = PalVideoTrigger(
-        id: '3682638A',
-        type: PalVideos.survey,
-        video240pUrl: 'http://240purl.com',
-        video480pUrl: 'http://480purl.com',
-        video720pUrl: 'http://720purl.com',
-        author: Author(
-          companyTitle: 'CEO',
-          userName: 'John Mclane',
-        ),
-        survey: Survey(question: '', choices: [
-          ChoiceItem(id: 'a', text: 'réponse a'),
-          ChoiceItem(id: 'b', text: 'réponse b'),
-          ChoiceItem(id: 'c', text: 'réponse c'),
-        ]),
-      );
+      PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
       when(httpClient.post(
         Uri.parse('/events'),
         body: anyNamed('body'),
@@ -170,35 +157,22 @@ void main() {
   testWidgets(
     '''
     call setCurrentScreen, shows a single choice survey, push skip
-    => calls api to record skipped event
+    => calls api to record [open video, skipped event]
     ''',
     (WidgetTester tester) async {
       beforeEach();
-      final videoTriggerResponse = PalVideoTrigger(
-        id: '3682638A',
-        type: PalVideos.survey,
-        video240pUrl: 'http://240purl.com',
-        video480pUrl: 'http://480purl.com',
-        video720pUrl: 'http://720purl.com',
-        author: Author(
-          companyTitle: 'CEO',
-          userName: 'John Mclane',
-        ),
-        survey: Survey(question: '', choices: [
-          ChoiceItem(id: 'a', text: 'réponse a'),
-          ChoiceItem(id: 'b', text: 'réponse b'),
-          ChoiceItem(id: 'c', text: 'réponse c'),
-        ]),
-      );
+      PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
       when(httpClient.post(
         Uri.parse('/events'),
         body: anyNamed('body'),
-      )).thenAnswer((_) => Future.value(
-            Response(
-              videoTriggerResponse.toJson(),
-              200,
-            ),
-          ));
+      )).thenAnswer((_) => Future.value(Response(
+            videoTriggerResponse.toJson(),
+            200,
+          )));
+      when(httpClient.post(
+        Uri.parse('/triggers/${videoTriggerResponse.id}'),
+        body: anyNamed('body'),
+      )).thenAnswer((_) => Future.value(Response('', 200)));
       var app = MaterialApp(
         home: Builder(builder: (context) {
           pal.logCurrentScreen(context, 'screen1');
@@ -211,15 +185,45 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.byType(VideoMiniature), findsOneWidget);
+      final miniatureWidget = findWidget<VideoMiniature>();
+      miniatureWidget.onTap();
+      await tester.pump(const Duration(milliseconds: 500));
 
-      final skipBtnFinder = find.byKey(const ValueKey("palVideoSkip"));
-      await tester.tap(skipBtnFinder);
+      expect(find.byKey(const ValueKey("palVideoSkip")), findsOneWidget);
+      final skipBtn = findWidget<ElevatedButton>();
+      skipBtn.onPressed!();
       await tester.pump(const Duration(milliseconds: 500));
       final capturedCall = verify(httpClient.post(
         Uri.parse('/triggers/3682638A'),
         body: captureAnyNamed("body"),
       )).captured;
-      capturedCall[0];
+      final resultEvents = capturedCall[0] as List<dynamic>;
+      expect(resultEvents, isNotNull);
+      expect(resultEvents.length, 2);
+      final event_1 = VideoTriggerEvent.fromJson(resultEvents[0]);
+      final event_2 = VideoTriggerEvent.fromJson(resultEvents[1]);
+      expect(event_1.type, VideoTriggerEvents.min_video_open);
+      expect(event_2.type, VideoTriggerEvents.video_skip);
     },
   );
+}
+
+PalVideoTrigger _createVideoWithSurvey() {
+  final videoTriggerResponse = PalVideoTrigger(
+    id: '3682638A',
+    type: PalVideos.survey,
+    video240pUrl: 'http://240purl.com',
+    video480pUrl: 'http://480purl.com',
+    video720pUrl: 'http://720purl.com',
+    author: Author(
+      companyTitle: 'CEO',
+      userName: 'John Mclane',
+    ),
+    survey: Survey(question: '', choices: [
+      ChoiceItem(id: 'a', text: 'réponse a'),
+      ChoiceItem(id: 'b', text: 'réponse b'),
+      ChoiceItem(id: 'c', text: 'réponse c'),
+    ]),
+  );
+  return videoTriggerResponse;
 }

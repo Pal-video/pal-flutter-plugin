@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Pal plugin - demo'),
         ),
-        body: Column(
+        body: ListView(
           children: [
             ListTile(
               title: const Text('Pal - feedback'),

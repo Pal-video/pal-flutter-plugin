@@ -4,13 +4,18 @@ import 'package:pal/api/models/video_trigger.dart';
 import 'package:pal/pal.dart';
 import 'http_client.dart';
 import 'models/pal_options.dart';
+import 'models/video_trigger_event.dart';
+import 'triggered_event_api.dart';
 
 class Pal {
   /// an enhanced httpclient for our needs
   HttpClient? _httpClient;
 
-  /// records events to our server
+  /// records client app events to our server
   PalEventApi? _eventApi;
+
+  /// records video's events
+  PalTriggeredEventApi? _triggeredEventApi;
 
   /// this is the Pal sdk overlaying our video above your app
   PalPlugin? _palSdk;
@@ -34,6 +39,7 @@ class Pal {
   initialize(PalOptions palOptions) {
     _httpClient ??= HttpClient.create(_serverUrl, palOptions.apiKey);
     _eventApi ??= PalEventApi(_httpClient!);
+    _triggeredEventApi ??= PalTriggeredEventApi(_httpClient!);
   }
 
   Future<void> logLogin(BuildContext buildContext) {
@@ -75,12 +81,28 @@ class Pal {
       onTapChoice: (choice) => _onTapChoice(trigger, choice),
       onVideoEndAction: () => _onVideoEnded(trigger),
       onSkip: () => _onVideoSkipped(trigger),
+      onExpand: () => _onVideoExpand(trigger),
     );
+  }
+
+  Future<void> _onVideoExpand(PalVideoTrigger trigger) async {
+    final event = VideoTriggerEvent(
+      time: DateTime.now(),
+      type: VideoTriggerEvents.min_video_open,
+    );
+    _triggeredEventApi!.save(trigger.id, event);
   }
 
   Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {}
 
   Future<void> _onVideoEnded(PalVideoTrigger trigger) async {}
 
-  Future<void> _onVideoSkipped(PalVideoTrigger trigger) async {}
+  Future<void> _onVideoSkipped(PalVideoTrigger trigger) async {
+    final event = VideoTriggerEvent(
+      time: DateTime.now(),
+      type: VideoTriggerEvents.video_skip,
+    );
+    _triggeredEventApi!.save(trigger.id, event);
+    _triggeredEventApi!.send();
+  }
 }

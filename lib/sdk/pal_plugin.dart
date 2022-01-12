@@ -26,6 +26,7 @@ class PalPlugin {
     required List<Choice> choices,
     required OnTapChoice onTapChoice,
     required Function onVideoEndAction,
+    Function? onExpand,
     Function? onClose,
     Function? onSkip,
   }) async {
@@ -38,6 +39,7 @@ class PalPlugin {
       onVideoEndAction: onVideoEndAction,
       onSkip: onSkip,
       onClose: onClose,
+      onExpand: onExpand,
       child: SingleChoiceForm(
         question: question,
         choices: choices,
@@ -59,6 +61,7 @@ class PalPlugin {
     required String companyTitle,
     required Function onVideoEndAction,
     Function? onClose,
+    Function? onExpand,
     String? avatarUrl,
     Widget? child,
     Function? onSkip,
@@ -79,6 +82,9 @@ class PalPlugin {
                   videoAsset: videoAsset,
                   radius: 80,
                   onTap: () {
+                    if (onExpand != null) {
+                      onExpand();
+                    }
                     _overlayHelper.popHelper();
                     showExpandedVideoAsset(
                       context: ctx,
