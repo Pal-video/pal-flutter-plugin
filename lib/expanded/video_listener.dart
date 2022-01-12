@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -8,17 +10,46 @@ class VideoListener {
   VideoPlayerController controller;
   bool hasInit;
 
+  bool get isTesting => Platform.environment.containsKey('FLUTTER_TEST');
+
   VideoListener(
     this.controller, {
     required this.onPositionChanged,
   }) : hasInit = false;
 
-  init() {
+  _initListener() {
     if (hasInit) {
       return;
     }
     controller.addListener(onPositionChangedListener);
     hasInit = true;
+    // since we can't test the video ending trigger in full integration test
+    if (isTesting) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        onPositionChanged(Duration.zero);
+      });
+    }
+  }
+
+  Future<bool> start({
+    required double volume,
+    required bool loop,
+  }) async {
+    try {
+      Future.delayed(const Duration(milliseconds: 500));
+      await controller.initialize();
+      _initListener();
+      await controller.setLooping(loop);
+      await controller.setVolume(volume);
+      await controller.seekTo(Duration.zero);
+      await Future.delayed(const Duration(milliseconds: 500), () async {
+        await controller.play();
+      });
+      return true;
+    } catch (e, d) {
+      debugPrint("Error while playing video: $e, $d");
+    }
+    return false;
   }
 
   dispose() {

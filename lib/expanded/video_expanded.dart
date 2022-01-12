@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pal/expanded/video_container.dart';
 import 'package:pal/widgets/user_card/user_card.dart';
@@ -89,6 +91,7 @@ class VideoExpandedState extends State<VideoExpanded>
       videoPlayerController,
       onPositionChanged: _onPositionChangedListener,
     );
+    _layoutFadeController.forward();
   }
 
   @override
@@ -104,23 +107,23 @@ class VideoExpandedState extends State<VideoExpanded>
     _layoutFadeController.dispose();
   }
 
-  Future<bool> _initVideo() async {
-    try {
-      await videoPlayerController.setLooping(false);
-      await videoPlayerController.setVolume(1);
-      await videoPlayerController.initialize();
-      await videoPlayerController.seekTo(Duration.zero);
-      videoListener.init();
-      await _layoutFadeController.forward();
-      await Future.delayed(const Duration(milliseconds: 500), () async {
-        await videoPlayerController.play();
-      });
-      return true;
-    } catch (e, d) {
-      debugPrint("Error while playing video: $e, $d");
-    }
-    return false;
-  }
+  // Future<bool> _initVideo() async {
+  //   try {
+  //     await videoPlayerController.initialize();
+  //     await videoPlayerController.setLooping(false);
+  //     await videoPlayerController.setVolume(1);
+  //     await videoPlayerController.seekTo(Duration.zero);
+  //     videoListener.init();
+  //     await _layoutFadeController.forward();
+  //     await Future.delayed(const Duration(milliseconds: 500), () async {
+  //       await videoPlayerController.play();
+  //     });
+  //     return true;
+  //   } catch (e, d) {
+  //     debugPrint("Error while playing video: $e, $d");
+  //   }
+  //   return false;
+  // }
 
   _onPositionChangedListener(Duration remaining) {
     if (widget.onEndAction == null) {
@@ -163,7 +166,7 @@ class VideoExpandedState extends State<VideoExpanded>
             child: widget.testMode
                 ? Container()
                 : FutureBuilder(
-                    future: _initVideo(),
+                    future: videoListener.start(volume: 1, loop: false),
                     builder: (context, snap) {
                       if (snap.hasError) {
                         // log error

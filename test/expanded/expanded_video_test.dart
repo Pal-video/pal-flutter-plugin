@@ -21,6 +21,8 @@ void main() {
     );
     await tester.pumpWidget(app);
     await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
   });
 
   group('onSkip is null', () {
@@ -36,11 +38,16 @@ void main() {
       );
       await tester.pumpWidget(app);
       await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
     }
 
     testWidgets('onSkip is not visible', (WidgetTester tester) async {
       await beforeEach(tester);
       expect(find.text("SKIP"), findsNothing);
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
     });
   });
 
@@ -69,12 +76,17 @@ void main() {
       // pump app
       await tester.pumpWidget(app);
       await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
     }
 
     testWidgets('onSkip is visible, skip text is visible',
         (WidgetTester tester) async {
       await beforeEach(tester);
       expect(find.text("SKIP VIDEO"), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
     });
 
     testWidgets('volume is at 100, looping is false',
@@ -87,6 +99,9 @@ void main() {
 
       expect(videoController.value.volume, 1.0);
       expect(videoController.value.isLooping, isFalse);
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
     });
 
     testWidgets(
@@ -102,6 +117,9 @@ void main() {
 
       await tester.pump();
       expect(hasEnd, isTrue);
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
     });
   });
 }

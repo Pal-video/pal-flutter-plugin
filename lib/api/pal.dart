@@ -95,7 +95,13 @@ class Pal {
 
   Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {}
 
-  Future<void> _onVideoEnded(PalVideoTrigger trigger) async {}
+  Future<void> _onVideoEnded(PalVideoTrigger trigger) async {
+    print("*************");
+    print("*************");
+    print("_onVideoEnded");
+    print("*************");
+    print("*************");
+  }
 
   Future<void> _onVideoSkipped(PalVideoTrigger trigger) async {
     final event = VideoTriggerEvent(

@@ -5,3 +5,10 @@ T findWidget<T>() => find
     .evaluate() //
     .first
     .widget as T;
+
+T findNWidget<T>(int n) => find
+    .byType(T)
+    .evaluate() //
+    .toList()
+    .elementAt(n)
+    .widget as T;

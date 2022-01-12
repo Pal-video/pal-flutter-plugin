@@ -59,5 +59,8 @@ void main() {
     miniature.onTap();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(VideoExpanded), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
   });
 }
