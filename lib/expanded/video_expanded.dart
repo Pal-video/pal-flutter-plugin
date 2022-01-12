@@ -101,29 +101,11 @@ class VideoExpandedState extends State<VideoExpanded>
 
   @override
   void dispose() {
-    super.dispose();
     videoListener.dispose();
     _contentFadeController.dispose();
     _layoutFadeController.dispose();
+    super.dispose();
   }
-
-  // Future<bool> _initVideo() async {
-  //   try {
-  //     await videoPlayerController.initialize();
-  //     await videoPlayerController.setLooping(false);
-  //     await videoPlayerController.setVolume(1);
-  //     await videoPlayerController.seekTo(Duration.zero);
-  //     videoListener.init();
-  //     await _layoutFadeController.forward();
-  //     await Future.delayed(const Duration(milliseconds: 500), () async {
-  //       await videoPlayerController.play();
-  //     });
-  //     return true;
-  //   } catch (e, d) {
-  //     debugPrint("Error while playing video: $e, $d");
-  //   }
-  //   return false;
-  // }
 
   _onPositionChangedListener(Duration remaining) {
     if (widget.onEndAction == null) {
@@ -138,9 +120,10 @@ class VideoExpandedState extends State<VideoExpanded>
 
   void _close([Intent? intent]) {
     if (widget.close != null) {
-      _layoutFadeController //
-          .reverse() //
-          .then((_) => widget.close!());
+      videoListener.pause();
+      _layoutFadeController.reverse().then((_) {
+        widget.close!();
+      });
     }
   }
 

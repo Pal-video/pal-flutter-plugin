@@ -203,9 +203,9 @@ void main() {
       expect(resultEvents.length, 2);
       final event_1 = VideoTriggerEvent.fromJson(resultEvents[0]);
       final event_2 = VideoTriggerEvent.fromJson(resultEvents[1]);
-      expect(event_1.type, VideoTriggerEvents.min_video_open);
+      expect(event_1.type, VideoTriggerEvents.minVideoOpen);
       expect(event_1.time, isNotNull);
-      expect(event_2.type, VideoTriggerEvents.video_skip);
+      expect(event_2.type, VideoTriggerEvents.videoSkip);
       expect(event_2.time, isNotNull);
     },
   );
@@ -249,8 +249,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.byType(ChoiceWidget), findsNWidgets(3));
       await tester.tap(find.byType(ChoiceWidget).first);
-
       await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+
       final capturedCall = verify(httpClient.post(
         Uri.parse('/triggers/3682638A'),
         body: captureAnyNamed("body"),
@@ -259,7 +260,10 @@ void main() {
       expect(resultEvents, isNotNull);
       expect(resultEvents.length, 2);
       final event_1 = VideoTriggerEvent.fromJson(resultEvents[0]);
-      expect(event_1.type, VideoTriggerEvents.min_video_open);
+      final event_2 = VideoTriggerEvent.fromJson(resultEvents[1]);
+      expect(event_1.type, VideoTriggerEvents.minVideoOpen);
+      expect(event_2.type, VideoTriggerEvents.answer);
+      expect(event_2.args!['answer'], 'a');
     },
   );
 }

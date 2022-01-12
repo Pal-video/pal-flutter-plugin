@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 enum VideoTriggerEvents {
-  video_skip,
-  min_video_open,
+  videoSkip,
+  minVideoOpen,
+  answer,
 }
 
 // TODO deviceId, userId, or create a sessionId to sync these ???
@@ -15,20 +16,32 @@ enum VideoTriggerEvents {
 class VideoTriggerEvent {
   VideoTriggerEvents type;
   DateTime time;
+  Map<String, dynamic>? args;
 
   VideoTriggerEvent({
     required this.time,
     required this.type,
+    this.args,
   });
+
+  factory VideoTriggerEvent.singleChoice(String choiceId) => VideoTriggerEvent(
+        time: DateTime.now(),
+        type: VideoTriggerEvents.answer,
+        args: <String, dynamic>{
+          'answer': choiceId,
+        },
+      );
 
   VideoTriggerEvent copyWith({
     String? videoId,
     DateTime? time,
     VideoTriggerEvents? type,
+    Map<String, dynamic>? args,
   }) {
     return VideoTriggerEvent(
       time: time ?? this.time,
       type: type ?? this.type,
+      args: args ?? this.args,
     );
   }
 
@@ -36,12 +49,14 @@ class VideoTriggerEvent {
     return {
       'time': time.millisecondsSinceEpoch,
       'type': type.name,
+      'args': args,
     };
   }
 
   factory VideoTriggerEvent.fromMap(Map<String, dynamic> map) {
     return VideoTriggerEvent(
         time: DateTime.fromMillisecondsSinceEpoch(map['time']),
+        args: map['args'],
         type: parseType(map['type']));
   }
 

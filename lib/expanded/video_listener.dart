@@ -54,6 +54,7 @@ class VideoListener {
 
   dispose() {
     controller.removeListener(onPositionChangedListener);
+    controller.dispose();
   }
 
   onPositionChangedListener() async {
@@ -73,5 +74,9 @@ class VideoListener {
     } catch (e, d) {
       debugPrint("Error while fetching duration: $e, $d");
     }
+  }
+
+  Future<void> pause() async {
+    await controller.pause();
   }
 }

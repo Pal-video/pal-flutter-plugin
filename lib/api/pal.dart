@@ -88,25 +88,23 @@ class Pal {
   Future<void> _onVideoExpand(PalVideoTrigger trigger) async {
     final event = VideoTriggerEvent(
       time: DateTime.now(),
-      type: VideoTriggerEvents.min_video_open,
+      type: VideoTriggerEvents.minVideoOpen,
     );
     _triggeredEventApi!.save(trigger.id, event);
   }
 
-  Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {}
-
-  Future<void> _onVideoEnded(PalVideoTrigger trigger) async {
-    print("*************");
-    print("*************");
-    print("_onVideoEnded");
-    print("*************");
-    print("*************");
+  Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {
+    final event = VideoTriggerEvent.singleChoice(choice.id);
+    _triggeredEventApi!.save(trigger.id, event);
+    _triggeredEventApi!.send();
   }
+
+  Future<void> _onVideoEnded(PalVideoTrigger trigger) async {}
 
   Future<void> _onVideoSkipped(PalVideoTrigger trigger) async {
     final event = VideoTriggerEvent(
       time: DateTime.now(),
-      type: VideoTriggerEvents.video_skip,
+      type: VideoTriggerEvents.videoSkip,
     );
     _triggeredEventApi!.save(trigger.id, event);
     _triggeredEventApi!.send();
