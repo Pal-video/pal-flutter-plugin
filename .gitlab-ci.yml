@@ -1,0 +1,33 @@
+stages:
+  - Setup
+  - Test
+
+include:
+  - project: "apparence/apparence-ci-templates"
+    file:
+      - "flutter.yaml"
+      - "fastlane.yaml"
+      - "mail.yaml"
+    ref: "master"
+
+###########
+## SETUP ##
+###########
+setup:
+  stage: Setup
+  extends: .setup
+
+read_version:
+  stage: Setup
+  extends: .read-build-version
+
+###########
+## TEST  ##
+###########
+test:
+  stage: Test
+  extends: .tests-stable
+
+code_quality_check:
+  stage: Test
+  extends: .code_quality

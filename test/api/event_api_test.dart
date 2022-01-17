@@ -81,8 +81,8 @@ void main() {
   });
 
   group(''' 
-  init session returns a sessionId from localstorage
-  ''', () {
+    init session returns a sessionId from localstorage
+    ''', () {
     late Pal pal;
     HttpClient httpClient = MockHttpClient();
     SharedPreferences sharedPreferencesMock = MockSharedPreferences();
