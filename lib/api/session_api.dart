@@ -1,5 +1,4 @@
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
 import 'package:pal/api/http_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +29,7 @@ class PalSessionApi {
       body: {},
     );
     _session = PalSession.fromJson(res.body);
+    await sharedPreferences.setString(_kSessionId, _session!.id);
   }
 
   PalSession get session => _session!;

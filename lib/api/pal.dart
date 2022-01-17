@@ -43,7 +43,7 @@ class Pal {
 
   static final instance = Pal(sdk: PalPlugin.instance);
 
-  initialize(PalOptions palOptions) async {
+  Future<void> initialize(PalOptions palOptions) async {
     _httpClient ??= HttpClient.create(_serverUrl, palOptions.apiKey);
     _eventApi ??= PalEventApi(_httpClient!);
     _sessionApi ??= PalSessionApi(
@@ -52,7 +52,7 @@ class Pal {
     );
     _triggeredEventApi ??= PalTriggeredEventApi(_httpClient!);
 
-    _sessionApi!.initSession();
+    await _sessionApi!.initSession();
   }
 
   Future<void> logLogin(BuildContext buildContext) {

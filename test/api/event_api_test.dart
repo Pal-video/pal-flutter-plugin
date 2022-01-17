@@ -35,8 +35,7 @@ void main() {
       pal = Pal(
           httpClient: httpClient,
           sdk: PalPlugin.instance,
-          sessionApi: PalSessionApi(httpClient, sharedPreferencesMock))
-        ..initialize(PalOptions(apiKey: 'apiKey'));
+          sessionApi: PalSessionApi(httpClient, sharedPreferencesMock));
     }
 
     tearDown(() {
@@ -45,7 +44,10 @@ void main() {
     });
 
     testWidgets(
-      'should create a session from remote server',
+      '''
+      should create a session from remote server,
+      session is saved in sharedpreferences
+      ''',
       (WidgetTester tester) async {
         when(httpClient.post(
           Uri.parse('/sessions'),
@@ -57,9 +59,14 @@ void main() {
               ),
             ));
         when(sharedPreferencesMock.getString('sessionId')).thenReturn(null);
+        when(sharedPreferencesMock.setString('sessionId', '803238203D'))
+            .thenAnswer((_) => Future.value(true));
         beforeEach();
+        await pal.initialize(PalOptions(apiKey: 'apiKey'));
 
         verify(sharedPreferencesMock.getString('sessionId')).called(1);
+        verify(sharedPreferencesMock.setString('sessionId', '803238203D'))
+            .called(1);
       },
     );
   });
