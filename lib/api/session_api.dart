@@ -1,6 +1,7 @@
-import 'package:device_info_plus/device_info_plus.dart';
+// import 'package:device_info_plus/device_info_plus.dart';
 import 'package:pal/api/http_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 
 import 'models/session.dart';
 
@@ -12,11 +13,14 @@ class PalSessionApi {
   /// the current user session
   PalSession? _session;
 
-  final _deviceInfoPlugin = DeviceInfoPlugin();
+  // final DeviceInfoPlugin deviceInfoPlugin;
 
   final SharedPreferences sharedPreferences;
 
-  PalSessionApi(this._httpClient, this.sharedPreferences);
+  PalSessionApi(
+    this._httpClient,
+    this.sharedPreferences,
+  );
 
   Future<void> initSession() async {
     final localSessionId = sharedPreferences.getString(_kSessionId);
@@ -26,7 +30,9 @@ class PalSessionApi {
     }
     final res = await _httpClient.post(
       Uri.parse('/sessions'),
-      body: {},
+      body: PalSessionRequest.create(
+        platform: defaultTargetPlatform.name,
+      ).toMap(),
     );
     _session = PalSession.fromJson(res.body);
     await sharedPreferences.setString(_kSessionId, _session!.id);

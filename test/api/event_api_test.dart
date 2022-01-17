@@ -9,6 +9,7 @@ import 'package:pal/api/models/author.dart';
 import 'package:pal/api/models/event.dart';
 import 'package:pal/api/http_client.dart';
 import 'package:pal/api/models/pal_options.dart';
+import 'package:pal/api/models/session.dart';
 import 'package:pal/api/models/survey.dart';
 import 'package:pal/api/models/video_trigger.dart';
 import 'package:pal/api/models/video_trigger_event.dart';
@@ -64,9 +65,17 @@ void main() {
         beforeEach();
         await pal.initialize(PalOptions(apiKey: 'apiKey'));
 
+        final createSession = verify(httpClient.post(
+          Uri.parse('/sessions'),
+          body: captureAnyNamed('body'),
+        )).captured;
         verify(sharedPreferencesMock.getString('sessionId')).called(1);
         verify(sharedPreferencesMock.setString('sessionId', '803238203D'))
             .called(1);
+        final createSessionReq = PalSessionRequest.fromMap(createSession[0]);
+        // session creation embedd current client context
+        expect(createSessionReq.framework, "FLUTTER");
+        expect(createSessionReq.platform, "android");
       },
     );
   });
