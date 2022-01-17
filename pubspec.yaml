@@ -7,9 +7,11 @@ environment:
   flutter: ">=2.5.0"
 
 dependencies:
+  device_info_plus: ^3.2.1
   flutter:
     sdk: flutter
   http: ^0.13.4
+  shared_preferences: ^2.0.12
   video_player: ^2.2.10
 
 dev_dependencies:

@@ -16,17 +16,24 @@ enum VideoTriggerEvents {
 class VideoTriggerEvent {
   VideoTriggerEvents type;
   DateTime time;
+  String sessionId;
   Map<String, dynamic>? args;
 
   VideoTriggerEvent({
     required this.time,
     required this.type,
+    required this.sessionId,
     this.args,
   });
 
-  factory VideoTriggerEvent.singleChoice(String choiceId) => VideoTriggerEvent(
+  factory VideoTriggerEvent.singleChoice(
+    String choiceId,
+    String sessionId,
+  ) =>
+      VideoTriggerEvent(
         time: DateTime.now(),
         type: VideoTriggerEvents.answer,
+        sessionId: sessionId,
         args: <String, dynamic>{
           'answer': choiceId,
         },
@@ -35,11 +42,13 @@ class VideoTriggerEvent {
   VideoTriggerEvent copyWith({
     String? videoId,
     DateTime? time,
+    String? sessionId,
     VideoTriggerEvents? type,
     Map<String, dynamic>? args,
   }) {
     return VideoTriggerEvent(
       time: time ?? this.time,
+      sessionId: sessionId ?? this.sessionId,
       type: type ?? this.type,
       args: args ?? this.args,
     );
@@ -50,6 +59,7 @@ class VideoTriggerEvent {
       'time': time.millisecondsSinceEpoch,
       'type': type.name,
       'args': args,
+      'sessionId': sessionId,
     };
   }
 
@@ -57,6 +67,7 @@ class VideoTriggerEvent {
     return VideoTriggerEvent(
         time: DateTime.fromMillisecondsSinceEpoch(map['time']),
         args: map['args'],
+        sessionId: map['sessionId'],
         type: parseType(map['type']));
   }
 
