@@ -103,33 +103,6 @@ class _SingleChoiceFormState extends State<SingleChoiceForm>
   }
 }
 
-class FlowItemDelegate extends FlowDelegate {
-  FlowItemDelegate({required this.animation}) : super(repaint: animation);
-
-  final Animation<double> animation;
-
-  @override
-  bool shouldRepaint(FlowItemDelegate oldDelegate) {
-    return animation != oldDelegate.animation;
-  }
-
-  @override
-  void paintChildren(FlowPaintingContext context) {
-    double dx = 0.0;
-    for (int i = 0; i < context.childCount; ++i) {
-      dx = context.getChildSize(i)!.height * i;
-      context.paintChild(
-        i,
-        transform: Matrix4.translationValues(
-          0,
-          dx * animation.value,
-          0,
-        ),
-      );
-    }
-  }
-}
-
 class ChoiceWidget extends StatelessWidget {
   final Choice choice;
   final Color bgColor, onTapColor;
