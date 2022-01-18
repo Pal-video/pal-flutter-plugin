@@ -21,16 +21,6 @@ class PalEvent {
     required this.event,
     this.attrs,
   });
-
-  PalEvent copyWith({
-    PalEvents? event,
-    Map<String, dynamic>? attrs,
-  }) {
-    return PalEvent(
-      event: event ?? this.event,
-      attrs: attrs ?? this.attrs,
-    );
-  }
 }
 
 class PalEventContext extends PalEvent {

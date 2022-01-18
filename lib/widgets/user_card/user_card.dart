@@ -40,31 +40,31 @@ class UserCard extends StatefulWidget {
         ),
       );
 
-  factory UserCard.grey({
-    required String userName,
-    required String companyTitle,
-    required String? imageUrl,
-  }) =>
-      UserCard(
-        bgColor: const Color(0xFF2D3645),
-        imageUrl: imageUrl,
-        userName: Text(
-          userName,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-        companyTitle: Text(
-          companyTitle,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w200,
-            fontSize: 14,
-          ),
-        ),
-      );
+  // factory UserCard.grey({
+  //   required String userName,
+  //   required String companyTitle,
+  //   required String? imageUrl,
+  // }) =>
+  //     UserCard(
+  //       bgColor: const Color(0xFF2D3645),
+  //       imageUrl: imageUrl,
+  //       userName: Text(
+  //         userName,
+  //         style: const TextStyle(
+  //           color: Colors.white,
+  //           fontWeight: FontWeight.bold,
+  //           fontSize: 18,
+  //         ),
+  //       ),
+  //       companyTitle: Text(
+  //         companyTitle,
+  //         style: const TextStyle(
+  //           color: Colors.white,
+  //           fontWeight: FontWeight.w200,
+  //           fontSize: 14,
+  //         ),
+  //       ),
+  //     );
 
   @override
   _UserCardState createState() => _UserCardState();

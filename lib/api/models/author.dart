@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 
 class Author {
   String userName;
@@ -10,18 +10,6 @@ class Author {
     required this.companyTitle,
     this.avatarUrl,
   });
-
-  Author copyWith({
-    String? userName,
-    String? companyTitle,
-    String? avatarUrl,
-  }) {
-    return Author(
-      userName: userName ?? this.userName,
-      companyTitle: companyTitle ?? this.companyTitle,
-      avatarUrl: avatarUrl ?? this.avatarUrl,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,25 +27,21 @@ class Author {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  // String toJson() => json.encode(toMap());
 
-  factory Author.fromJson(String source) => Author.fromMap(json.decode(source));
+  // factory Author.fromJson(String source) => Author.fromMap(json.decode(source));
 
-  @override
-  String toString() =>
-      'Author(userName: $userName, companyTitle: $companyTitle, avatarUrl: $avatarUrl)';
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  //   return other is Author &&
+  //       other.userName == userName &&
+  //       other.companyTitle == companyTitle &&
+  //       other.avatarUrl == avatarUrl;
+  // }
 
-    return other is Author &&
-        other.userName == userName &&
-        other.companyTitle == companyTitle &&
-        other.avatarUrl == avatarUrl;
-  }
-
-  @override
-  int get hashCode =>
-      userName.hashCode ^ companyTitle.hashCode ^ avatarUrl.hashCode;
+  // @override
+  // int get hashCode =>
+  //     userName.hashCode ^ companyTitle.hashCode ^ avatarUrl.hashCode;
 }

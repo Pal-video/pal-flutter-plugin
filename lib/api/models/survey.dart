@@ -10,16 +10,6 @@ class ChoiceItem {
     required this.text,
   });
 
-  ChoiceItem copyWith({
-    String? id,
-    String? text,
-  }) {
-    return ChoiceItem(
-      id: id ?? this.id,
-      text: text ?? this.text,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -34,23 +24,23 @@ class ChoiceItem {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  // String toJson() => json.encode(toMap());
 
-  factory ChoiceItem.fromJson(String source) =>
-      ChoiceItem.fromMap(json.decode(source));
+  // factory ChoiceItem.fromJson(String source) =>
+  //     ChoiceItem.fromMap(json.decode(source));
 
-  @override
-  String toString() => 'ChoiceItem(id: $id, text: $text)';
+  // @override
+  // String toString() => 'ChoiceItem(id: $id, text: $text)';
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
 
-    return other is ChoiceItem && other.id == id && other.text == text;
-  }
+  //   return other is ChoiceItem && other.id == id && other.text == text;
+  // }
 
-  @override
-  int get hashCode => id.hashCode ^ text.hashCode;
+  // @override
+  // int get hashCode => id.hashCode ^ text.hashCode;
 }
 
 class Survey {
@@ -61,16 +51,6 @@ class Survey {
     required this.question,
     this.choices,
   });
-
-  Survey copyWith({
-    String? question,
-    List<ChoiceItem>? choices,
-  }) {
-    return Survey(
-      question: question ?? this.question,
-      choices: choices ?? this.choices,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -89,23 +69,23 @@ class Survey {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  // String toJson() => json.encode(toMap());
 
-  factory Survey.fromJson(String source) => Survey.fromMap(json.decode(source));
+  // factory Survey.fromJson(String source) => Survey.fromMap(json.decode(source));
 
-  @override
-  String toString() => 'Survey(question: $question, choices: $choices)';
+  // @override
+  // String toString() => 'Survey(question: $question, choices: $choices)';
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
+  //   final listEquals = const DeepCollectionEquality().equals;
 
-    return other is Survey &&
-        other.question == question &&
-        listEquals(other.choices, choices);
-  }
+  //   return other is Survey &&
+  //       other.question == question &&
+  //       listEquals(other.choices, choices);
+  // }
 
-  @override
-  int get hashCode => question.hashCode ^ choices.hashCode;
+  // @override
+  // int get hashCode => question.hashCode ^ choices.hashCode;
 }

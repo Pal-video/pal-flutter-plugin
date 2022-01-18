@@ -39,20 +39,20 @@ class VideoTriggerEvent {
         },
       );
 
-  VideoTriggerEvent copyWith({
-    String? videoId,
-    DateTime? time,
-    String? sessionId,
-    VideoTriggerEvents? type,
-    Map<String, dynamic>? args,
-  }) {
-    return VideoTriggerEvent(
-      time: time ?? this.time,
-      sessionId: sessionId ?? this.sessionId,
-      type: type ?? this.type,
-      args: args ?? this.args,
-    );
-  }
+  // VideoTriggerEvent copyWith({
+  //   String? videoId,
+  //   DateTime? time,
+  //   String? sessionId,
+  //   VideoTriggerEvents? type,
+  //   Map<String, dynamic>? args,
+  // }) {
+  //   return VideoTriggerEvent(
+  //     time: time ?? this.time,
+  //     sessionId: sessionId ?? this.sessionId,
+  //     type: type ?? this.type,
+  //     args: args ?? this.args,
+  //   );
+  // }
 
   Map<String, dynamic> toMap() {
     return {
@@ -76,18 +76,15 @@ class VideoTriggerEvent {
   factory VideoTriggerEvent.fromJson(String source) =>
       VideoTriggerEvent.fromMap(json.decode(source));
 
-  @override
-  String toString() => 'VideoTriggerEvent(time: $time)';
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  //   return other is VideoTriggerEvent && other.time == time;
+  // }
 
-    return other is VideoTriggerEvent && other.time == time;
-  }
-
-  @override
-  int get hashCode => type.hashCode ^ time.hashCode;
+  // @override
+  // int get hashCode => type.hashCode ^ time.hashCode;
 
   static VideoTriggerEvents parseType(String data) {
     final search =
