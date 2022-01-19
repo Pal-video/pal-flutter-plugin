@@ -58,12 +58,48 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Demo - Happy'),
+              title: const Text('Demo - MonsuiviDiet'),
+              subtitle: const Text(
+                'Single choice - Video then request user feedback',
+              ),
+              leading: const Icon(Icons.video_camera_back),
+              onTap: () => _showSingleChoiceDemoPopup(),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Demo - MyLapto'),
+              subtitle: const Text(
+                'Single choice - Video then request user feedback',
+              ),
+              leading: const Icon(Icons.video_camera_back),
+              onTap: () => _showSingleChoiceDemoPopup(),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Demo - WeAreCaring'),
+              subtitle: const Text(
+                'Single choice - Video then request user feedback',
+              ),
+              leading: const Icon(Icons.video_camera_back),
+              onTap: () => _showSingleChoiceDemoPopup(),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Demo - Hapii'),
               subtitle: const Text(
                 'Single choice - Video then request user feedback',
               ),
               leading: const Icon(Icons.video_camera_back),
               onTap: () => _showHappyDemoPopup(),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Demo - Meeriad'),
+              subtitle: const Text(
+                'Single choice - Video then request user feedback',
+              ),
+              leading: const Icon(Icons.video_camera_back),
+              onTap: () => _showMeeriadDemoPopup(),
             ),
           ],
         ),
@@ -94,12 +130,29 @@ class _HomePageState extends State<HomePage> {
       context: context,
       videoAsset: 'assets/happy.mp4',
       userName: 'David',
-      companyTitle: 'Product manager - Hapii',
+      companyTitle: 'Product manager - Happy',
       question: 'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
       choices: const [
         Choice(id: 'a', text: 'Gestion des facturations'),
         Choice(id: 'b', text: 'Système de paiement'),
         Choice(id: 'c', text: 'Signature électronique'),
+      ],
+      onTapChoice: (choice) {},
+      onVideoEndAction: () {},
+    );
+  }
+
+  Future _showMeeriadDemoPopup() {
+    return PalPlugin.instance.showSingleChoiceSurvey(
+      context: context,
+      videoAsset: 'assets/meeriad.mp4',
+      userName: 'David',
+      companyTitle: 'Product manager - Meeriad',
+      question: 'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
+      choices: const [
+        Choice(id: 'a', text: 'La gestion des challenges'),
+        Choice(id: 'b', text: 'L\'ajout de thématiques'),
+        Choice(id: 'c', text: 'L\'amélioration des événements'),
       ],
       onTapChoice: (choice) {},
       onVideoEndAction: () {},

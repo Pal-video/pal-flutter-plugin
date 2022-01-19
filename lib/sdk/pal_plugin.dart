@@ -144,7 +144,7 @@ class PalPlugin {
             onSkip: onSkip,
             child: child,
             close: close,
-            bgColor: const Color(0xFF191E26).withOpacity(.9),
+            bgColor: const Color(0xFF191E26).withOpacity(.82),
           ),
         ),
       ),
