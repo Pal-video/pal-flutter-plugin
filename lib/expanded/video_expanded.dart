@@ -13,7 +13,6 @@ const defaultBgColor = Color(0xFF191E26);
 class VideoExpanded extends StatefulWidget {
   final String videoAsset;
   final Function? onSkip;
-  final String? onSkipText;
   final String userName;
   final String companyTitle;
   final String? avatarUrl;
@@ -29,7 +28,6 @@ class VideoExpanded extends StatefulWidget {
     Key? key,
     required this.videoAsset,
     this.onSkip,
-    this.onSkipText,
     required this.userName,
     required this.companyTitle,
     this.triggerEndRemaining = const Duration(seconds: 0),
@@ -197,14 +195,7 @@ class VideoExpandedState extends State<VideoExpanded>
                 key: const ValueKey("palVideoSkip"),
                 style: raisedButtonStyle,
                 onPressed: _skipVideo,
-                child: Text(
-                  widget.onSkipText ?? 'SKIP',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14,
-                  ),
-                ),
+                child: const Icon(Icons.close),
               ),
             ),
           Positioned(
@@ -238,10 +229,9 @@ class VideoExpandedState extends State<VideoExpanded>
   ButtonStyle get raisedButtonStyle => ElevatedButton.styleFrom(
         onPrimary: Colors.white,
         primary: Colors.black,
-        minimumSize: const Size(88, 36),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
       );
 }

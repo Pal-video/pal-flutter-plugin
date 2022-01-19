@@ -44,7 +44,7 @@ void main() {
 
     testWidgets('onSkip is not visible', (WidgetTester tester) async {
       await beforeEach(tester);
-      expect(find.text("SKIP"), findsNothing);
+      expect(find.byType(ElevatedButton), findsNothing);
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
@@ -62,7 +62,6 @@ void main() {
             videoPlayerController: videoController,
             videoAsset: 'assets/me.mp4',
             onSkip: () => {},
-            onSkipText: "SKIP VIDEO",
             companyTitle: "CEO",
             userName: 'Marty Mcfly',
             onEndAction: () => hasEnd = true,
@@ -83,7 +82,7 @@ void main() {
     testWidgets('onSkip is visible, skip text is visible',
         (WidgetTester tester) async {
       await beforeEach(tester);
-      expect(find.text("SKIP VIDEO"), findsOneWidget);
+      expect(find.byType(ElevatedButton), findsOneWidget);
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));

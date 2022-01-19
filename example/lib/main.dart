@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pal/pal.dart';
-import 'package:pal/surveys/single_choice/single_choice.dart';
-// import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,9 +33,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 500), () async {
-      _showSingleChoicePopup();
-    });
+    // Future.delayed(const Duration(milliseconds: 500), () async {
+    //   _showSingleChoiceDemoPopup();
+    // });
   }
 
   @override
@@ -49,13 +47,23 @@ class _HomePageState extends State<HomePage> {
         ),
         body: ListView(
           children: [
+            const SizedBox(height: 16),
             ListTile(
-              title: const Text('Pal - feedback'),
-              subtitle: const Text('Video then request user feedback'),
+              title: const Text('Demo - Single choice'),
+              subtitle: const Text(
+                'Single choice - Video then request user feedback',
+              ),
               leading: const Icon(Icons.video_camera_back),
-              onTap: () {
-                _showSingleChoicePopup();
-              },
+              onTap: () => _showSingleChoiceDemoPopup(),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Demo - Happy'),
+              subtitle: const Text(
+                'Single choice - Video then request user feedback',
+              ),
+              leading: const Icon(Icons.video_camera_back),
+              onTap: () => _showHappyDemoPopup(),
             ),
           ],
         ),
@@ -63,7 +71,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future _showSingleChoicePopup() {
+  Future _showSingleChoiceDemoPopup() {
     return PalPlugin.instance.showSingleChoiceSurvey(
       context: context,
       videoAsset: 'assets/me.mp4',
@@ -75,6 +83,23 @@ class _HomePageState extends State<HomePage> {
         Choice(id: 'b', text: 'lorem B'),
         Choice(id: 'c', text: 'lorem C'),
         Choice(id: 'd', text: 'lorem D'),
+      ],
+      onTapChoice: (choice) {},
+      onVideoEndAction: () {},
+    );
+  }
+
+  Future _showHappyDemoPopup() {
+    return PalPlugin.instance.showSingleChoiceSurvey(
+      context: context,
+      videoAsset: 'assets/happy.mp4',
+      userName: 'David',
+      companyTitle: 'Product manager - Hapii',
+      question: 'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
+      choices: const [
+        Choice(id: 'a', text: 'Gestion des facturations'),
+        Choice(id: 'b', text: 'Système de paiement'),
+        Choice(id: 'c', text: 'Signature électronique'),
       ],
       onTapChoice: (choice) {},
       onVideoEndAction: () {},
