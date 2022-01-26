@@ -54,6 +54,33 @@ class PalPlugin {
     );
   }
 
+  Future<void> showVideoOnly({
+    required BuildContext context,
+    required String videoAsset,
+    required String userName,
+    required String companyTitle,
+    String? avatarUrl,
+    Function? onExpand,
+    Function? onClose,
+    Function? onSkip,
+  }) async {
+    showVideoAsset(
+        context: context,
+        videoAsset: videoAsset,
+        userName: userName,
+        companyTitle: companyTitle,
+        avatarUrl: avatarUrl,
+        onVideoEndAction: () {
+          _overlayHelper.popHelper();
+          if (onClose != null) {
+            onClose();
+          }
+        },
+        onSkip: onSkip,
+        onClose: onClose,
+        onExpand: onExpand);
+  }
+
   Future<void> showVideoAsset({
     required BuildContext context,
     required String videoAsset,

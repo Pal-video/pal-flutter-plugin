@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pal/pal.dart';
+import 'package:pal_plugin_example/page_fake.dart';
 
 void main() {
   runApp(const MyApp());
@@ -101,6 +102,15 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.video_camera_back),
               onTap: () => _showMeeriadDemoPopup(),
             ),
+            const Divider(),
+            ListTile(
+              title: const Text('Demo - Fridaa'),
+              subtitle: const Text(
+                'App immersion',
+              ),
+              leading: const Icon(Icons.remove_red_eye),
+              onTap: () => _showFridaDemo(),
+            ),
           ],
         ),
       ),
@@ -156,6 +166,40 @@ class _HomePageState extends State<HomePage> {
       ],
       onTapChoice: (choice) {},
       onVideoEndAction: () {},
+    );
+  }
+
+  Future _showFridaDemo() async {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => FakePage(
+            assetImgUrl: "assets/background1.jpeg",
+            onTap: () async {
+              await PalPlugin.instance.showSingleChoiceSurvey(
+                context: context,
+                videoAsset: 'assets/fridaa.mp4',
+                userName: 'David',
+                companyTitle: 'Product manager - Fridaa',
+                question:
+                    'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
+                choices: const [
+                  Choice(id: 'a', text: 'Ajouter des liens d’annonces'),
+                  Choice(id: 'b', text: 'Créer un dossier de demande de prêt '),
+                  Choice(id: 'c', text: 'Gestion des propositions faites'),
+                ],
+                onTapChoice: (choice) {},
+                onVideoEndAction: () {},
+              );
+            },
+            onTapBottom: () async {
+              await PalPlugin.instance.showVideoOnly(
+                context: context,
+                videoAsset: 'assets/fridaa.mp4',
+                userName: 'David',
+                companyTitle: 'Product manager - Fridaa',
+              );
+            }),
+      ),
     );
   }
 }

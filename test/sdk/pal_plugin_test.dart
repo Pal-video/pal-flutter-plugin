@@ -4,6 +4,8 @@ import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/miniature/video_miniature.dart';
 import 'package:pal/sdk/pal_plugin.dart';
 
+import '../test_utils.dart';
+
 void main() {
   BuildContext? _context;
 
@@ -56,6 +58,27 @@ void main() {
     await tester.ensureVisible(find.byType(VideoMiniature));
     final miniature =
         find.byType(VideoMiniature).evaluate().first.widget as VideoMiniature;
+    miniature.onTap();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.byType(VideoExpanded), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
+  });
+
+  testWidgets(
+      'call showVideoOnly, tap on miniature => expanded video is shown then closed',
+      (WidgetTester tester) async {
+    await beforeEach(tester);
+    await PalPlugin.instance.showVideoOnly(
+      context: _context!,
+      videoAsset: 'assets/me.mp4',
+      userName: 'Gautier',
+      companyTitle: 'Apparence.io CTO',
+    );
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.ensureVisible(find.byType(VideoMiniature));
+    final miniature = findWidget<VideoMiniature>();
     miniature.onTap();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(VideoExpanded), findsOneWidget);
