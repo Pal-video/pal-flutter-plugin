@@ -173,32 +173,33 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => FakePage(
-            assetImgUrl: "assets/background1.jpeg",
-            onTap: () async {
-              await PalPlugin.instance.showSingleChoiceSurvey(
-                context: context,
-                videoAsset: 'assets/fridaa.mp4',
-                userName: 'David',
-                companyTitle: 'Product manager - Fridaa',
-                question:
-                    'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
-                choices: const [
-                  Choice(id: 'a', text: 'Ajouter des liens d’annonces'),
-                  Choice(id: 'b', text: 'Créer un dossier de demande de prêt '),
-                  Choice(id: 'c', text: 'Gestion des propositions faites'),
-                ],
-                onTapChoice: (choice) {},
-                onVideoEndAction: () {},
-              );
-            },
-            onTapBottom: () async {
-              await PalPlugin.instance.showVideoOnly(
-                context: context,
-                videoAsset: 'assets/fridaa.mp4',
-                userName: 'David',
-                companyTitle: 'Product manager - Fridaa',
-              );
-            }),
+          assetImgUrl: "assets/background1.jpeg",
+          onTap: () async {
+            await PalPlugin.instance.showSingleChoiceSurvey(
+              context: context,
+              videoAsset: 'assets/fridaa.mp4',
+              userName: 'David',
+              companyTitle: 'Product manager - Fridaa',
+              question:
+                  'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
+              choices: const [
+                Choice(id: 'a', text: 'Ajouter des liens d’annonces'),
+                Choice(id: 'b', text: 'Créer un dossier de demande de prêt '),
+                Choice(id: 'c', text: 'Gestion des propositions faites'),
+              ],
+              onTapChoice: (choice) {},
+              onVideoEndAction: () {},
+            );
+          },
+          onTapBottom: () async {
+            await PalPlugin.instance.showVideoOnly(
+              context: context,
+              videoAsset: 'assets/fridaa.mp4',
+              userName: 'David',
+              companyTitle: 'Product manager - Fridaa',
+            );
+          },
+        ),
       ),
     );
   }
