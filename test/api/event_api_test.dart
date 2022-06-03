@@ -16,7 +16,7 @@ import 'package:pal/api/models/video_trigger_event.dart';
 import 'package:pal/api/pal.dart';
 import 'package:pal/api/session_api.dart';
 import 'package:pal/pal.dart';
-import 'package:pal/surveys/single_choice/single_choice.dart';
+// import 'package:pal/surveys/single_choice/single_choice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../test_utils.dart';
@@ -106,12 +106,12 @@ void main() {
 
     testWidgets(
       '''
-    call setCurrentScreen with name screen1
+    call setCurrentScreen with name screen1, sessionUID
     => send a PalEvent with all attributes
     ''',
       (WidgetTester tester) async {
         beforeEach();
-        when(httpClient.post(Uri.parse('/events'), body: anyNamed('body')))
+        when(httpClient.post(Uri.parse('/eventlogs'), body: anyNamed('body')))
             .thenAnswer((_) => Future.value(Response('', 200)));
         var app = MaterialApp(
           home: Builder(builder: (context) {
@@ -125,12 +125,13 @@ void main() {
         await tester.pump(const Duration(milliseconds: 100));
 
         final capturedCall = verify(httpClient.post(
-          Uri.parse('/events'),
+          Uri.parse('/eventlogs'),
           body: captureAnyNamed("body"),
         )).captured;
         final captureEvent = capturedCall[0];
-        expect(captureEvent['event'], equals(PalEvents.setScreen.name));
-        expect(captureEvent['platform'], equals('android'));
+        expect(captureEvent['name'], equals('screen1'));
+        expect(captureEvent['sessionUId'], equals('803238203D'));
+        expect(captureEvent['type'], equals(PalEvents.setScreen.name));
         expect(
           captureEvent['attrs'],
           equals(
@@ -149,7 +150,7 @@ void main() {
     ''',
       (WidgetTester tester) async {
         beforeEach();
-        when(httpClient.post(Uri.parse('/events'), body: anyNamed('body')))
+        when(httpClient.post(Uri.parse('/eventlogs'), body: anyNamed('body')))
             .thenAnswer((_) => Future.value(Response('', 200)));
         var app = MaterialApp(
           home: Builder(builder: (context) {
@@ -173,7 +174,7 @@ void main() {
     ''',
       (WidgetTester tester) async {
         beforeEach();
-        when(httpClient.post(Uri.parse('/events'), body: anyNamed('body')))
+        when(httpClient.post(Uri.parse('/eventlogs'), body: anyNamed('body')))
             .thenAnswer((_) => Future.value(Response('', 500)));
         var app = MaterialApp(
           home: Builder(builder: (context) {
@@ -199,7 +200,7 @@ void main() {
         beforeEach();
         PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
         when(httpClient.post(
-          Uri.parse('/events'),
+          Uri.parse('/eventlogs'),
           body: anyNamed('body'),
         )).thenAnswer((_) => Future.value(
               Response(
@@ -232,7 +233,7 @@ void main() {
         beforeEach();
         PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
         when(httpClient.post(
-          Uri.parse('/events'),
+          Uri.parse('/eventlogs'),
           body: anyNamed('body'),
         )).thenAnswer((_) => Future.value(Response(
               videoTriggerResponse.toJson(),

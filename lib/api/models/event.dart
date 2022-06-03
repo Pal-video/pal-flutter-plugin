@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pal/api/models/session.dart';
 
 enum PalEvents {
   login,
@@ -11,45 +12,53 @@ enum PalEvents {
 }
 
 class PalEvent {
-  /// the event triggered by the app
-  final PalEvents event;
+  /// name of the event as it is registered on the server
+  final String name;
+
+  /// the event type triggered by the app
+  final PalEvents type;
 
   /// attributes for sending custom event data
   final Map<String, dynamic>? attrs;
 
   const PalEvent({
-    required this.event,
+    required this.name,
+    required this.type,
     this.attrs,
   });
 }
 
 class PalEventContext extends PalEvent {
-  /// current running platform
-  final TargetPlatform platform;
+  /// the current user device session
+  final PalSession session;
 
   const PalEventContext({
-    required this.platform,
+    required this.session,
+    required String name,
     required PalEvents event,
     Map<String, dynamic>? attrs,
   }) : super(
-          event: event,
+          name: name,
+          type: event,
           attrs: attrs,
         );
 
   factory PalEventContext.fromEvent(
+    PalSession session,
     PalEvent palEvent,
-    TargetPlatform platform,
   ) {
     return PalEventContext(
-      event: palEvent.event,
+      session: session,
+      name: palEvent.name,
+      event: palEvent.type,
       attrs: palEvent.attrs,
-      platform: platform,
     );
   }
 
   toJson() => {
-        'event': event.name,
+        'sessionUId': session.id,
+        'name': name,
+        'type': type.name,
         'attrs': attrs != null ? jsonEncode(attrs) : null,
-        'platform': platform.name,
       };
 }

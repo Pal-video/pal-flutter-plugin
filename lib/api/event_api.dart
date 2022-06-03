@@ -1,7 +1,7 @@
 import 'package:pal/api/http_client.dart';
-import 'package:flutter/foundation.dart';
 
 import 'models/event.dart';
+import 'models/session.dart';
 import 'models/video_trigger.dart';
 
 class PalEventApi {
@@ -21,9 +21,12 @@ class PalEventApi {
     throw "not implemented yet";
   }
 
-  Future<PalVideoTrigger?> logCurrentScreen(String name) => _logEvent(
+  Future<PalVideoTrigger?> logCurrentScreen(PalSession session, String name) =>
+      _logEvent(
+        session,
         PalEvent(
-          event: PalEvents.setScreen,
+          name: name,
+          type: PalEvents.setScreen,
           attrs: <String, dynamic>{
             'name': name,
           },
@@ -34,13 +37,11 @@ class PalEventApi {
     throw "not implemented yet";
   }
 
-  Future<PalVideoTrigger?> _logEvent(PalEvent event) async {
-    final eventContext = PalEventContext.fromEvent(
-      event,
-      defaultTargetPlatform,
-    );
+  Future<PalVideoTrigger?> _logEvent(PalSession session, PalEvent event) async {
+    final eventContext = PalEventContext.fromEvent(session, event);
+
     final response = await _httpClient.post(
-      Uri.parse('/events'),
+      Uri.parse('/eventlogs'),
       body: eventContext.toJson(),
     );
     if (response.body.isEmpty) {
