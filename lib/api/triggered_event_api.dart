@@ -3,7 +3,7 @@ import 'models/video_trigger_event.dart';
 
 class PalTriggeredEventApi {
   /// recorded event list before saving these to database
-  Map<String, List<VideoTriggerEvent>> _resultEvents = {};
+  final Map<String, List<VideoTriggerEvent>> _resultEvents = {};
 
   final HttpClient _httpClient;
 

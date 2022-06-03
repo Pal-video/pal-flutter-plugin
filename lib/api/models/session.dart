@@ -50,11 +50,11 @@ String _kFramework = "FLUTTER";
 
 /// request a new session from pal session using this
 class PalSessionRequest {
-  final String framework;
+  final String frameworkType;
   final String platform;
 
   PalSessionRequest({
-    required this.framework,
+    required this.frameworkType,
     required this.platform,
   });
 
@@ -62,21 +62,21 @@ class PalSessionRequest {
     required String platform,
   }) {
     return PalSessionRequest(
-      framework: _kFramework,
+      frameworkType: _kFramework,
       platform: platform,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'framework': framework,
+      'framework': frameworkType,
       'platform': platform,
     };
   }
 
   factory PalSessionRequest.fromMap(Map<String, dynamic> map) {
     return PalSessionRequest(
-      framework: map['framework'] ?? '',
+      frameworkType: map['framework'] ?? '',
       platform: map['platform'] ?? '',
     );
   }
@@ -87,15 +87,15 @@ class PalSessionRequest {
       PalSessionRequest.fromMap(json.decode(source));
 
   @override
-  String toString() => 'PalSessionRequest(framework: $framework)';
+  String toString() => 'PalSessionRequest(framework: $frameworkType)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PalSessionRequest && other.framework == framework;
+    return other is PalSessionRequest && other.frameworkType == frameworkType;
   }
 
   @override
-  int get hashCode => framework.hashCode;
+  int get hashCode => frameworkType.hashCode;
 }

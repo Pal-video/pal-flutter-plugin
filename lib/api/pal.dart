@@ -70,12 +70,26 @@ class Pal {
   Future<void> logCurrentScreen(BuildContext buildContext, String name) async {
     final video = await _eventApi!.logCurrentScreen(name);
     if (video != null) {
-      await _showSurvey(context: buildContext, trigger: video);
+      await _showVideo(context: buildContext, trigger: video);
     }
   }
 
   Future<void> logButtonClick(BuildContext buildContext, String name) {
     throw "not implemented yet";
+  }
+
+  Future<void> _showVideo({
+    required BuildContext context,
+    required PalVideoTrigger trigger,
+  }) {
+    return _palSdk.showVideoOnly(
+      context: context,
+      videoAsset: trigger.video720pUrl,
+      userName: trigger.author.userName,
+      companyTitle: trigger.author.companyTitle,
+      onSkip: () => _onVideoSkipped(trigger),
+      onExpand: () => _onVideoExpand(trigger),
+    );
   }
 
   Future<void> _showSurvey({

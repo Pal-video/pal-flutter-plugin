@@ -13,10 +13,11 @@ class BouncingCircleBg extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BouncingCircleBgState createState() => _BouncingCircleBgState();
+  BouncingCircleBgState createState() => BouncingCircleBgState();
 }
 
-class _BouncingCircleBgState extends State<BouncingCircleBg>
+@visibleForTesting
+class BouncingCircleBgState extends State<BouncingCircleBg>
     with SingleTickerProviderStateMixin {
   late final AnimationController animationController = AnimationController(
     vsync: this,

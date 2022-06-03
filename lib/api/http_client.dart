@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:http_parser/http_parser.dart';
 
 abstract class BaseHttpClient {}
 
@@ -137,35 +136,6 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
         headers: headers,
       ),
     );
-  }
-
-  Future<http.StreamedResponse> multipartImage(
-    url, {
-    Map<String, String>? fields,
-    Map<String, String>? headers,
-    required List<int> fileData,
-    String? imageType,
-    String? filename,
-    required String fileFieldName,
-    String httpMethod = 'POST',
-  }) async {
-    var request =
-        http.MultipartRequest(httpMethod, Uri.parse('$_baseUrl/$url'));
-    if (fields != null) {
-      request.fields.addAll(fields);
-    }
-    if (headers != null) {
-      request.headers.addAll(headers);
-    }
-    var multipartFile = http.MultipartFile.fromBytes(
-      fileFieldName,
-      fileData,
-      filename: filename,
-      contentType: MediaType.parse('image/$imageType'),
-    );
-    request.files.add(multipartFile);
-    request.headers['Authorization'] = 'Bearer $_token';
-    return request.send();
   }
 }
 

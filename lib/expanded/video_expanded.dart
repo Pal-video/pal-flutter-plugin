@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pal/expanded/video_container.dart';
 import 'package:pal/widgets/user_card/user_card.dart';

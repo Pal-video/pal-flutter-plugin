@@ -18,27 +18,30 @@ class SingleChoiceForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SingleChoiceFormState createState() => _SingleChoiceFormState();
+  SingleChoiceFormState createState() => SingleChoiceFormState();
 }
 
-class _SingleChoiceFormState extends State<SingleChoiceForm>
+@visibleForTesting
+class SingleChoiceFormState extends State<SingleChoiceForm>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _animController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-  );
+  AnimationController? _animController;
 
-  late final _tweenAnim = Tween<double>(
-    begin: 0.0,
-    end: 1.0,
-  ).animate(CurvedAnimation(
-    parent: _animController,
-    curve: Curves.easeOut,
-  ));
+  Animation<double>? _tweenAnim;
 
   @override
   void initState() {
     super.initState();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _tweenAnim = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animController!,
+      curve: Curves.easeOut,
+    ));
     // Future.delayed(const Duration(milliseconds: 1000), () {
     //   _animController.forward();
     // });
@@ -46,7 +49,9 @@ class _SingleChoiceFormState extends State<SingleChoiceForm>
 
   @override
   void dispose() {
-    _animController.dispose();
+    if (_animController != null) {
+      _animController!.dispose();
+    }
     super.dispose();
   }
 
@@ -74,8 +79,8 @@ class _SingleChoiceFormState extends State<SingleChoiceForm>
             ),
             const Flexible(
               flex: 0,
-              child: SizedBox(height: 12),
               fit: FlexFit.loose,
+              child: SizedBox(height: 12),
             ),
             Flexible(
               flex: 1,
@@ -93,8 +98,8 @@ class _SingleChoiceFormState extends State<SingleChoiceForm>
             ),
             const Flexible(
               flex: 0,
-              child: SizedBox(height: 16),
               fit: FlexFit.loose,
+              child: SizedBox(height: 16),
             ),
           ],
         ),
