@@ -12,20 +12,20 @@ class PalTriggeredEventApi {
   /// save this event
   /// you have to call [send] to store this in remote server
   Future<void> save(
-    String videoTriggerId,
+    String eventlogId,
     VideoTriggerEvent event,
   ) async {
-    _resultEvents.putIfAbsent(videoTriggerId, () => []);
-    _resultEvents[videoTriggerId]!.add(event);
+    _resultEvents.putIfAbsent(eventlogId, () => []);
+    _resultEvents[eventlogId]!.add(event);
   }
 
   /// calls remote server to store all these events related to
   /// [videoTriggerId] the video id
   Future<void> send() async {
-    for (var videoId in _resultEvents.keys) {
+    for (var eventlogId in _resultEvents.keys) {
       await _httpClient.post(
-        Uri.parse('/triggers/$videoId'),
-        body: _resultEvents[videoId]!.map((e) => e.toJson()).toList(),
+        Uri.parse('/eventlogs/$eventlogId'),
+        body: _resultEvents[eventlogId]!.map((e) => e.toJson()).toList(),
       );
     }
     _resultEvents.clear();
