@@ -76,7 +76,7 @@ class PalSessionRequest {
 
   factory PalSessionRequest.fromMap(Map<String, dynamic> map) {
     return PalSessionRequest(
-      frameworkType: map['framework'] ?? '',
+      frameworkType: map['frameworkType'] ?? '',
       platform: map['platform'] ?? '',
     );
   }

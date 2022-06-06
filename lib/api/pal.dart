@@ -112,7 +112,7 @@ class Pal {
   }) {
     return _palSdk.showVideoOnly(
       context: context,
-      videoAsset: trigger.video720pUrl,
+      videoAsset: trigger.videoUrl,
       userName: trigger.author.userName,
       companyTitle: trigger.author.companyTitle,
       onSkip: () => _onVideoSkipped(trigger),
@@ -126,7 +126,7 @@ class Pal {
   }) {
     return _palSdk.showSingleChoiceSurvey(
       context: context,
-      videoAsset: trigger.video720pUrl,
+      videoAsset: trigger.videoUrl,
       userName: trigger.author.userName,
       companyTitle: trigger.author.companyTitle,
       question: trigger.survey!.question,

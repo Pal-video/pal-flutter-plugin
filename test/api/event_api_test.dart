@@ -55,7 +55,7 @@ void main() {
           body: anyNamed('body'),
         )).thenAnswer((_) => Future.value(
               Response(
-                '{"id": "803238203D"}',
+                '{"uid": "803238203D"}',
                 200,
               ),
             ));
@@ -72,7 +72,8 @@ void main() {
         verify(sharedPreferencesMock.getString('sessionId')).called(1);
         verify(sharedPreferencesMock.setString('sessionId', '803238203D'))
             .called(1);
-        final createSessionReq = PalSessionRequest.fromMap(createSession[0]);
+        final createSessionReq =
+            PalSessionRequest.fromMap(jsonDecode(createSession[0]));
         // session creation embedd current client context
         expect(createSessionReq.frameworkType, "FLUTTER");
         expect(createSessionReq.platform, "android");
@@ -129,11 +130,12 @@ void main() {
           body: captureAnyNamed("body"),
         )).captured;
         final captureEvent = capturedCall[0];
-        expect(captureEvent['name'], equals('screen1'));
-        expect(captureEvent['sessionUId'], equals('803238203D'));
-        expect(captureEvent['type'], equals(PalEvents.setScreen.name));
+        final capturedPalEvent = jsonDecode(captureEvent);
+        expect(capturedPalEvent['name'], equals('screen1'));
+        expect(capturedPalEvent['sessionUId'], equals('803238203D'));
+        expect(capturedPalEvent['type'], equals(PalEvents.setScreen.name));
         expect(
-          captureEvent['attrs'],
+          capturedPalEvent['attrs'],
           equals(
             jsonEncode(<String, dynamic>{
               "name": "screen1",
@@ -344,10 +346,12 @@ void main() {
 PalVideoTrigger _createVideoWithSurvey() {
   final videoTriggerResponse = PalVideoTrigger(
     eventLogId: '3682638A',
+    videoId: 'videoId98309283',
+    creationDate: DateTime.now(),
     // type: PalVideos.survey,
-    video240pUrl: 'http://240purl.com',
-    video480pUrl: 'http://480purl.com',
-    video720pUrl: 'http://720purl.com',
+    videoUrl: 'http://240purl.com',
+    videoThumbUrl: 'http://480purl.com',
+    imgThumbUrl: 'http://720purl.com',
     author: Author(
       companyTitle: 'CEO',
       userName: 'John Mclane',
@@ -364,10 +368,12 @@ PalVideoTrigger _createVideoWithSurvey() {
 PalVideoTrigger _createVideoOnlyAnswer() {
   final videoTriggerResponse = PalVideoTrigger(
     eventLogId: '3682638A',
+    videoId: 'videoId98309283',
+    creationDate: DateTime.now(),
     // type: PalVideos.,
-    video240pUrl: 'http://240purl.com',
-    video480pUrl: 'http://480purl.com',
-    video720pUrl: 'http://720purl.com',
+    videoUrl: 'http://240purl.com',
+    videoThumbUrl: 'http://480purl.com',
+    imgThumbUrl: 'http://720purl.com',
     author: Author(
       companyTitle: 'CEO',
       userName: 'John Mclane',

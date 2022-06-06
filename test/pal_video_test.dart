@@ -119,10 +119,12 @@ class FakePage extends StatelessWidget {
 PalVideoTrigger _createVideoOnlyAnswer() {
   final videoTriggerResponse = PalVideoTrigger(
     eventLogId: '3682638A',
+    videoId: 'videoId98309283',
+    creationDate: DateTime.now(),
     // type: PalVideos.,
-    video240pUrl: 'http://240purl.com',
-    video480pUrl: 'http://480purl.com',
-    video720pUrl: 'http://720purl.com',
+    videoUrl: 'http://240purl.com',
+    videoThumbUrl: 'http://480purl.com',
+    imgThumbUrl: 'http://720purl.com',
     author: Author(
       companyTitle: 'CEO',
       userName: 'John Mclane',

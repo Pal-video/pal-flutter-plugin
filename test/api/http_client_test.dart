@@ -30,7 +30,7 @@ void main() {
         when(httpMockClient.send(any)).thenAnswer((_) =>
             Future<http.StreamedResponse>(() => http.StreamedResponse(
                 Stream.fromFuture(Future<List<int>>(() => [])), 200)));
-        var res = await httpClient.get(Uri.parse('test'));
+        var res = await httpClient.get(Uri.parse('/test'));
         expect(res.statusCode, 200);
         var capturedCall = verify(httpMockClient.send(captureAny)).captured;
         expect(capturedCall[0].url.toString(), equals('$baseUrl/test'));
@@ -49,7 +49,7 @@ void main() {
           when(httpMockClient.send(any)).thenAnswer((_) =>
               Future<http.StreamedResponse>(() => http.StreamedResponse(
                   Stream.fromFuture(Future<List<int>>(() => [])), 200)));
-          var res = await httpClient.post(Uri.parse('test'));
+          var res = await httpClient.post(Uri.parse('/test'));
           expect(res.statusCode, 200);
 
           var capturedCall = verify(httpMockClient.send(captureAny)).captured;
@@ -69,7 +69,7 @@ void main() {
           when(httpMockClient.send(any)).thenAnswer((_) =>
               Future<http.StreamedResponse>(() => http.StreamedResponse(
                   Stream.fromFuture(Future<List<int>>(() => [])), 200)));
-          var res = await httpClient.put(Uri.parse('test'));
+          var res = await httpClient.put(Uri.parse('/test'));
           expect(res.statusCode, 200);
 
           var capturedCall = verify(httpMockClient.send(captureAny)).captured;
@@ -89,7 +89,7 @@ void main() {
         when(httpMockClient.send(any)).thenAnswer((_) =>
             Future<http.StreamedResponse>(() => http.StreamedResponse(
                 Stream.fromFuture(Future<List<int>>(() => [])), 200)));
-        var res = await httpClient.delete(Uri.parse('test'));
+        var res = await httpClient.delete(Uri.parse('/test'));
         expect(res.statusCode, 200);
 
         var capturedCall = verify(httpMockClient.send(captureAny)).captured;
@@ -113,7 +113,7 @@ void main() {
           ),
         );
         try {
-          await httpClient.get(Uri.parse('test'));
+          await httpClient.get(Uri.parse('/test'));
           expect(false, true);
         } catch (e) {
           expect(e is InternalHttpError, equals(true),

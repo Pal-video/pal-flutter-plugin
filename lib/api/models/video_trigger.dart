@@ -38,7 +38,7 @@ class PalVideoTrigger {
     return {
       'eventLogId': eventLogId,
       'videoId': videoId,
-      'creationDate': creationDate,
+      'creationDate': creationDate.toIso8601String(),
       'videoUrl': videoUrl,
       'videoThumbUrl': videoThumbUrl,
       'imgThumbUrl': imgThumbUrl,
@@ -52,14 +52,14 @@ class PalVideoTrigger {
     return PalVideoTrigger(
       eventLogId: map['eventLogId'] ?? '',
       videoId: map['videoId'] ?? '',
-      creationDate: map['creationDate'] ?? '',
+      creationDate: DateTime.parse(map['creationDate']),
       videoUrl: map['videoUrl'] ?? '',
       videoThumbUrl: map['videoThumbUrl'] ?? '',
       imgThumbUrl: map['imgThumbUrl'] ?? '',
       // type: parseType(map['type']),
       author: Author(
-        userName: map['videoSpeakerName'],
-        companyTitle: map['videoSpeakerRole'],
+        userName: map['videoSpeakerName'] ?? '',
+        companyTitle: map['videoSpeakerRole'] ?? '',
       ),
       survey: map['survey'] != null ? Survey.fromMap(map['survey']) : null,
     );
