@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pal_plugin_example">
+    package="io.apparence.example">
    <application
-        android:label="pal_plugin_example"
+        android:label="example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

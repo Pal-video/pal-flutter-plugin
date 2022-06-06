@@ -1,29 +1,29 @@
 import 'dart:convert';
 
 class PalSession {
-  String id;
+  String uid;
 
   PalSession({
-    required this.id,
+    required this.uid,
   });
 
   PalSession copyWith({
     String? id,
   }) {
     return PalSession(
-      id: id ?? this.id,
+      uid: id ?? uid,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'uid': uid,
     };
   }
 
   factory PalSession.fromMap(Map<String, dynamic> map) {
     return PalSession(
-      id: map['id'] ?? '',
+      uid: map['uid'] ?? '',
     );
   }
 
@@ -33,17 +33,17 @@ class PalSession {
       PalSession.fromMap(json.decode(source));
 
   @override
-  String toString() => 'PalSession(id: $id)';
+  String toString() => 'PalSession(uid: $uid)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PalSession && other.id == id;
+    return other is PalSession && other.uid == uid;
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => uid.hashCode;
 }
 
 String _kFramework = "FLUTTER";
@@ -69,7 +69,7 @@ class PalSessionRequest {
 
   Map<String, dynamic> toMap() {
     return {
-      'framework': frameworkType,
+      'frameworkType': frameworkType,
       'platform': platform,
     };
   }

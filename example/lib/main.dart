@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:pal/api/models/pal_options.dart';
+import 'package:pal/api/pal.dart';
 import 'package:pal/pal.dart';
+import 'package:pal/sdk/navigation_observer.dart';
 import 'package:pal_plugin_example/page_fake.dart';
 
-void main() {
+import 'page1.dart';
+
+void main() async {
+  final Pal pal = Pal.instance;
+  WidgetsFlutterBinding.ensureInitialized();
+  await pal.initialize(PalOptions(
+      apiKey:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjBmZTAwNzMwLTc5ZGItNDRkNS04NjNkLTkxMzk5NzRhYmFmNkBwYWwuaW8iLCJzdWIiOiIwZmUwMDczMC03OWRiLTQ0ZDUtODYzZC05MTM5OTc0YWJhZjYiLCJpYXQiOjE2NTEwNjYzNDYsImdyb3VwcyI6WyJQcm9qZWN0Il0sImV4cCI6MTAyOTEwNjYzNDYsImp0aSI6IjFmMmQ0OGRlLTc2MjctNDliOS04OTZjLTEwZmU4OTU2NmQ4NSJ9.KV4iBBl2Yqt8OMDY2cLapQz1udlCQOxYR0_z_ujXVTObi-KKnc0yJPTfAydd9hOJqFpVXSiyulrCRS8HxfspCfigRTebynnDmJzM7tMZ981AYkYqJNre8JNYxY292m2bXf77qrBlSHAMcgYjRyvig6iyVW1p6DyhNuzNDqdu931k-bgm2s5_MJv9UiWq3FB6TG9E2nKBohR-ScCLlFwvbbpEjwed06RFNkzSShYPk5oYRUv0h4d2DxsjaZnyBf3Gv7zzTbdyqAenLf1A3c_0vUTUOrVvYICGzjUbO3kyKtEPGZlQclYenPYCEKCL84px4SlqQYFjB_o876fbD-pUGg'));
+
   runApp(const MyApp());
 }
 
@@ -13,12 +24,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pal plugin demo',
+      navigatorObservers: [PalNavigatorObserver.create()],
       theme: ThemeData(
         primarySwatch: Colors.blue,
         splashFactory: InkSplash.splashFactory,
       ),
-      home: const HomePage(),
+      routes: {
+        '/': (context) => const HomePage(),
+        '/page1': (context) => const Page1(),
+      },
     );
   }
 }
@@ -59,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Demo - MonsuiviDiet'),
+              title: const Text('SDK Demo - Single choice'),
               subtitle: const Text(
                 'Single choice - Video then request user feedback',
               ),
@@ -68,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Demo - MyLapto'),
+              title: const Text('SDK Demo - MonsuiviDiet'),
               subtitle: const Text(
                 'Single choice - Video then request user feedback',
               ),
@@ -77,7 +92,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Demo - WeAreCaring'),
+              title: const Text('SDK Demo - MyLapto'),
               subtitle: const Text(
                 'Single choice - Video then request user feedback',
               ),
@@ -86,7 +101,16 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Demo - Hapii'),
+              title: const Text('SDK Demo - WeAreCaring'),
+              subtitle: const Text(
+                'Single choice - Video then request user feedback',
+              ),
+              leading: const Icon(Icons.video_camera_back),
+              onTap: () => _showSingleChoiceDemoPopup(),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('SDK Demo - Hapii'),
               subtitle: const Text(
                 'Single choice - Video then request user feedback',
               ),
@@ -95,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Demo - Meeriad'),
+              title: const Text('SDK Demo - Meeriad'),
               subtitle: const Text(
                 'Single choice - Video then request user feedback',
               ),
@@ -104,7 +128,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Demo - Fridaa'),
+              title: const Text('SDK Demo - Fridaa'),
               subtitle: const Text(
                 'App immersion',
               ),

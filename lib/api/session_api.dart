@@ -24,21 +24,23 @@ class PalSessionApi {
 
   Future<void> initSession() async {
     final localSessionId = sharedPreferences.getString(_kSessionId);
-    if (localSessionId != null) {
-      _session = PalSession(id: localSessionId);
+    if (localSessionId != null && localSessionId.isNotEmpty) {
+      _session = PalSession(uid: localSessionId);
       return;
     }
+
     final res = await _httpClient.post(
       Uri.parse('/sessions'),
       body: PalSessionRequest.create(
         platform: defaultTargetPlatform.name,
-      ).toMap(),
+      ).toJson(),
     );
     _session = PalSession.fromJson(res.body);
-    await sharedPreferences.setString(_kSessionId, _session!.id);
+
+    await sharedPreferences.setString(_kSessionId, _session!.uid);
   }
 
   PalSession get session => _session!;
 
-  bool get hasSession => _session != null;
+  bool get hasSession => _session != null && _session!.uid.isNotEmpty;
 }

@@ -1,4 +1,4 @@
-package com.example.pal_plugin_example
+package io.apparence.example
 
 import io.flutter.embedding.android.FlutterActivity
 

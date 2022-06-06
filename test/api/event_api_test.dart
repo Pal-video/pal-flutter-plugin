@@ -240,7 +240,7 @@ void main() {
               200,
             )));
         when(httpClient.post(
-          Uri.parse('/eventlogs/${videoTriggerResponse.id}'),
+          Uri.parse('/eventlogs/${videoTriggerResponse.eventLogId}'),
           body: anyNamed('body'),
         )).thenAnswer((_) => Future.value(Response('', 200)));
         var app = MaterialApp(
@@ -343,7 +343,7 @@ void main() {
 
 PalVideoTrigger _createVideoWithSurvey() {
   final videoTriggerResponse = PalVideoTrigger(
-    id: '3682638A',
+    eventLogId: '3682638A',
     // type: PalVideos.survey,
     video240pUrl: 'http://240purl.com',
     video480pUrl: 'http://480purl.com',
@@ -363,7 +363,7 @@ PalVideoTrigger _createVideoWithSurvey() {
 
 PalVideoTrigger _createVideoOnlyAnswer() {
   final videoTriggerResponse = PalVideoTrigger(
-    id: '3682638A',
+    eventLogId: '3682638A',
     // type: PalVideos.,
     video240pUrl: 'http://240purl.com',
     video480pUrl: 'http://480purl.com',

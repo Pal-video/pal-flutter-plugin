@@ -55,10 +55,14 @@ class PalEventContext extends PalEvent {
     );
   }
 
-  toJson() => {
-        'sessionUId': session.id,
-        'name': name,
-        'type': type.name,
-        'attrs': attrs != null ? jsonEncode(attrs) : null,
-      };
+  Map<String, dynamic> toMap() {
+    return {
+      'sessionUId': session.uid,
+      'name': name,
+      'type': type.name,
+      'attrs': attrs != null ? jsonEncode(attrs) : null,
+    };
+  }
+
+  toJson() => jsonEncode(toMap());
 }

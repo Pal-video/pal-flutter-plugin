@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -39,7 +40,9 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
       return response;
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       String? errorCode;
-      try {} catch (_) {}
+      // try {
+      //   errorCode = response.statusCode;
+      // } catch (_) {}
       throw UnreachableHttpError(
           'Http ${response.statusCode} error, network or bad gateway : ${response.request?.url}',
           code: errorCode);
@@ -60,14 +63,16 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
     final Encoding? encoding,
   }) async {
     headers = _initHeader(headers);
-    return _checkResponse(
-      await super.post(
-        Uri.parse('$_baseUrl/$url'),
-        headers: headers,
-        body: body,
-        encoding: encoding,
-      ),
+    // debugPrint('... ==> POST ${Uri.parse('$_baseUrl$url')}');
+    // debugPrint('... ==> headers $headers');
+    // debugPrint('... ==> body $body');
+    final response = await super.post(
+      Uri.parse('$_baseUrl$url'),
+      headers: headers,
+      body: body,
+      encoding: encoding,
     );
+    return _checkResponse(response);
   }
 
   @override
@@ -79,7 +84,7 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
   }) async {
     return _checkResponse(
       await super.delete(
-        Uri.parse('$_baseUrl/$url'),
+        Uri.parse('$_baseUrl$url'),
         headers: headers,
       ),
     );
@@ -94,7 +99,7 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
   }) async {
     headers = _initHeader(headers);
     var res = await super.put(
-      Uri.parse('$_baseUrl/$url'),
+      Uri.parse('$_baseUrl$url'),
       headers: headers,
       body: body,
       encoding: encoding,
@@ -113,7 +118,7 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
     return _checkResponse(
       await super.patch(
         Uri.parse(
-          '$_baseUrl/$url',
+          '$_baseUrl$url',
         ),
         headers: headers,
         body: body,
@@ -132,7 +137,7 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
   Future<Response> get(final url, {final Map<String, String>? headers}) async {
     return _checkResponse(
       await super.get(
-        Uri.parse('$_baseUrl/$url'),
+        Uri.parse('$_baseUrl$url'),
         headers: headers,
       ),
     );
