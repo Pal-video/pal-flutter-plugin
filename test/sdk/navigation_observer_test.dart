@@ -28,9 +28,6 @@ void main() {
         '/page1': (context) => const FakePage(title: 'page 1'),
         '/page2': (context) => const FakePage(title: 'page 2'),
       },
-      onGenerateRoute: (settings) {
-        print("settings call ${settings.name}");
-      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
         splashFactory: InkSplash.splashFactory,

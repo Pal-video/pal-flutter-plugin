@@ -5,6 +5,7 @@ import 'package:pal/api/models/survey.dart';
 
 enum PalVideos {
   survey,
+  min_to_big_video,
 }
 
 class PalVideoTrigger {
@@ -12,7 +13,7 @@ class PalVideoTrigger {
   String video240pUrl;
   String video480pUrl;
   String video720pUrl;
-  PalVideos type;
+  // PalVideos type;
   Author author;
   Survey? survey;
 
@@ -21,7 +22,7 @@ class PalVideoTrigger {
     required this.video240pUrl,
     required this.video480pUrl,
     required this.video720pUrl,
-    required this.type,
+    // required this.type,
     required this.author,
     this.survey,
   });
@@ -32,7 +33,7 @@ class PalVideoTrigger {
       'video240pUrl': video240pUrl,
       'video480pUrl': video480pUrl,
       'video720pUrl': video720pUrl,
-      'type': type.name,
+      // 'type': type.name,
       'author': author.toMap(),
       'survey': survey?.toMap(),
     };
@@ -44,7 +45,7 @@ class PalVideoTrigger {
       video240pUrl: map['video240pUrl'] ?? '',
       video480pUrl: map['video480pUrl'] ?? '',
       video720pUrl: map['video720pUrl'] ?? '',
-      type: parseType(map['type']),
+      // type: parseType(map['type']),
       author: Author.fromMap(map['author']),
       survey: map['survey'] != null ? Survey.fromMap(map['survey']) : null,
     );

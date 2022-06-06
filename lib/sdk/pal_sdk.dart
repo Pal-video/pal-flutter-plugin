@@ -9,12 +9,12 @@ import '../overlays/overlay_helper.dart';
 
 typedef OnTapChoice = void Function(Choice choice);
 
-class PalPlugin {
+class PalSdk {
   final OverlayHelper _overlayHelper = OverlayHelper();
 
-  static final instance = PalPlugin._();
+  static final instance = PalSdk._();
 
-  PalPlugin._();
+  PalSdk._();
 
   Future<void> showSingleChoiceSurvey({
     required BuildContext context,

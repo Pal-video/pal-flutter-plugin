@@ -21,7 +21,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       expect(_context, isNotNull);
       // show a single choice video
-      PalPlugin.instance.showSingleChoiceSurvey(
+      PalSdk.instance.showSingleChoiceSurvey(
         context: _context!,
         videoAsset: 'assets/me.mp4',
         userName: 'Gautier',
@@ -40,7 +40,7 @@ void main() {
 
     testWidgets('Pal instance exists', (WidgetTester tester) async {
       await beforeEach(tester);
-      expect(PalPlugin.instance, isNotNull);
+      expect(PalSdk.instance, isNotNull);
     });
 
     testWidgets('miniature is visible, click => show expanded video',

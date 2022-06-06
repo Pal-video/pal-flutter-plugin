@@ -35,7 +35,7 @@ void main() {
     void beforeEach() {
       pal = Pal(
           httpClient: httpClient,
-          sdk: PalPlugin.instance,
+          sdk: PalSdk.instance,
           sessionApi: PalSessionApi(httpClient, sharedPreferencesMock));
     }
 
@@ -94,7 +94,7 @@ void main() {
 
       pal = Pal(
           httpClient: httpClient,
-          sdk: PalPlugin.instance,
+          sdk: PalSdk.instance,
           sessionApi: PalSessionApi(httpClient, sharedPreferencesMock))
         ..initialize(PalOptions(apiKey: 'apiKey'));
     }
@@ -240,7 +240,7 @@ void main() {
               200,
             )));
         when(httpClient.post(
-          Uri.parse('/triggers/${videoTriggerResponse.id}'),
+          Uri.parse('/eventlogs/${videoTriggerResponse.id}'),
           body: anyNamed('body'),
         )).thenAnswer((_) => Future.value(Response('', 200)));
         var app = MaterialApp(
@@ -264,7 +264,7 @@ void main() {
         skipBtn.onPressed!();
         await tester.pump(const Duration(milliseconds: 500));
         final capturedCall = verify(httpClient.post(
-          Uri.parse('/triggers/3682638A'),
+          Uri.parse('/eventlogs/3682638A'),
           body: captureAnyNamed("body"),
         )).captured;
         final resultEvents = capturedCall[0] as List<dynamic>;
@@ -344,7 +344,7 @@ void main() {
 PalVideoTrigger _createVideoWithSurvey() {
   final videoTriggerResponse = PalVideoTrigger(
     id: '3682638A',
-    type: PalVideos.survey,
+    // type: PalVideos.survey,
     video240pUrl: 'http://240purl.com',
     video480pUrl: 'http://480purl.com',
     video720pUrl: 'http://720purl.com',
@@ -357,6 +357,21 @@ PalVideoTrigger _createVideoWithSurvey() {
       ChoiceItem(id: 'b', text: 'réponse b'),
       ChoiceItem(id: 'c', text: 'réponse c'),
     ]),
+  );
+  return videoTriggerResponse;
+}
+
+PalVideoTrigger _createVideoOnlyAnswer() {
+  final videoTriggerResponse = PalVideoTrigger(
+    id: '3682638A',
+    // type: PalVideos.,
+    video240pUrl: 'http://240purl.com',
+    video480pUrl: 'http://480purl.com',
+    video720pUrl: 'http://720purl.com',
+    author: Author(
+      companyTitle: 'CEO',
+      userName: 'John Mclane',
+    ),
   );
   return videoTriggerResponse;
 }

@@ -39,4 +39,6 @@ class PalSessionApi {
   }
 
   PalSession get session => _session!;
+
+  bool get hasSession => _session != null;
 }

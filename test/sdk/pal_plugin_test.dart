@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pal/expanded/video_expanded.dart';
 import 'package:pal/miniature/video_miniature.dart';
-import 'package:pal/sdk/pal_plugin.dart';
+import 'package:pal/sdk/pal_sdk.dart';
 
 import '../test_utils.dart';
 
@@ -25,13 +25,13 @@ void main() {
 
   testWidgets('Pal instance exists', (WidgetTester tester) async {
     await beforeEach(tester);
-    expect(PalPlugin.instance, isNotNull);
+    expect(PalSdk.instance, isNotNull);
   });
 
   testWidgets('call showVideoAsset => shows a video within miniature',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalPlugin.instance.showVideoAsset(
+    await PalSdk.instance.showVideoAsset(
       context: _context!,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
@@ -47,7 +47,7 @@ void main() {
       'call showVideoAsset, tap on miniature => expanded video is shown',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalPlugin.instance.showVideoAsset(
+    await PalSdk.instance.showVideoAsset(
       context: _context!,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
@@ -70,7 +70,7 @@ void main() {
       'call showVideoOnly, tap on miniature => expanded video is shown then closed',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalPlugin.instance.showVideoOnly(
+    await PalSdk.instance.showVideoOnly(
       context: _context!,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',

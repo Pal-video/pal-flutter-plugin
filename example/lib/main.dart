@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _showSingleChoiceDemoPopup() {
-    return PalPlugin.instance.showSingleChoiceSurvey(
+    return PalSdk.instance.showSingleChoiceSurvey(
       context: context,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _showHappyDemoPopup() {
-    return PalPlugin.instance.showSingleChoiceSurvey(
+    return PalSdk.instance.showSingleChoiceSurvey(
       context: context,
       videoAsset: 'assets/happy.mp4',
       userName: 'David',
@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _showMeeriadDemoPopup() {
-    return PalPlugin.instance.showSingleChoiceSurvey(
+    return PalSdk.instance.showSingleChoiceSurvey(
       context: context,
       videoAsset: 'assets/meeriad.mp4',
       userName: 'David',
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context) => FakePage(
           assetImgUrl: "assets/background1.jpeg",
           onTap: () async {
-            await PalPlugin.instance.showSingleChoiceSurvey(
+            await PalSdk.instance.showSingleChoiceSurvey(
               context: context,
               videoAsset: 'assets/fridaa.mp4',
               userName: 'David',
@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage> {
             );
           },
           onTapBottom: () async {
-            await PalPlugin.instance.showVideoOnly(
+            await PalSdk.instance.showVideoOnly(
               context: context,
               videoAsset: 'assets/fridaa.mp4',
               userName: 'David',
