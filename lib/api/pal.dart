@@ -79,8 +79,9 @@ class Pal {
   /// Or each time this screen is visited
   Future<void> logCurrentScreen(BuildContext buildContext, String name) async {
     if (!_sessionApi!.hasSession) {
-      debugPrint(
-          '''Missing Session Error: You must have a session to call this method''');
+      debugPrint('''
+      Missing Session Error: You must have a session to call this method
+      ''');
       return;
     }
     if (triggeredVideo != null) {
@@ -136,32 +137,48 @@ class Pal {
   }
 
   Future<void> _onVideoExpand(PalVideoTrigger trigger) async {
-    final event = VideoTriggerEvent(
-      time: DateTime.now(),
-      sessionId: _sessionApi!.session.id,
-      type: VideoTriggerEvents.minVideoOpen,
-    );
-    _triggeredEventApi!.save(trigger.id, event);
+    try {
+      final event = VideoTriggerEvent(
+        time: DateTime.now(),
+        sessionId: _sessionApi!.session.id,
+        type: VideoTriggerEvents.minVideoOpen,
+      );
+      _triggeredEventApi!.save(trigger.id, event);
+    } catch (err, stack) {
+      debugPrint("Pal error");
+      debugPrintStack(stackTrace: stack);
+    }
   }
 
   Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {
-    final event = VideoTriggerEvent.singleChoice(
-      choice.id,
-      _sessionApi!.session.id,
-    );
-    _triggeredEventApi!.save(trigger.id, event);
-    _triggeredEventApi!.send();
+    try {
+      final event = VideoTriggerEvent.singleChoice(
+        choice.id,
+        _sessionApi!.session.id,
+      );
+      _triggeredEventApi!.save(trigger.id, event);
+      _triggeredEventApi!.send();
+    } catch (err, stack) {
+      debugPrint("Pal error");
+      debugPrintStack(stackTrace: stack);
+    }
   }
 
   Future<void> _onVideoEnded(PalVideoTrigger trigger) async {}
 
   Future<void> _onVideoSkipped(PalVideoTrigger trigger) async {
-    final event = VideoTriggerEvent(
-      time: DateTime.now(),
-      type: VideoTriggerEvents.videoSkip,
-      sessionId: _sessionApi!.session.id,
-    );
-    _triggeredEventApi!.save(trigger.id, event);
-    _triggeredEventApi!.send();
+    try {
+      triggeredVideo = null;
+      final event = VideoTriggerEvent(
+        time: DateTime.now(),
+        type: VideoTriggerEvents.videoSkip,
+        sessionId: _sessionApi!.session.id,
+      );
+      _triggeredEventApi!.save(trigger.id, event);
+      _triggeredEventApi!.send();
+    } catch (err, stack) {
+      debugPrint("Pal error");
+      debugPrintStack(stackTrace: stack);
+    }
   }
 }
