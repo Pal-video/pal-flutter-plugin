@@ -7,12 +7,14 @@ import 'package:pal/sdk/pal_sdk.dart';
 import '../test_utils.dart';
 
 void main() {
-  BuildContext? _context;
+  final navigatorKey = GlobalKey<NavigatorState>();
+
+  PalSdk palSdk = PalSdk.fromKey(navigatorKey: navigatorKey);
 
   Future beforeEach(WidgetTester tester) async {
     var app = MaterialApp(
+      navigatorKey: navigatorKey,
       home: Builder(builder: (context) {
-        _context = context;
         return Scaffold(
           body: Container(),
         );
@@ -20,19 +22,20 @@ void main() {
     );
     await tester.pumpWidget(app);
     await tester.pump(const Duration(milliseconds: 500));
-    expect(_context, isNotNull);
+    expect(navigatorKey.currentState?.context, isNotNull,
+        reason: 'context is not null');
   }
 
-  testWidgets('Pal instance exists', (WidgetTester tester) async {
+  testWidgets('Create new Pal works', (WidgetTester tester) async {
     await beforeEach(tester);
-    expect(PalSdk.instance, isNotNull);
+    expect(PalSdk.fromKey(navigatorKey: navigatorKey), isNotNull);
   });
 
   testWidgets('call showVideoAsset => shows a video within miniature',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalSdk.instance.showVideoAsset(
-      context: _context!,
+    await palSdk.showVideoAsset(
+      context: navigatorKey.currentState!.context,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
@@ -47,8 +50,8 @@ void main() {
       'call showVideoAsset, tap on miniature => expanded video is shown',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalSdk.instance.showVideoAsset(
-      context: _context!,
+    await palSdk.showVideoAsset(
+      context: navigatorKey.currentContext!,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
@@ -70,8 +73,8 @@ void main() {
       'call showVideoOnly, tap on miniature => expanded video is shown then closed',
       (WidgetTester tester) async {
     await beforeEach(tester);
-    await PalSdk.instance.showVideoOnly(
-      context: _context!,
+    await palSdk.showVideoOnly(
+      context: navigatorKey.currentContext!,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',

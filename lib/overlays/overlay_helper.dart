@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class OverlayHelper {
+  GlobalKey<NavigatorState> navigatorKey;
   OverlayEntry? overlayEntry;
 
-  OverlayHelper();
+  OverlayHelper(this.navigatorKey);
 
   showHelper(BuildContext context, WidgetBuilder widgetBuilder) {
     popHelper();
@@ -11,7 +12,8 @@ class OverlayHelper {
       opaque: false,
       builder: widgetBuilder,
     );
-    final overlay = Overlay.of(context);
+    final overlay = navigatorKey.currentState?.overlay;
+    assert(overlay != null, "No overlay for context found");
     if (overlay != null) {
       overlay.insert(overlayEntry!);
     }

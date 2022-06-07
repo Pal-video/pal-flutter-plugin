@@ -10,11 +10,16 @@ import '../overlays/overlay_helper.dart';
 typedef OnTapChoice = void Function(Choice choice);
 
 class PalSdk {
-  final OverlayHelper _overlayHelper = OverlayHelper();
+  final OverlayHelper _overlayHelper;
 
-  static final instance = PalSdk._();
+  @visibleForTesting
+  PalSdk({
+    required OverlayHelper overlayHelper,
+  }) : _overlayHelper = overlayHelper;
 
-  PalSdk._();
+  PalSdk.fromKey({
+    required GlobalKey<NavigatorState> navigatorKey,
+  }) : _overlayHelper = OverlayHelper(navigatorKey);
 
   Future<void> showSingleChoiceSurvey({
     required BuildContext context,

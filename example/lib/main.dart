@@ -7,12 +7,18 @@ import 'package:pal_plugin_example/page_fake.dart';
 
 import 'page1.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   final Pal pal = Pal.instance;
   WidgetsFlutterBinding.ensureInitialized();
-  await pal.initialize(PalOptions(
+  await pal.initialize(
+    PalOptions(
       apiKey:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjBmZTAwNzMwLTc5ZGItNDRkNS04NjNkLTkxMzk5NzRhYmFmNkBwYWwuaW8iLCJzdWIiOiIwZmUwMDczMC03OWRiLTQ0ZDUtODYzZC05MTM5OTc0YWJhZjYiLCJpYXQiOjE2NTEwNjYzNDYsImdyb3VwcyI6WyJQcm9qZWN0Il0sImV4cCI6MTAyOTEwNjYzNDYsImp0aSI6IjFmMmQ0OGRlLTc2MjctNDliOS04OTZjLTEwZmU4OTU2NmQ4NSJ9.KV4iBBl2Yqt8OMDY2cLapQz1udlCQOxYR0_z_ujXVTObi-KKnc0yJPTfAydd9hOJqFpVXSiyulrCRS8HxfspCfigRTebynnDmJzM7tMZ981AYkYqJNre8JNYxY292m2bXf77qrBlSHAMcgYjRyvig6iyVW1p6DyhNuzNDqdu931k-bgm2s5_MJv9UiWq3FB6TG9E2nKBohR-ScCLlFwvbbpEjwed06RFNkzSShYPk5oYRUv0h4d2DxsjaZnyBf3Gv7zzTbdyqAenLf1A3c_0vUTUOrVvYICGzjUbO3kyKtEPGZlQclYenPYCEKCL84px4SlqQYFjB_o876fbD-pUGg'));
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjBmZTAwNzMwLTc5ZGItNDRkNS04NjNkLTkxMzk5NzRhYmFmNkBwYWwuaW8iLCJzdWIiOiIwZmUwMDczMC03OWRiLTQ0ZDUtODYzZC05MTM5OTc0YWJhZjYiLCJpYXQiOjE2NTEwNjYzNDYsImdyb3VwcyI6WyJQcm9qZWN0Il0sImV4cCI6MTAyOTEwNjYzNDYsImp0aSI6IjFmMmQ0OGRlLTc2MjctNDliOS04OTZjLTEwZmU4OTU2NmQ4NSJ9.KV4iBBl2Yqt8OMDY2cLapQz1udlCQOxYR0_z_ujXVTObi-KKnc0yJPTfAydd9hOJqFpVXSiyulrCRS8HxfspCfigRTebynnDmJzM7tMZ981AYkYqJNre8JNYxY292m2bXf77qrBlSHAMcgYjRyvig6iyVW1p6DyhNuzNDqdu931k-bgm2s5_MJv9UiWq3FB6TG9E2nKBohR-ScCLlFwvbbpEjwed06RFNkzSShYPk5oYRUv0h4d2DxsjaZnyBf3Gv7zzTbdyqAenLf1A3c_0vUTUOrVvYICGzjUbO3kyKtEPGZlQclYenPYCEKCL84px4SlqQYFjB_o876fbD-pUGg',
+    ),
+    navigatorKey,
+  );
 
   runApp(const MyApp());
 }
@@ -25,6 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pal plugin demo',
+      navigatorKey: navigatorKey,
       navigatorObservers: [PalNavigatorObserver.create()],
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -32,7 +39,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const HomePage(),
-        '/page1': (context) => const Page1(),
+        '/page1_2': (context) => const Page1(),
       },
     );
   }
@@ -47,102 +54,79 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void initState() {
-    super.initState();
-    // Future.delayed(const Duration(milliseconds: 500), () async {
-    //   _showSingleChoiceDemoPopup();
-    // });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Pal plugin - demo'),
-        ),
-        body: ListView(
-          children: [
-            const SizedBox(height: 16),
-            ListTile(
-              title: const Text('Demo - Single choice'),
-              subtitle: const Text(
-                'Single choice - Video then request user feedback',
-              ),
-              leading: const Icon(Icons.video_camera_back),
-              onTap: () => _showSingleChoiceDemoPopup(),
+    debugPrint("--------------------");
+    debugPrint("Starting pal demo");
+    debugPrint("--------------------");
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Pal plugin - demo'),
+      ),
+      body: ListView(
+        children: [
+          const SizedBox(height: 16),
+          ListTile(
+            title: const Text('Demo - trigger video'),
+            subtitle: const Text(
+              'Trigger a simple video from server API',
             ),
-            const Divider(),
-            ListTile(
-              title: const Text('SDK Demo - Single choice'),
-              subtitle: const Text(
-                'Single choice - Video then request user feedback',
-              ),
-              leading: const Icon(Icons.video_camera_back),
-              onTap: () => _showSingleChoiceDemoPopup(),
+            leading: const Icon(Icons.cloud_download),
+            onTap: () => Navigator.of(context).pushNamed('/page1_2'),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Session reset'),
+            subtitle: const Text(
+              'Force recreate the Pal user session',
             ),
-            const Divider(),
-            ListTile(
-              title: const Text('SDK Demo - MonsuiviDiet'),
-              subtitle: const Text(
-                'Single choice - Video then request user feedback',
-              ),
-              leading: const Icon(Icons.video_camera_back),
-              onTap: () => _showSingleChoiceDemoPopup(),
+            leading: const Icon(Icons.cloud_download),
+            onTap: () => _showSingleChoiceDemoPopup(),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('SDK Demo - Single choice'),
+            subtitle: const Text(
+              'Single choice - Video then request user feedback',
             ),
-            const Divider(),
-            ListTile(
-              title: const Text('SDK Demo - MyLapto'),
-              subtitle: const Text(
-                'Single choice - Video then request user feedback',
-              ),
-              leading: const Icon(Icons.video_camera_back),
-              onTap: () => _showSingleChoiceDemoPopup(),
+            leading: const Icon(Icons.video_camera_back),
+            onTap: () => _showSingleChoiceDemoPopup(),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('SDK Demo - Hapii'),
+            subtitle: const Text(
+              'Single choice - Video then request user feedback',
             ),
-            const Divider(),
-            ListTile(
-              title: const Text('SDK Demo - WeAreCaring'),
-              subtitle: const Text(
-                'Single choice - Video then request user feedback',
-              ),
-              leading: const Icon(Icons.video_camera_back),
-              onTap: () => _showSingleChoiceDemoPopup(),
+            leading: const Icon(Icons.video_camera_back),
+            onTap: () => _showHappyDemoPopup(),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('SDK Demo - Meeriad'),
+            subtitle: const Text(
+              'Single choice - Video then request user feedback',
             ),
-            const Divider(),
-            ListTile(
-              title: const Text('SDK Demo - Hapii'),
-              subtitle: const Text(
-                'Single choice - Video then request user feedback',
-              ),
-              leading: const Icon(Icons.video_camera_back),
-              onTap: () => _showHappyDemoPopup(),
+            leading: const Icon(Icons.video_camera_back),
+            onTap: () => _showMeeriadDemoPopup(),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('SDK Demo - Fridaa'),
+            subtitle: const Text(
+              'App immersion',
             ),
-            const Divider(),
-            ListTile(
-              title: const Text('SDK Demo - Meeriad'),
-              subtitle: const Text(
-                'Single choice - Video then request user feedback',
-              ),
-              leading: const Icon(Icons.video_camera_back),
-              onTap: () => _showMeeriadDemoPopup(),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text('SDK Demo - Fridaa'),
-              subtitle: const Text(
-                'App immersion',
-              ),
-              leading: const Icon(Icons.remove_red_eye),
-              onTap: () => _showFridaDemo(),
-            ),
-          ],
-        ),
+            leading: const Icon(Icons.remove_red_eye),
+            onTap: () => _showFridaDemo(),
+          ),
+        ],
       ),
     );
   }
 
+  PalSdk get palSdk => PalSdk.fromKey(navigatorKey: navigatorKey);
+
   Future _showSingleChoiceDemoPopup() {
-    return PalSdk.instance.showSingleChoiceSurvey(
+    return palSdk.showSingleChoiceSurvey(
       context: context,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
@@ -160,24 +144,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _showHappyDemoPopup() {
-    return PalSdk.instance.showSingleChoiceSurvey(
+    return palSdk.showVideoOnly(
       context: context,
-      videoAsset: 'assets/happy.mp4',
+      videoAsset:
+          'https://res.cloudinary.com/apparence/video/upload/ac_none,c_crop,h_300,w_300/v1651066364/Pal/dev/projects/0fe00730-79db-44d5-863d-9139974abaf6/videos/eba985b2-d35d-4863-858d-14572f5202ab.mp4',
       userName: 'David',
       companyTitle: 'Product manager - Happy',
-      question: 'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
-      choices: const [
-        Choice(id: 'a', text: 'Gestion des facturations'),
-        Choice(id: 'b', text: 'Système de paiement'),
-        Choice(id: 'c', text: 'Signature électronique'),
-      ],
-      onTapChoice: (choice) {},
-      onVideoEndAction: () {},
     );
   }
 
   Future _showMeeriadDemoPopup() {
-    return PalSdk.instance.showSingleChoiceSurvey(
+    return palSdk.showSingleChoiceSurvey(
       context: context,
       videoAsset: 'assets/meeriad.mp4',
       userName: 'David',
@@ -199,7 +176,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context) => FakePage(
           assetImgUrl: "assets/background1.jpeg",
           onTap: () async {
-            await PalSdk.instance.showSingleChoiceSurvey(
+            await palSdk.showSingleChoiceSurvey(
               context: context,
               videoAsset: 'assets/fridaa.mp4',
               userName: 'David',
@@ -216,7 +193,7 @@ class _HomePageState extends State<HomePage> {
             );
           },
           onTapBottom: () async {
-            await PalSdk.instance.showVideoOnly(
+            await palSdk.showVideoOnly(
               context: context,
               videoAsset: 'assets/fridaa.mp4',
               userName: 'David',

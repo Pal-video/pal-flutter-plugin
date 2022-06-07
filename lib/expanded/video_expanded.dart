@@ -45,7 +45,7 @@ class VideoExpanded extends StatefulWidget {
 @visibleForTesting
 class VideoExpandedState extends State<VideoExpanded>
     with TickerProviderStateMixin {
-  late VideoPlayerController videoPlayerController;
+  VideoPlayerController? videoPlayerController;
   late VideoListener videoListener;
 
   /// content fade animation
@@ -81,18 +81,23 @@ class VideoExpandedState extends State<VideoExpanded>
   @override
   void initState() {
     super.initState();
-    videoPlayerController = widget.videoPlayerController ??
-        VideoPlayerController.asset(widget.videoAsset);
-    videoListener = VideoListener(
-      videoPlayerController,
-      onPositionChanged: _onPositionChangedListener,
-    );
-    _layoutFadeController.forward();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (widget.videoPlayerController != null) {
+      videoPlayerController = widget.videoPlayerController!;
+    } else {
+      videoPlayerController = widget.videoAsset.startsWith("http")
+          ? VideoPlayerController.network(widget.videoAsset)
+          : VideoPlayerController.asset(widget.videoAsset);
+    }
+    videoListener = VideoListener(
+      videoPlayerController!,
+      onPositionChanged: _onPositionChangedListener,
+    );
+    _layoutFadeController.forward();
   }
 
   @override
@@ -160,10 +165,10 @@ class VideoExpandedState extends State<VideoExpanded>
                         );
                       }
                       return VideoContainer(
-                        ratio: videoPlayerController.value.aspectRatio,
-                        contentSize: videoPlayerController.value.size,
+                        ratio: videoPlayerController!.value.aspectRatio,
+                        contentSize: videoPlayerController!.value.size,
                         child: VideoPlayer(
-                          videoPlayerController,
+                          videoPlayerController!,
                         ),
                       );
                     },

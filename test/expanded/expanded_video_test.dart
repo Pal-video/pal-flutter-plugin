@@ -70,8 +70,8 @@ void main() {
         ),
       );
       // mock video controller
-      final _realVideoController = VideoPlayerController.asset('');
-      when(videoController.value).thenAnswer((_) => _realVideoController.value);
+      final realVideoController = VideoPlayerController.asset('');
+      when(videoController.value).thenAnswer((_) => realVideoController.value);
       // pump app
       await tester.pumpWidget(app);
       await tester.pump(const Duration(milliseconds: 500));
@@ -96,7 +96,7 @@ void main() {
           tester.state<VideoExpandedState>(find.byType(VideoExpanded));
       final videoController = videoExpandedState.videoPlayerController;
 
-      expect(videoController.value.volume, 1.0);
+      expect(videoController!.value.volume, 1.0);
       expect(videoController.value.isLooping, isFalse);
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
@@ -110,7 +110,7 @@ void main() {
       final videoExpandedState =
           tester.state<VideoExpandedState>(find.byType(VideoExpanded));
 
-      when(videoExpandedState.videoPlayerController.position)
+      when(videoExpandedState.videoPlayerController!.position)
           .thenAnswer((_) => Future.value(Duration.zero));
       videoExpandedState.videoListener.onPositionChangedListener();
 

@@ -47,7 +47,9 @@ class _VideoMiniatureState extends State<VideoMiniature>
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset(widget.videoAsset);
+    _videoPlayerController = widget.videoAsset.startsWith("http")
+        ? VideoPlayerController.network(widget.videoAsset)
+        : VideoPlayerController.asset(widget.videoAsset);
   }
 
   Future _initVideo() async {
@@ -58,8 +60,11 @@ class _VideoMiniatureState extends State<VideoMiniature>
       await _videoPlayerController.setVolume(0);
       await _videoPlayerController.play();
       _fadeAnimController.forward();
-    } catch (_) {
+    } catch (err, stack) {
+      debugPrint("--------------------");
       debugPrint("cannot load video");
+      debugPrint("--------------------");
+      debugPrintStack(stackTrace: stack);
     }
   }
 

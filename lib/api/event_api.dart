@@ -44,7 +44,7 @@ class PalEventApi {
       Uri.parse('/eventlogs'),
       body: eventContext.toJson(),
     );
-    if (response.body.isEmpty) {
+    if (response.body.isEmpty || response.body == 'null') {
       return null;
     }
     return PalVideoTrigger.fromJson(response.body);

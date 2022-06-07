@@ -8,8 +8,13 @@ void main() {
   group('miniature > video > single choice', () {
     BuildContext? _context;
 
+    final navigatorKey = GlobalKey<NavigatorState>();
+
+    final PalSdk palSdk = PalSdk.fromKey(navigatorKey: navigatorKey);
+
     Future beforeEach(WidgetTester tester) async {
       var app = MaterialApp(
+        navigatorKey: navigatorKey,
         home: Builder(builder: (context) {
           _context = context;
           return Scaffold(
@@ -21,7 +26,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       expect(_context, isNotNull);
       // show a single choice video
-      PalSdk.instance.showSingleChoiceSurvey(
+      await palSdk.showSingleChoiceSurvey(
         context: _context!,
         videoAsset: 'assets/me.mp4',
         userName: 'Gautier',
@@ -37,11 +42,6 @@ void main() {
         onVideoEndAction: () {},
       );
     }
-
-    testWidgets('Pal instance exists', (WidgetTester tester) async {
-      await beforeEach(tester);
-      expect(PalSdk.instance, isNotNull);
-    });
 
     testWidgets('miniature is visible, click => show expanded video',
         (WidgetTester tester) async {

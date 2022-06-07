@@ -28,14 +28,18 @@ void main() {
   sessionApi doesn't have any locally saved session
   ''', () {
     late Pal pal;
+
     HttpClient httpClient = MockHttpClient();
+
     SharedPreferences sharedPreferencesMock = MockSharedPreferences();
+
+    final navigatorKey = GlobalKey<NavigatorState>();
 
     /// in real code use Pal.instance.initialize(PalOptions(apiKey: "apiKey"));
     void beforeEach() {
       pal = Pal(
           httpClient: httpClient,
-          sdk: PalSdk.instance,
+          sdk: PalSdk.fromKey(navigatorKey: navigatorKey),
           sessionApi: PalSessionApi(httpClient, sharedPreferencesMock));
     }
 
@@ -63,7 +67,7 @@ void main() {
         when(sharedPreferencesMock.setString('sessionId', '803238203D'))
             .thenAnswer((_) => Future.value(true));
         beforeEach();
-        await pal.initialize(PalOptions(apiKey: 'apiKey'));
+        await pal.initialize(PalOptions(apiKey: 'apiKey'), navigatorKey);
 
         final createSession = verify(httpClient.post(
           Uri.parse('/sessions'),
@@ -85,8 +89,12 @@ void main() {
     init session returns a sessionId from localstorage
     ''', () {
     late Pal pal;
+
     HttpClient httpClient = MockHttpClient();
+
     SharedPreferences sharedPreferencesMock = MockSharedPreferences();
+
+    final navigatorKey = GlobalKey<NavigatorState>();
 
     /// in real code use Pal.instance.initialize(PalOptions(apiKey: "apiKey"));
     void beforeEach() {
@@ -95,9 +103,9 @@ void main() {
 
       pal = Pal(
           httpClient: httpClient,
-          sdk: PalSdk.instance,
+          sdk: PalSdk.fromKey(navigatorKey: navigatorKey),
           sessionApi: PalSessionApi(httpClient, sharedPreferencesMock))
-        ..initialize(PalOptions(apiKey: 'apiKey'));
+        ..initialize(PalOptions(apiKey: 'apiKey'), navigatorKey);
     }
 
     tearDown(() {
