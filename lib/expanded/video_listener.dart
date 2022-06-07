@@ -48,19 +48,15 @@ class VideoListener {
     if (_playing) {
       return false;
     }
-    if (isTesting) {
-      _playing = true;
-      return true;
-    }
     try {
       _playing = true;
-      Future.delayed(const Duration(milliseconds: 500));
+      // Future.delayed(const Duration(milliseconds: 100));
       await controller.initialize();
       _initListener();
       await controller.setLooping(loop);
       await controller.setVolume(volume);
       await controller.seekTo(Duration.zero);
-      await Future.delayed(const Duration(milliseconds: 500), () async {
+      await Future.delayed(const Duration(milliseconds: 100), () async {
         await controller.play();
         if (onVideoStarted != null) {
           onVideoStarted!();

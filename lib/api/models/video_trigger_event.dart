@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'dates.dart';
+
 enum VideoTriggerEvents {
   videoSkip,
   minVideoOpen,
   answer,
 }
-
-// TODO deviceId, userId, or create a sessionId to sync these ???
 
 /// Those events are sent when the user
 /// * see the video
@@ -39,24 +39,9 @@ class VideoTriggerEvent {
         },
       );
 
-  // VideoTriggerEvent copyWith({
-  //   String? videoId,
-  //   DateTime? time,
-  //   String? sessionId,
-  //   VideoTriggerEvents? type,
-  //   Map<String, dynamic>? args,
-  // }) {
-  //   return VideoTriggerEvent(
-  //     time: time ?? this.time,
-  //     sessionId: sessionId ?? this.sessionId,
-  //     type: type ?? this.type,
-  //     args: args ?? this.args,
-  //   );
-  // }
-
   Map<String, dynamic> toMap() {
     return {
-      'time': time.millisecondsSinceEpoch,
+      'time': toDateServerFormat(time),
       'type': type.name,
       'args': args,
       'sessionId': sessionId,
@@ -65,7 +50,7 @@ class VideoTriggerEvent {
 
   factory VideoTriggerEvent.fromMap(Map<String, dynamic> map) {
     return VideoTriggerEvent(
-        time: DateTime.fromMillisecondsSinceEpoch(map['time']),
+        time: DateTime.parse(map['time']),
         args: map['args'],
         sessionId: map['sessionId'],
         type: parseType(map['type']));
@@ -75,16 +60,6 @@ class VideoTriggerEvent {
 
   factory VideoTriggerEvent.fromJson(String source) =>
       VideoTriggerEvent.fromMap(json.decode(source));
-
-  // @override
-  // bool operator ==(Object other) {
-  //   if (identical(this, other)) return true;
-
-  //   return other is VideoTriggerEvent && other.time == time;
-  // }
-
-  // @override
-  // int get hashCode => type.hashCode ^ time.hashCode;
 
   static VideoTriggerEvents parseType(String data) {
     final search =

@@ -21,13 +21,18 @@ class PalTriggeredEventApi {
 
   /// calls remote server to store all these events related to
   /// [videoTriggerId] the video id
-  Future<void> send() async {
+  Future<void> send() {
+    var futuresList = <Future<void>>[];
     for (var eventlogId in _resultEvents.keys) {
-      await _httpClient.post(
-        Uri.parse('/eventlogs/$eventlogId'),
-        body: _resultEvents[eventlogId]!.map((e) => e.toJson()).toList(),
-      );
+      var events = _resultEvents[eventlogId]!;
+      for (var event in events) {
+        futuresList.add(_httpClient.post(
+          Uri.parse('/eventlogs/$eventlogId'),
+          body: event.toJson(),
+        ));
+      }
     }
-    _resultEvents.clear();
+    return Future.wait(futuresList) //
+        .then((_) => _resultEvents.clear());
   }
 }

@@ -67,24 +67,7 @@ class _VideoMiniatureState extends State<VideoMiniature>
         _fadeAnimController.forward();
       },
     );
-    // _fadeAnimController.forward();
   }
-
-  // Future _initVideo() async {
-  //   try {
-  //     await Future.delayed(const Duration(milliseconds: 100));
-  //     await _videoPlayerController.initialize();
-  //     await _videoPlayerController.setLooping(true);
-  //     await _videoPlayerController.setVolume(0);
-  //     await _videoPlayerController.play();
-  //     _fadeAnimController.forward();
-  //   } catch (err, stack) {
-  //     debugPrint("--------------------");
-  //     debugPrint("cannot load video");
-  //     debugPrint("--------------------");
-  //     debugPrintStack(stackTrace: stack);
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -111,28 +94,27 @@ class _VideoMiniatureState extends State<VideoMiniature>
               ),
             );
           }
-          return Container();
-          // return PopAnimation(
-          //   animation: _fadeAnimController,
-          //   opacityAnim: opacityAnimation,
-          //   sizeAnim: sizeAnimation,
-          //   child: GestureDetector(
-          //     onTap: () => _fadeAnimController.reverse().then((value) {
-          //       HapticFeedback.mediumImpact();
-          //       widget.onTap();
-          //     }),
-          //     child: ClipOval(
-          //       clipBehavior: Clip.antiAlias,
-          //       clipper: _CenterClip(widget.radius),
-          //       child: AspectRatio(
-          //         aspectRatio: videoListener.controller.value.aspectRatio,
-          //         child: VideoPlayer(
-          //           videoListener.controller,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // );
+          return PopAnimation(
+            animation: _fadeAnimController,
+            opacityAnim: opacityAnimation,
+            sizeAnim: sizeAnimation,
+            child: GestureDetector(
+              onTap: () => _fadeAnimController.reverse().then((value) {
+                HapticFeedback.mediumImpact();
+                widget.onTap();
+              }),
+              child: ClipOval(
+                clipBehavior: Clip.antiAlias,
+                clipper: _CenterClip(widget.radius),
+                child: AspectRatio(
+                  aspectRatio: videoListener.controller.value.aspectRatio,
+                  child: VideoPlayer(
+                    videoListener.controller,
+                  ),
+                ),
+              ),
+            ),
+          );
         },
       ),
     );
