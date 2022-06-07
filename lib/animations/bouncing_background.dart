@@ -19,21 +19,31 @@ class BouncingCircleBg extends StatefulWidget {
 @visibleForTesting
 class BouncingCircleBgState extends State<BouncingCircleBg>
     with SingleTickerProviderStateMixin {
-  late final AnimationController animationController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-  );
+  AnimationController? animationController;
 
   @override
   void initState() {
     super.initState();
-    animationController.repeat(reverse: true);
+    if (animationController != null) {
+      animationController!.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    animationController ??= AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
   }
 
   @override
   void dispose() {
-    animationController.dispose();
     super.dispose();
+    if (animationController != null) {
+      animationController!.dispose();
+    }
   }
 
   @override
@@ -59,7 +69,7 @@ class BouncingCircleBgState extends State<BouncingCircleBg>
           80,
         ),
       ],
-      listenable: animationController,
+      listenable: animationController!,
       child: widget.child,
     );
   }

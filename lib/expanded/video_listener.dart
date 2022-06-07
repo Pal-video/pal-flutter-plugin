@@ -5,28 +5,38 @@ import 'package:video_player/video_player.dart';
 
 typedef OnPositionChanged = void Function(Duration duration);
 
+typedef OnVideoStarted = void Function();
+
 class VideoListener {
-  final OnPositionChanged onPositionChanged;
+  final OnPositionChanged? onPositionChanged;
+
+  final OnVideoStarted? onVideoStarted;
+
   VideoPlayerController controller;
-  bool hasInit;
+
+  bool _hasInit;
+
+  bool _playing;
 
   bool get isTesting => Platform.environment.containsKey('FLUTTER_TEST');
 
   VideoListener(
     this.controller, {
-    required this.onPositionChanged,
-  }) : hasInit = false;
+    this.onPositionChanged,
+    this.onVideoStarted,
+  })  : _hasInit = false,
+        _playing = false;
 
   _initListener() {
-    if (hasInit) {
+    if (_hasInit) {
       return;
     }
     controller.addListener(onPositionChangedListener);
-    hasInit = true;
+    _hasInit = true;
     // since we can't test the video ending trigger in full integration test
-    if (isTesting) {
+    if (isTesting && onPositionChanged != null) {
       Future.delayed(const Duration(milliseconds: 500), () {
-        onPositionChanged(Duration.zero);
+        onPositionChanged!(Duration.zero);
       });
     }
   }
@@ -35,7 +45,15 @@ class VideoListener {
     required double volume,
     required bool loop,
   }) async {
+    if (_playing) {
+      return false;
+    }
+    if (isTesting) {
+      _playing = true;
+      return true;
+    }
     try {
+      _playing = true;
       Future.delayed(const Duration(milliseconds: 500));
       await controller.initialize();
       _initListener();
@@ -44,13 +62,20 @@ class VideoListener {
       await controller.seekTo(Duration.zero);
       await Future.delayed(const Duration(milliseconds: 500), () async {
         await controller.play();
+        if (onVideoStarted != null) {
+          onVideoStarted!();
+        }
       });
       return true;
     } catch (e, d) {
+      _playing = false;
       debugPrint("Error while playing video: $e, $d");
     }
     return false;
   }
+
+  bool get isPlaying =>
+      _playing && controller.value.isPlaying && controller.value.isInitialized;
 
   dispose() {
     controller.removeListener(onPositionChangedListener);
@@ -59,8 +84,8 @@ class VideoListener {
 
   onPositionChangedListener() async {
     final remaining = await remainingDuration;
-    if (remaining != null) {
-      onPositionChanged(remaining);
+    if (remaining != null && onPositionChanged != null) {
+      onPositionChanged!(remaining);
     }
   }
 
@@ -74,6 +99,7 @@ class VideoListener {
     } catch (e, d) {
       debugPrint("Error while fetching duration: $e, $d");
     }
+    return null;
   }
 
   Future<void> pause() async {

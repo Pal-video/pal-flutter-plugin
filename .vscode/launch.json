@@ -10,7 +10,8 @@
             "request": "launch",
             "program": "example/lib/main.dart",
             "args": [
-                "--dart-define=SERVER_URL=http://192.168.8.168:8080"
+                // "--dart-define=SERVER_URL=http://192.168.8.168:8080"
+                "--dart-define=SERVER_URL=http://192.168.1.21:8080"
             ]
         },
     ]

@@ -35,7 +35,7 @@ class PalSdk {
     Function? onClose,
     Function? onSkip,
   }) async {
-    showVideoAsset(
+    return showVideoAsset(
       context: context,
       videoAsset: videoAsset,
       userName: userName,
@@ -69,7 +69,7 @@ class PalSdk {
     Function? onClose,
     Function? onSkip,
   }) async {
-    showVideoAsset(
+    return showVideoAsset(
         context: context,
         videoAsset: videoAsset,
         userName: userName,

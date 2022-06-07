@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  PalSdk get palSdk => PalSdk.fromKey(navigatorKey: navigatorKey);
+  PalSdk palSdk = PalSdk.fromKey(navigatorKey: navigatorKey);
 
   Future _showSingleChoiceDemoPopup() {
     return palSdk.showSingleChoiceSurvey(

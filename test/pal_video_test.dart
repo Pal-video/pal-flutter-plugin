@@ -93,13 +93,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('page 1'), findsOneWidget);
-      // var captured = verify(
-      //   () => httpClient.post(
-      //     any(),
-      //     body: captureAny(named: 'body'),
-      //   ),
-      // ).captured;
-      // expect(captured.length, 1);
+      var captured = verify(
+        () => httpClient.post(
+          any(),
+          body: captureAny(named: 'body'),
+        ),
+      ).captured;
+      expect(captured.length, 1);
     },
   );
 }
