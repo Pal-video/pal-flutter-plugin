@@ -123,6 +123,7 @@ void main() {
         when(httpClient.post(Uri.parse('/eventlogs'), body: anyNamed('body')))
             .thenAnswer((_) => Future.value(Response('', 200)));
         var app = MaterialApp(
+          navigatorKey: navigatorKey,
           home: Builder(builder: (context) {
             pal.logCurrentScreen(context, 'screen1');
             return Scaffold(
@@ -201,93 +202,95 @@ void main() {
       },
     );
 
-    testWidgets(
-      '''
-    call setCurrentScreen, api returns a Video with a singleChoice form
-    => calls PalPlugin showSingleChoiceSurvey. 
-    ''',
-      (WidgetTester tester) async {
-        beforeEach();
-        PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
-        when(httpClient.post(
-          Uri.parse('/eventlogs'),
-          body: anyNamed('body'),
-        )).thenAnswer((_) => Future.value(
-              Response(
-                videoTriggerResponse.toJson(),
-                200,
-              ),
-            ));
-        var app = MaterialApp(
-          home: Builder(builder: (context) {
-            pal.logCurrentScreen(context, 'screen1');
-            return Scaffold(
-              body: Container(),
-            );
-          }),
-        );
-        await tester.pumpWidget(app);
-        await tester.pump(const Duration(milliseconds: 500));
-        await tester.pump(const Duration(milliseconds: 500));
+    //Survey are disabled for now
+    // testWidgets(
+    //   '''
+    // call setCurrentScreen, api returns a Video with a singleChoice form
+    // => calls PalPlugin showSingleChoiceSurvey.
+    // ''',
+    //   (WidgetTester tester) async {
+    //     beforeEach();
+    //     PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
+    //     when(httpClient.post(
+    //       Uri.parse('/eventlogs'),
+    //       body: anyNamed('body'),
+    //     )).thenAnswer((_) => Future.value(
+    //           Response(
+    //             videoTriggerResponse.toJson(),
+    //             200,
+    //           ),
+    //         ));
+    //     var app = MaterialApp(
+    //       home: Builder(builder: (context) {
+    //         pal.logCurrentScreen(context, 'screen1');
+    //         return Scaffold(
+    //           body: Container(),
+    //         );
+    //       }),
+    //     );
+    //     await tester.pumpWidget(app);
+    //     await tester.pump(const Duration(milliseconds: 500));
+    //     await tester.pump(const Duration(milliseconds: 500));
 
-        expect(find.byType(VideoMiniature), findsOneWidget);
-      },
-    );
+    //     expect(find.byType(VideoMiniature), findsOneWidget);
+    //   },
+    // );
 
-    testWidgets(
-      '''
-    call setCurrentScreen, shows a single choice survey, push skip
-    => calls api to record [open video, skipped event]
-    ''',
-      (WidgetTester tester) async {
-        beforeEach();
-        PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
-        when(httpClient.post(
-          Uri.parse('/eventlogs'),
-          body: anyNamed('body'),
-        )).thenAnswer((_) => Future.value(Response(
-              videoTriggerResponse.toJson(),
-              200,
-            )));
-        when(httpClient.post(
-          Uri.parse('/eventlogs/${videoTriggerResponse.eventLogId}'),
-          body: anyNamed('body'),
-        )).thenAnswer((_) => Future.value(Response('', 200)));
-        var app = MaterialApp(
-          home: Builder(builder: (context) {
-            pal.logCurrentScreen(context, 'screen1');
-            return Scaffold(
-              body: Container(),
-            );
-          }),
-        );
-        await tester.pumpWidget(app);
-        await tester.pump(const Duration(milliseconds: 500));
-        await tester.pump(const Duration(milliseconds: 500));
-        expect(find.byType(VideoMiniature), findsOneWidget);
-        final miniatureWidget = findWidget<VideoMiniature>();
-        miniatureWidget.onTap();
-        await tester.pump(const Duration(milliseconds: 500));
+    // NO survey for now
+    // testWidgets(
+    //   '''
+    // call setCurrentScreen, shows a single choice survey, push skip
+    // => calls api to record [open video, skipped event]
+    // ''',
+    //   (WidgetTester tester) async {
+    //     beforeEach();
+    //     PalVideoTrigger videoTriggerResponse = _createVideoWithSurvey();
+    //     when(httpClient.post(
+    //       Uri.parse('/eventlogs'),
+    //       body: anyNamed('body'),
+    //     )).thenAnswer((_) => Future.value(Response(
+    //           videoTriggerResponse.toJson(),
+    //           200,
+    //         )));
+    //     when(httpClient.post(
+    //       Uri.parse('/eventlogs/${videoTriggerResponse.eventLogId}'),
+    //       body: anyNamed('body'),
+    //     )).thenAnswer((_) => Future.value(Response('', 200)));
+    //     var app = MaterialApp(
+    //       home: Builder(builder: (context) {
+    //         pal.logCurrentScreen(context, 'screen1');
+    //         return Scaffold(
+    //           body: Container(),
+    //         );
+    //       }),
+    //     );
+    //     await tester.pumpWidget(app);
+    //     await tester.pump(const Duration(milliseconds: 500));
+    //     await tester.pump(const Duration(milliseconds: 500));
+    //     expect(find.byType(VideoMiniature), findsOneWidget);
+    //     final miniatureWidget = findWidget<VideoMiniature>();
+    //     miniatureWidget.onTap();
+    //     await tester.pump(const Duration(milliseconds: 500));
 
-        expect(find.byKey(const ValueKey("palVideoSkip")), findsOneWidget);
-        final skipBtn = findWidget<ElevatedButton>();
-        skipBtn.onPressed!();
-        await tester.pump(const Duration(milliseconds: 500));
-        final capturedCall = verify(httpClient.post(
-          Uri.parse('/eventlogs/3682638A'),
-          body: captureAnyNamed("body"),
-        )).captured;
-        final resultEvents = capturedCall[0] as List<dynamic>;
-        expect(resultEvents, isNotNull);
-        expect(resultEvents.length, 2);
-        final event_1 = VideoTriggerEvent.fromJson(resultEvents[0]);
-        final event_2 = VideoTriggerEvent.fromJson(resultEvents[1]);
-        expect(event_1.type, VideoTriggerEvents.minVideoOpen);
-        expect(event_1.time, isNotNull);
-        expect(event_2.type, VideoTriggerEvents.videoSkip);
-        expect(event_2.time, isNotNull);
-      },
-    );
+    //     expect(find.byKey(const ValueKey("palVideoSkip")), findsOneWidget);
+    //     final skipBtn = findWidget<ElevatedButton>();
+    //     skipBtn.onPressed!();
+    //     await tester.pump(const Duration(milliseconds: 500));
+    //     final capturedCall = verify(httpClient.post(
+    //       Uri.parse('/eventlogs/3682638A'),
+    //       body: captureAnyNamed("body"),
+    //     )).captured;
+    //     final resultEvents = capturedCall[0] as List<dynamic>;
+    //     expect(resultEvents, isNotNull);
+    //     expect(resultEvents.length, 2);
+    //     final event_1 = VideoTriggerEvent.fromJson(resultEvents[0]);
+    //     final event_2 = VideoTriggerEvent.fromJson(resultEvents[1]);
+    //     expect(event_1.type, VideoTriggerEvents.minVideoOpen);
+    //     expect(event_1.time, isNotNull);
+    //     expect(event_2.type, VideoTriggerEvents.videoSkip);
+    //     expect(event_2.time, isNotNull);
+    //   },
+    // );
 
 // NO survey for now
 //     testWidgets(
