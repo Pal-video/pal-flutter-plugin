@@ -24,9 +24,6 @@ class BouncingCircleBgState extends State<BouncingCircleBg>
   @override
   void initState() {
     super.initState();
-    if (animationController != null) {
-      animationController!.repeat(reverse: true);
-    }
   }
 
   @override
@@ -36,14 +33,15 @@ class BouncingCircleBgState extends State<BouncingCircleBg>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
+    animationController!.repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    super.dispose();
     if (animationController != null) {
       animationController!.dispose();
     }
+    super.dispose();
   }
 
   @override

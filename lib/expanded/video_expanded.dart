@@ -84,6 +84,8 @@ class VideoExpandedState extends State<VideoExpanded>
     curve: Curves.easeOut,
   ));
 
+  late final Future<bool> videoFuture;
+
   @override
   void initState() {
     super.initState();
@@ -104,6 +106,7 @@ class VideoExpandedState extends State<VideoExpanded>
       onPositionChanged: _onPositionChangedListener,
     );
     _layoutFadeController.forward();
+    videoFuture = videoListener.start(volume: 1, loop: false);
   }
 
   @override
@@ -169,7 +172,7 @@ class VideoExpandedState extends State<VideoExpanded>
             child: widget.testMode
                 ? Container()
                 : FutureBuilder(
-                    future: videoListener.start(volume: 1, loop: false),
+                    future: videoFuture,
                     builder: (context, snap) {
                       if (snap.hasError) {
                         // log error
