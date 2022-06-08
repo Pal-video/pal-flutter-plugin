@@ -45,6 +45,7 @@ class PalSdk {
       onSkip: onSkip,
       onClose: onClose,
       onExpand: onExpand,
+      animateOnVideoEnd: false,
       child: SingleChoiceForm(
         question: question,
         choices: choices,
@@ -66,7 +67,7 @@ class PalSdk {
     required String companyTitle,
     String? avatarUrl,
     Function? onExpand,
-    Function? onClose,
+    Function? onVideoEnd,
     Function? onSkip,
   }) async {
     return showVideoAsset(
@@ -75,14 +76,15 @@ class PalSdk {
         userName: userName,
         companyTitle: companyTitle,
         avatarUrl: avatarUrl,
+        animateOnVideoEnd: true,
         onVideoEndAction: () {
           _overlayHelper.popHelper();
-          if (onClose != null) {
-            onClose();
+          if (onVideoEnd != null) {
+            onVideoEnd();
           }
         },
         onSkip: onSkip,
-        onClose: onClose,
+        onClose: onVideoEnd,
         onExpand: onExpand);
   }
 
@@ -92,6 +94,7 @@ class PalSdk {
     required String userName,
     required String companyTitle,
     required Function onVideoEndAction,
+    required bool animateOnVideoEnd,
     Function? onClose,
     Function? onExpand,
     String? avatarUrl,
@@ -123,6 +126,7 @@ class PalSdk {
                       videoAsset: videoAsset,
                       userName: userName,
                       companyTitle: companyTitle,
+                      animateOnVideoEnd: animateOnVideoEnd,
                       child: child,
                       onVideoEndAction: onVideoEndAction,
                       close: () {
@@ -155,6 +159,7 @@ class PalSdk {
     required String companyTitle,
     required Function onVideoEndAction,
     required Function close,
+    required bool animateOnVideoEnd,
     Function? onSkip,
     String? avatarUrl,
     Widget? child,
@@ -172,6 +177,7 @@ class PalSdk {
             userName: userName,
             avatarUrl: avatarUrl,
             onEndAction: onVideoEndAction,
+            animateOnVideoEnd: animateOnVideoEnd,
             triggerEndRemaining: const Duration(seconds: 1),
             onSkip: onSkip,
             close: close,

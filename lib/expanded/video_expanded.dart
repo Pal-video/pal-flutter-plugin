@@ -9,17 +9,22 @@ import 'video_listener.dart';
 const defaultBgColor = Color(0xFF191E26);
 
 class VideoExpanded extends StatefulWidget {
+  final bool testMode;
   final String videoAsset;
-  final Function? onSkip;
   final String userName;
   final String companyTitle;
   final String? avatarUrl;
+
   final Duration triggerEndRemaining;
+
+  final Function? onSkip;
   final Function? close;
   final Function? onEndAction;
+  final bool animateOnVideoEnd;
+
   final VideoPlayerController? videoPlayerController;
-  final bool testMode;
   final Color bgColor;
+
   final Widget? child;
 
   const VideoExpanded({
@@ -34,6 +39,7 @@ class VideoExpanded extends StatefulWidget {
     this.videoPlayerController,
     this.testMode = false,
     this.bgColor = defaultBgColor,
+    this.animateOnVideoEnd = false,
     this.close,
     this.child,
   }) : super(key: key);
@@ -115,7 +121,20 @@ class VideoExpandedState extends State<VideoExpanded>
     if (remaining <= widget.triggerEndRemaining &&
         _contentFadeController.status == AnimationStatus.dismissed) {
       _contentFadeController.forward();
+      _onEndVideo();
+    }
+  }
+
+  void _onEndVideo() {
+    if (widget.onEndAction != null && !widget.animateOnVideoEnd) {
       widget.onEndAction!();
+    }
+    if (widget.animateOnVideoEnd) {
+      _layoutFadeController.reverse().then((_) {
+        if (widget.onEndAction != null) {
+          widget.onEndAction!();
+        }
+      });
     }
   }
 

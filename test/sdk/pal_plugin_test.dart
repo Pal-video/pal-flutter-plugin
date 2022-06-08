@@ -39,6 +39,7 @@ void main() {
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
+      animateOnVideoEnd: false,
       onVideoEndAction: () {},
     );
     await tester.pump(const Duration(milliseconds: 500));
@@ -55,6 +56,7 @@ void main() {
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
+      animateOnVideoEnd: false,
       onVideoEndAction: () {},
     );
     await tester.pump(const Duration(milliseconds: 500));

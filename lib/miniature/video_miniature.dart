@@ -85,6 +85,10 @@ class _VideoMiniatureState extends State<VideoMiniature>
         builder: (context, snap) {
           if (snap.hasError || !videoListener.isPlaying) {
             // log error
+            debugPrint("Loading miniature... ${videoListener.isPlaying}");
+            if (snap.hasError) {
+              debugPrint("Error : ${snap.error}");
+            }
             return Container(
               width: widget.radius,
               height: widget.radius,
@@ -94,6 +98,7 @@ class _VideoMiniatureState extends State<VideoMiniature>
               ),
             );
           }
+          debugPrint("Loading miniature...");
           return PopAnimation(
             animation: _fadeAnimController,
             opacityAnim: opacityAnimation,

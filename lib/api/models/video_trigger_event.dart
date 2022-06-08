@@ -5,6 +5,7 @@ import 'dates.dart';
 enum VideoTriggerEvents {
   videoSkip,
   minVideoOpen,
+  videoViewed,
   answer,
 }
 

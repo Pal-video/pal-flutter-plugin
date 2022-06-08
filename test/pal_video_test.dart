@@ -4,13 +4,11 @@ import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pal/api/http_client.dart';
 import 'package:pal/api/models/author.dart';
-import 'package:pal/api/models/pal_options.dart';
 import 'package:pal/api/models/video_trigger.dart';
-import 'package:pal/api/pal.dart';
-import 'package:pal/api/session_api.dart';
-import 'package:pal/sdk/navigation_observer.dart';
-import 'package:pal/sdk/pal_sdk.dart';
+import 'package:pal/miniature/video_miniature.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'test_utils.dart';
 
 class BuildContextMock extends Mock implements BuildContext {}
 
@@ -23,39 +21,18 @@ void main() {
 
   final SharedPreferences sharedPreferencesMock = SharedPreferencesMock();
 
-  late final Pal pal;
-
-  late final PalNavigatorObserver palNavigatorObserver;
-
   GlobalKey<NavigatorState>? navigatorKey;
 
   MaterialApp? app;
 
   Future _createApp(WidgetTester tester) async {
     navigatorKey = GlobalKey<NavigatorState>();
-    // init pal
-    pal = Pal(
-      httpClient: httpClient,
-      sessionApi: PalSessionApi(httpClient, sharedPreferencesMock),
-    );
-    palNavigatorObserver = PalNavigatorObserver(pal: pal);
     when(() => sharedPreferencesMock.getString('sessionId'))
         .thenReturn('803238203D');
-    await pal.initialize(PalOptions(apiKey: 'apiKey'), navigatorKey!);
-    // create app
-    app = MaterialApp(
+    app = await createAppWithPal(
+      httpClient: httpClient,
+      sharedPreferencesMock: sharedPreferencesMock,
       navigatorKey: navigatorKey,
-      navigatorObservers: [palNavigatorObserver],
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const FakePage(title: 'home page'),
-        '/page1': (context) => const FakePage(title: 'page 1'),
-        '/page2': (context) => const FakePage(title: 'page 2'),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        splashFactory: InkSplash.splashFactory,
-      ),
     );
   }
 
@@ -74,6 +51,26 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     await tester.pumpAndSettle();
   }
+
+  testWidgets(
+    '''
+    call setCurrentScreen, api returns no action to perform
+    => shows nothing 
+    ''',
+    (WidgetTester tester) async {
+      await _createApp(tester);
+      when(() => httpClient.post(
+            any(),
+            body: any(named: 'body'),
+          )).thenAnswer((_) => Future.value(Response(
+            '',
+            200,
+          )));
+      await _startApp(tester);
+
+      expect(find.byType(VideoMiniature), findsNothing);
+    },
+  );
 
   testWidgets(
     '''start app on home page, shows a video, replace page with page 1 
@@ -102,6 +99,47 @@ void main() {
       expect(captured.length, 1);
     },
   );
+
+  // testWidgets(
+  //   '''
+  //   call setCurrentScreen with name screen1, sessionUID
+  //   => send a PalEvent with all attributes
+  //   ''',
+  //   (WidgetTester tester) async {
+  //     await _createApp(tester);
+  //     PalVideoTrigger videoTriggerResponse =
+  //         _createVideoOnlyAnswer(eventLogId: '9830203DJFB');
+  //     // mock the triggering video call
+  //     when(
+  //       () => httpClient.post(
+  //         Uri.parse('/eventlogs'),
+  //         body: any(named: 'body'),
+  //       ),
+  //     ).thenAnswer(
+  //       (_) => Future.value(Response(videoTriggerResponse.toJson(), 200)),
+  //     );
+  //     // mock the anayltics call
+  //     when(
+  //       () => httpClient.post(
+  //         Uri.parse('/eventlogs/9830203DJFB'),
+  //         body: any(named: 'body'),
+  //       ),
+  //     ).thenAnswer(
+  //       (_) => Future.value(Response('', 200)),
+  //     );
+  //     await _startApp(tester);
+
+  //     final capturedCall = verify(() => httpClient.post(
+  //           Uri.parse('/eventlogs/9830203DJFB'),
+  //           body: captureAny(named: "body"),
+  //         )).captured;
+  //     // should send 3 pal events :
+  //     // 1 - the video trigger,
+  //     // 2 - the video is opened
+  //     // 3 - the video has been viewed
+  //     expect(capturedCall.length, 3);
+  //   },
+  // );
 }
 
 class FakePage extends StatelessWidget {
@@ -117,9 +155,9 @@ class FakePage extends StatelessWidget {
   }
 }
 
-PalVideoTrigger _createVideoOnlyAnswer() {
+PalVideoTrigger _createVideoOnlyAnswer({String? eventLogId}) {
   final videoTriggerResponse = PalVideoTrigger(
-    eventLogId: '3682638A',
+    eventLogId: eventLogId ?? '3682638A',
     videoId: 'videoId98309283',
     creationDate: DateTime.now(),
     // type: PalVideos.,
