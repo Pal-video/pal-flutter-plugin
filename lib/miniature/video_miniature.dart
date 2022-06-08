@@ -31,6 +31,8 @@ class _VideoMiniatureState extends State<VideoMiniature>
 
   late final VideoListener videoListener;
 
+  late final Future<void> videoFuture;
+
   @override
   void initState() {
     super.initState();
@@ -67,6 +69,10 @@ class _VideoMiniatureState extends State<VideoMiniature>
         _fadeAnimController.forward();
       },
     );
+    videoFuture = videoListener.start(
+      volume: 0.0,
+      loop: true,
+    );
   }
 
   @override
@@ -81,13 +87,12 @@ class _VideoMiniatureState extends State<VideoMiniature>
     return SizedBox(
       width: widget.radius,
       child: FutureBuilder(
-        future: videoListener.start(volume: 0, loop: true),
+        future: videoFuture,
         builder: (context, snap) {
           if (snap.hasError || !videoListener.isPlaying) {
-            // log error
-            debugPrint("Loading miniature... ${videoListener.isPlaying}");
             if (snap.hasError) {
-              debugPrint("Error : ${snap.error}");
+              // log error
+              debugPrint("Error loading video : ${snap.error}");
             }
             return Container(
               width: widget.radius,
@@ -98,7 +103,6 @@ class _VideoMiniatureState extends State<VideoMiniature>
               ),
             );
           }
-          debugPrint("Loading miniature...");
           return PopAnimation(
             animation: _fadeAnimController,
             opacityAnim: opacityAnimation,

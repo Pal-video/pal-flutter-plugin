@@ -117,7 +117,8 @@ class Pal {
   }) {
     return _palSdk!.showVideoOnly(
       context: context,
-      videoAsset: trigger.videoUrl,
+      videoUrl: trigger.videoUrl,
+      minVideoUrl: trigger.videoThumbUrl,
       userName: trigger.author.userName,
       companyTitle: trigger.author.companyTitle,
       onSkip: () => _onVideoSkipped(trigger),
@@ -176,6 +177,7 @@ class Pal {
 
   Future<void> _onVideoViewed(PalVideoTrigger trigger) async {
     try {
+      triggeredVideo = null;
       final event = VideoTriggerEvent(
         time: DateTime.now(),
         sessionId: _sessionApi!.session.uid,

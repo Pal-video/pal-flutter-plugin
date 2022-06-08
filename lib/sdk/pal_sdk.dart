@@ -62,7 +62,8 @@ class PalSdk {
 
   Future<void> showVideoOnly({
     required BuildContext context,
-    required String videoAsset,
+    required String videoUrl,
+    required String minVideoUrl,
     required String userName,
     required String companyTitle,
     String? avatarUrl,
@@ -72,7 +73,7 @@ class PalSdk {
   }) async {
     return showVideoAsset(
         context: context,
-        videoAsset: videoAsset,
+        videoAsset: videoUrl,
         userName: userName,
         companyTitle: companyTitle,
         avatarUrl: avatarUrl,

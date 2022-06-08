@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
   Future _showHappyDemoPopup() {
     return palSdk.showVideoOnly(
       context: context,
-      videoAsset:
+      videoUrl:
           'https://res.cloudinary.com/apparence/video/upload/ac_none,c_crop,h_300,w_300/v1651066364/Pal/dev/projects/0fe00730-79db-44d5-863d-9139974abaf6/videos/eba985b2-d35d-4863-858d-14572f5202ab.mp4',
       userName: 'David',
       companyTitle: 'Product manager - Happy',
@@ -195,7 +195,7 @@ class _HomePageState extends State<HomePage> {
           onTapBottom: () async {
             await palSdk.showVideoOnly(
               context: context,
-              videoAsset: 'assets/fridaa.mp4',
+              videoUrl: 'assets/fridaa.mp4',
               userName: 'David',
               companyTitle: 'Product manager - Fridaa',
             );

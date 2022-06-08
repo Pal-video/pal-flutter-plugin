@@ -77,7 +77,8 @@ void main() {
     await beforeEach(tester);
     await palSdk.showVideoOnly(
       context: navigatorKey.currentContext!,
-      videoAsset: 'assets/me.mp4',
+      videoUrl: 'assets/me.mp4',
+      minVideoUrl: 'assets/minme.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
     );
