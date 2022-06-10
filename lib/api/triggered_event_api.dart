@@ -15,7 +15,7 @@ class PalTriggeredEventApi {
     String? eventlogId,
     VideoTriggerEvent event,
   ) async {
-    if (eventlogId == null) {
+    if (eventlogId == null || eventlogId.isEmpty) {
       return;
     }
     _resultEvents.putIfAbsent(eventlogId, () => []);

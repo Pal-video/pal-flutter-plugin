@@ -14,12 +14,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await pal.initialize(
     PalOptions(
-      apiKey:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjM2MjRlOTg3LTJiMWUtNGYwMy1hZmFlLTBlNTdlYzEyYmVkZEBwYWwuaW8iLCJzdWIiOiIzNjI0ZTk4Ny0yYjFlLTRmMDMtYWZhZS0wZTU3ZWMxMmJlZGQiLCJpYXQiOjE2NTQ4NjQ4NzIsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IkRFVkVMT1BNRU5UIiwiZXhwIjoxMDI5NDg2NDg3MiwianRpIjoiNjEyYzkwYzktOTQ2Yi00NTVkLTk1NDItNGI2OTQwYThkMmM3In0.Zh6-Xmpv34ieb4Z2dTdSUqRAUGFE70WpLc-e8EBk7lXiuPwkM6CuUMGcK_Tq_boGzAZ2RZtZue49Mz_j70J88wBUquieQ2w2GM4tvNNJwBq2ABx8e52nByLdgbJ0Wrt2k3mJmL9LgiMa7gx0Iy8vc6Ts54dESc1dAnxB48Ns0oLcv2xV1gylPn71eYYSt14nTdd08cZpAaC3tNQIMdWrZUdH0wono1NV5iR4-gZTG9_eeOX_eUKGA6xBOAMJLay_0be9iXOntlifhPmztlQnR_H5L5JO09Q-rLyYltPs-GkFt6EXnBUAgexyOzfABzpQtzp0dP28BIPsCUko8N0CtA',
+      apiKey: const String.fromEnvironment('PAL_TOKEN'),
     ),
     navigatorKey,
   );
-
   runApp(const MyApp());
 }
 
