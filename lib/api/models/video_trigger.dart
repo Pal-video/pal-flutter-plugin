@@ -5,11 +5,11 @@ import 'package:pal/api/models/survey.dart';
 
 enum PalVideos {
   survey,
-  min_to_big_video,
+  // min_to_big_video, //VNEXT
 }
 
 class PalVideoTrigger {
-  String eventLogId;
+  String? eventLogId;
   String videoId;
   DateTime creationDate;
 

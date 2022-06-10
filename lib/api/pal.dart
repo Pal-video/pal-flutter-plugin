@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pal/api/event_api.dart';
 import 'package:pal/api/models/video_trigger.dart';
@@ -96,14 +98,22 @@ class Pal {
     if (triggeredVideo != null) {
       return;
     }
-    final screenTriggeredVideo = await _eventApi!.logCurrentScreen(
-      _sessionApi!.session,
-      name,
+    runZonedGuarded(
+      () async {
+        final screenTriggeredVideo = await _eventApi!.logCurrentScreen(
+          _sessionApi!.session,
+          name,
+        );
+        if (screenTriggeredVideo != null) {
+          triggeredVideo = screenTriggeredVideo;
+          await _showVideo(
+            context: buildContext,
+            trigger: screenTriggeredVideo,
+          );
+        }
+      },
+      (error, stack) => debugPrint("[PAL] error showing video: $error"),
     );
-    if (screenTriggeredVideo != null) {
-      triggeredVideo = screenTriggeredVideo;
-      await _showVideo(context: buildContext, trigger: screenTriggeredVideo);
-    }
   }
 
   Future<void> logButtonClick(BuildContext buildContext, String name) {
@@ -111,7 +121,7 @@ class Pal {
   }
 
   /// shows a video miniature on the client app
-  Future<void> _showVideo({
+  Future<void>? _showVideo({
     required BuildContext context,
     required PalVideoTrigger trigger,
   }) {
