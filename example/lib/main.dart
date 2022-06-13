@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
               'Force recreate the Pal user session',
             ),
             leading: const Icon(Icons.cloud_download),
-            onTap: () => _showSingleChoiceDemoPopup(),
+            onTap: () => Pal.instance.resetSession(),
           ),
           const Divider(),
           ListTile(

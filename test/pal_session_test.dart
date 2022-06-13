@@ -56,7 +56,7 @@ void main() {
                 200,
               ),
             ));
-        when(sharedPreferencesMock.getString('sessionId')).thenReturn(null);
+        // when(sharedPreferencesMock.getString('sessionId')).thenReturn(null);
         when(sharedPreferencesMock.setString('sessionId', '803238203D'))
             .thenAnswer((_) => Future.value(true));
         beforeEach();
@@ -74,6 +74,55 @@ void main() {
         // session creation embedd current client context
         expect(createSessionReq.frameworkType, "FLUTTER");
         expect(createSessionReq.platform, "android");
+      },
+    );
+  });
+
+  group('user has a stored session', () {
+    late Pal pal;
+
+    HttpClient httpClient = MockHttpClient();
+
+    final navigatorKey = GlobalKey<NavigatorState>();
+
+    SharedPreferences sharedPreferencesMock = MockSharedPreferences();
+
+    Future<void> beforeEach() async {
+      pal = Pal(
+          httpClient: httpClient,
+          sdk: PalSdk.fromKey(navigatorKey: navigatorKey),
+          sessionApi: PalSessionApi(httpClient, sharedPreferencesMock));
+      // create a session mock request
+      when(httpClient.post(
+        Uri.parse('/sessions'),
+        body: anyNamed('body'),
+      )).thenAnswer((_) => Future.value(
+            Response(
+              '{"uid": "803238203D"}',
+              200,
+            ),
+          ));
+      // call create session
+      await pal.initialize(PalOptions(apiKey: 'apiKey'), navigatorKey);
+    }
+
+    tearDown(() {
+      reset(httpClient);
+      reset(sharedPreferencesMock);
+    });
+
+    testWidgets(
+      '''
+      create a remote session and save it in sharedpreferences
+      call reset session => session is removed from sharedpreferences
+      ''',
+      (WidgetTester tester) async {
+        // init pal
+        await beforeEach();
+
+        // call reset session
+        await pal.resetSession();
+        verify(sharedPreferencesMock.clear()).called(1);
       },
     );
   });
