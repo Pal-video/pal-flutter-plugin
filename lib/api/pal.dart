@@ -137,25 +137,25 @@ class Pal {
     );
   }
 
-  Future<void> _showSurvey({
-    required BuildContext context,
-    required PalVideoTrigger trigger,
-  }) {
-    return _palSdk!.showSingleChoiceSurvey(
-      context: context,
-      videoAsset: trigger.videoUrl,
-      userName: trigger.author.userName,
-      companyTitle: trigger.author.companyTitle,
-      question: trigger.survey!.question,
-      choices: trigger.survey!.choices!
-          .map((e) => Choice(id: e.id, text: e.text))
-          .toList(),
-      onTapChoice: (choice) => _onTapChoice(trigger, choice),
-      onVideoEndAction: () => _onVideoViewed(trigger),
-      onSkip: () => _onVideoSkipped(trigger),
-      onExpand: () => _onVideoExpand(trigger),
-    );
-  }
+  // Future<void> _showSurvey({
+  //   required BuildContext context,
+  //   required PalVideoTrigger trigger,
+  // }) {
+  //   return _palSdk!.showSingleChoiceSurvey(
+  //     context: context,
+  //     videoAsset: trigger.videoUrl,
+  //     userName: trigger.author.userName,
+  //     companyTitle: trigger.author.companyTitle,
+  //     question: trigger.survey!.question,
+  //     choices: trigger.survey!.choices!
+  //         .map((e) => Choice(id: e.id, text: e.text))
+  //         .toList(),
+  //     onTapChoice: (choice) => _onTapChoice(trigger, choice),
+  //     onVideoEndAction: () => _onVideoViewed(trigger),
+  //     onSkip: () => _onVideoSkipped(trigger),
+  //     onExpand: () => _onVideoExpand(trigger),
+  //   );
+  // }
 
   Future<void> _onVideoExpand(PalVideoTrigger trigger) async {
     try {
@@ -171,19 +171,19 @@ class Pal {
     }
   }
 
-  Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {
-    try {
-      final event = VideoTriggerEvent.singleChoice(
-        choice.id,
-        _sessionApi!.session.uid,
-      );
-      _triggeredEventApi!.save(trigger.eventLogId, event);
-      _triggeredEventApi!.send();
-    } catch (err, stack) {
-      debugPrint("Pal error");
-      debugPrintStack(stackTrace: stack);
-    }
-  }
+  // Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {
+  //   try {
+  //     final event = VideoTriggerEvent.singleChoice(
+  //       choice.id,
+  //       _sessionApi!.session.uid,
+  //     );
+  //     _triggeredEventApi!.save(trigger.eventLogId, event);
+  //     _triggeredEventApi!.send();
+  //   } catch (err, stack) {
+  //     debugPrint("Pal error");
+  //     debugPrintStack(stackTrace: stack);
+  //   }
+  // }
 
   Future<void> _onVideoViewed(PalVideoTrigger trigger) async {
     try {

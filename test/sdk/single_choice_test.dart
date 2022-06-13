@@ -6,7 +6,7 @@ import 'package:pal/surveys/single_choice/single_choice.dart';
 
 void main() {
   group('miniature > video > single choice', () {
-    BuildContext? _context;
+    BuildContext? context;
 
     final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -15,8 +15,8 @@ void main() {
     Future beforeEach(WidgetTester tester) async {
       var app = MaterialApp(
         navigatorKey: navigatorKey,
-        home: Builder(builder: (context) {
-          _context = context;
+        home: Builder(builder: (newContext) {
+          context = newContext;
           return Scaffold(
             body: Container(),
           );
@@ -24,10 +24,10 @@ void main() {
       );
       await tester.pumpWidget(app);
       await tester.pump(const Duration(milliseconds: 500));
-      expect(_context, isNotNull);
+      expect(context, isNotNull);
       // show a single choice video
       await palSdk.showSingleChoiceSurvey(
-        context: _context!,
+        context: context!,
         videoAsset: 'assets/me.mp4',
         userName: 'Gautier',
         companyTitle: 'Apparence.io CTO',

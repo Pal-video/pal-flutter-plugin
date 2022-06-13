@@ -67,10 +67,11 @@ class UserCard extends StatefulWidget {
   //     );
 
   @override
-  _UserCardState createState() => _UserCardState();
+  UserCardState createState() => UserCardState();
 }
 
-class _UserCardState extends State<UserCard> {
+@visibleForTesting
+class UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
     return Container(

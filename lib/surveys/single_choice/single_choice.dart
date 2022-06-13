@@ -26,7 +26,7 @@ class SingleChoiceFormState extends State<SingleChoiceForm>
     with SingleTickerProviderStateMixin {
   AnimationController? _animController;
 
-  Animation<double>? _tweenAnim;
+  // Animation<double>? _tweenAnim;
 
   @override
   void initState() {
@@ -35,13 +35,13 @@ class SingleChoiceFormState extends State<SingleChoiceForm>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _tweenAnim = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animController!,
-      curve: Curves.easeOut,
-    ));
+    // _tweenAnim = Tween<double>(
+    //   begin: 0.0,
+    //   end: 1.0,
+    // ).animate(CurvedAnimation(
+    //   parent: _animController!,
+    //   curve: Curves.easeOut,
+    // ));
     // Future.delayed(const Duration(milliseconds: 1000), () {
     //   _animController.forward();
     // });
