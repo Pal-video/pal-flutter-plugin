@@ -118,9 +118,12 @@ class Pal {
 
   /// reset the stored session UID from the local storage
   /// call it whenever your user logs out
-  Future<void> resetSession() async {
+  Future<void> clearSession() async {
     runZonedGuarded(
-      () => _sessionApi!.resetSession(),
+      () async {
+        await _sessionApi!.clearSession();
+        await _sessionApi!.initSession();
+      },
       (error, stack) => debugPrint("[PAL] error reseting session: $error"),
     );
   }

@@ -44,7 +44,7 @@ class PalSessionApi {
 
   bool get hasSession => _session != null && _session!.uid.isNotEmpty;
 
-  Future<void> resetSession() async {
+  Future<void> clearSession() async {
     await sharedPreferences.clear();
   }
 }
