@@ -56,7 +56,7 @@ void main() {
                 200,
               ),
             ));
-        // when(sharedPreferencesMock.getString('sessionId')).thenReturn(null);
+        when(sharedPreferencesMock.getString('sessionId')).thenReturn(null);
         when(sharedPreferencesMock.setString('sessionId', '803238203D'))
             .thenAnswer((_) => Future.value(true));
         beforeEach();
