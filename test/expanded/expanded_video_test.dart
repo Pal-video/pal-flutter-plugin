@@ -103,23 +103,21 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
     });
 
-    // we replaced this with a stopwatch since getting position creates lag
-    // testWidgets(
-    //     'trigger is called 0s before the end of the vidéo => endActionIsCalled',
-    //     (WidgetTester tester) async {
-    //   await beforeEach(tester);
-    //   final videoExpandedState =
-    //       tester.state<VideoExpandedState>(find.byType(VideoExpanded));
+    testWidgets(
+        'trigger is called 0s before the end of the vidéo => endActionIsCalled',
+        (WidgetTester tester) async {
+      await beforeEach(tester);
+      final videoExpandedState =
+          tester.state<VideoExpandedState>(find.byType(VideoExpanded));
 
-    //   when(videoExpandedState.videoPlayerController!.position)
-    //       .thenAnswer((_) => Future.value(Duration.zero));
-    //   videoExpandedState.videoListener.onPositionChangedListener();
+      when(videoExpandedState.videoPlayerController!.position)
+          .thenAnswer((_) => Future.value(Duration.zero));
 
-    //   await tester.pump();
-    //   expect(hasEnd, isTrue);
-    //   await tester.pump(const Duration(milliseconds: 500));
-    //   await tester.pump(const Duration(milliseconds: 500));
-    //   await tester.pump(const Duration(milliseconds: 500));
-    // });
+      await tester.pump();
+      expect(hasEnd, isTrue);
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+    });
   });
 }
