@@ -111,6 +111,7 @@ class Pal {
         if (screenTriggeredVideo == null) {
           return;
         }
+        triggeredVideo = screenTriggeredVideo;
         if (screenTriggeredVideo.isTalkType) {
           await _showVideo(
             context: buildContext,
@@ -212,6 +213,7 @@ class Pal {
 
   Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {
     try {
+      triggeredVideo = null;
       final event = VideoTriggerEvent.singleChoice(
         choice.id,
         _sessionApi!.session.uid,

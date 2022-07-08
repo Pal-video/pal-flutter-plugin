@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 import '../overlays/pal_banner.dart';
 import 'state_actions.dart';
 import 'video_listener.dart';
+import 'video_progress.dart';
 
 const defaultBgColor = Color(0xFF191E26);
 
@@ -53,7 +54,10 @@ class VideoExpanded extends StatefulWidget {
 class VideoExpandedState extends State<VideoExpanded>
     with TickerProviderStateMixin {
   VideoPlayerController? videoPlayerController;
+
   late VideoListener videoListener;
+
+  late Stream<VideoProgression> videoListener$;
 
   /// content fade animation
   late final AnimationController _contentFadeController = AnimationController(
@@ -106,6 +110,7 @@ class VideoExpandedState extends State<VideoExpanded>
       videoPlayerController!,
       onPositionChanged: _onPositionChangedListener,
     );
+    videoListener$ = videoListener.listenProgress();
     _layoutFadeController.forward();
     videoFuture = videoListener.start(volume: 1, loop: false);
   }
@@ -229,7 +234,7 @@ class VideoExpandedState extends State<VideoExpanded>
           Positioned(
             left: 24,
             right: 24,
-            bottom: 24,
+            bottom: 64,
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return AnimatedBuilder(
@@ -248,6 +253,23 @@ class VideoExpandedState extends State<VideoExpanded>
                 );
               },
             ),
+          ),
+          StreamBuilder<VideoProgression>(
+            stream: videoListener$,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container();
+              }
+              return Positioned(
+                top: 64,
+                left: 0,
+                right: 0,
+                child: VideoProgress(
+                  current: snapshot.data!.current,
+                  total: snapshot.data!.total,
+                ),
+              );
+            },
           ),
           const Positioned(
             left: 0,

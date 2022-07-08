@@ -82,7 +82,7 @@ void main() {
     testWidgets('onSkip is visible, skip text is visible',
         (WidgetTester tester) async {
       await beforeEach(tester);
-      expect(find.byType(ElevatedButton), findsOneWidget);
+      expect(find.byKey(const ValueKey("palVideoSkip")), findsOneWidget);
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
@@ -103,22 +103,23 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
     });
 
-    testWidgets(
-        'trigger is called 0s before the end of the vidéo => endActionIsCalled',
-        (WidgetTester tester) async {
-      await beforeEach(tester);
-      final videoExpandedState =
-          tester.state<VideoExpandedState>(find.byType(VideoExpanded));
+    // we replaced this with a stopwatch since getting position creates lag
+    // testWidgets(
+    //     'trigger is called 0s before the end of the vidéo => endActionIsCalled',
+    //     (WidgetTester tester) async {
+    //   await beforeEach(tester);
+    //   final videoExpandedState =
+    //       tester.state<VideoExpandedState>(find.byType(VideoExpanded));
 
-      when(videoExpandedState.videoPlayerController!.position)
-          .thenAnswer((_) => Future.value(Duration.zero));
-      videoExpandedState.videoListener.onPositionChangedListener();
+    //   when(videoExpandedState.videoPlayerController!.position)
+    //       .thenAnswer((_) => Future.value(Duration.zero));
+    //   videoExpandedState.videoListener.onPositionChangedListener();
 
-      await tester.pump();
-      expect(hasEnd, isTrue);
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pump(const Duration(milliseconds: 500));
-    });
+    //   await tester.pump();
+    //   expect(hasEnd, isTrue);
+    //   await tester.pump(const Duration(milliseconds: 500));
+    //   await tester.pump(const Duration(milliseconds: 500));
+    //   await tester.pump(const Duration(milliseconds: 500));
+    // });
   });
 }

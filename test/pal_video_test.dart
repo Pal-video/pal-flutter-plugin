@@ -86,6 +86,7 @@ void main() {
             200,
           )));
       await _startApp(tester);
+      expect(find.byType(VideoMiniature), findsOneWidget);
       navigatorKey!.currentState!.pushReplacementNamed('/page1');
       await tester.pumpAndSettle();
 

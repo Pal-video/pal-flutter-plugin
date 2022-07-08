@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,10 +8,20 @@ typedef OnPositionChanged = void Function(Duration duration);
 
 typedef OnVideoStarted = void Function();
 
+class VideoProgression {
+  Duration current;
+  Duration total;
+
+  VideoProgression(this.current, this.total);
+}
+
 class VideoListener {
   final OnPositionChanged? onPositionChanged;
 
   final OnVideoStarted? onVideoStarted;
+
+  final StreamController<VideoProgression> _videoProgressStreamCtrl =
+      StreamController();
 
   VideoPlayerController controller;
 
@@ -31,7 +42,6 @@ class VideoListener {
     if (_hasInit) {
       return;
     }
-    controller.addListener(onPositionChangedListener);
     _hasInit = true;
     // since we can't test the video ending trigger in full integration test
     if (isTesting && onPositionChanged != null) {
@@ -59,8 +69,7 @@ class VideoListener {
       if (onVideoStarted != null) {
         onVideoStarted!();
       }
-      // await Future.delayed(const Duration(milliseconds: 100), () async {
-      // });
+      await _startProgressTimer();
       return true;
     } catch (e, d) {
       _playing = false;
@@ -69,18 +78,49 @@ class VideoListener {
     return false;
   }
 
+  Stopwatch? _stopWatch;
+  Timer? _timer;
+
+  /// Currently listening to video progression makes laggy
+  /// so we create our own timer refreshing progression every seconds
+  Future<void> _startProgressTimer() async {
+    final totalDurationAwaited = await totalDuration;
+    _stopWatch = Stopwatch()..start();
+    _videoProgressStreamCtrl.add(VideoProgression(
+      Duration.zero,
+      totalDurationAwaited!,
+    ));
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_stopWatch!.elapsed >= totalDurationAwaited) {
+        timer.cancel();
+        _stopWatch!.stop();
+        return;
+      }
+      final remaining = totalDurationAwaited - _stopWatch!.elapsed;
+      if (onPositionChanged != null) {
+        onPositionChanged!(remaining);
+      }
+      if (_videoProgressStreamCtrl.isClosed) {
+        return;
+      }
+      _videoProgressStreamCtrl.add(VideoProgression(
+        _stopWatch!.elapsed,
+        totalDurationAwaited,
+      ));
+    });
+  }
+
   bool get isPlaying =>
       _playing && controller.value.isPlaying && controller.value.isInitialized;
 
   dispose() {
-    controller.removeListener(onPositionChangedListener);
     controller.dispose();
-  }
-
-  onPositionChangedListener() async {
-    final remaining = await remainingDuration;
-    if (remaining != null && onPositionChanged != null) {
-      onPositionChanged!(remaining);
+    _videoProgressStreamCtrl.close();
+    if (_stopWatch != null && _stopWatch!.isRunning) {
+      _stopWatch!.stop();
+    }
+    if (_timer != null && _timer!.isActive) {
+      _timer!.cancel();
     }
   }
 
@@ -96,6 +136,11 @@ class VideoListener {
     }
     return null;
   }
+
+  Future<Duration?> get totalDuration async => controller.value.duration;
+
+  Stream<VideoProgression> listenProgress() =>
+      _videoProgressStreamCtrl.stream.asBroadcastStream();
 
   Future<void> pause() async {
     await controller.pause();
