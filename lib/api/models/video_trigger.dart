@@ -77,4 +77,8 @@ class PalVideoTrigger {
     }
     return search.first;
   }
+
+  bool get isSurveyType => survey != null;
+
+  bool get isTalkType => survey == null;
 }

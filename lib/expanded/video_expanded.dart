@@ -3,6 +3,7 @@ import 'package:pal/expanded/video_container.dart';
 import 'package:pal/widgets/user_card/user_card.dart';
 import 'package:video_player/video_player.dart';
 
+import '../overlays/pal_banner.dart';
 import 'state_actions.dart';
 import 'video_listener.dart';
 
@@ -215,12 +216,14 @@ class VideoExpandedState extends State<VideoExpanded>
           if (widget.onSkip != null)
             Positioned(
               right: 24,
-              top: 40,
-              child: ElevatedButton(
+              top: 60,
+              child: InkWell(
                 key: const ValueKey("palVideoSkip"),
-                style: raisedButtonStyle,
-                onPressed: _skipVideo,
-                child: const Icon(Icons.close),
+                onTap: _skipVideo,
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
               ),
             ),
           Positioned(
@@ -246,17 +249,14 @@ class VideoExpandedState extends State<VideoExpanded>
               },
             ),
           ),
+          const Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: PalBanner(),
+          ),
         ],
       ),
     );
   }
-
-  ButtonStyle get raisedButtonStyle => ElevatedButton.styleFrom(
-        onPrimary: Colors.white,
-        primary: Colors.black,
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
-      );
 }

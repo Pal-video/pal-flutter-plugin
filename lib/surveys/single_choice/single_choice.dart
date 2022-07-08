@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'single_choice_model.dart';
 
+const successColor = Color(0xFF60E78D);
+
+const textColor = Color(0xFF0F0F0F);
+
+const choiceBgColor = Color(0xFFFFFFFF);
+
 typedef OnTapChoiceWithContext = void Function(
     BuildContext context, Choice choice);
 
@@ -58,48 +64,46 @@ class SingleChoiceFormState extends State<SingleChoiceForm>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Align(
+        alignment: Alignment.bottomCenter,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: [
-            const Spacer(flex: 1),
+            // const Spacer(flex: 2),
             Flexible(
-              fit: FlexFit.loose,
+              flex: 0,
               child: Text(
                 widget.question,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 21,
+                  fontSize: 24,
                 ),
               ),
             ),
             const Flexible(
               flex: 0,
-              fit: FlexFit.loose,
-              child: SizedBox(height: 12),
+              child: SizedBox(height: 30),
             ),
-            Flexible(
-              flex: 1,
-              fit: FlexFit.loose,
-              child: ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (_, index) => ChoiceWidget.pal(
-                  choice: widget.choices[index],
-                  onTap: widget.onTap,
-                ),
-                itemCount: widget.choices.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(height: 8),
-              ),
+            Wrap(
+              direction: Axis.horizontal,
+              spacing: 16,
+              runSpacing: 16,
+              children: widget.choices
+                  .map(
+                    (choice) => ChoiceWidget.pal(
+                      choice: choice,
+                      onTap: widget.onTap,
+                    ),
+                  )
+                  .toList(),
             ),
             const Flexible(
               flex: 0,
-              fit: FlexFit.loose,
-              child: SizedBox(height: 16),
+              child: SizedBox(height: 72),
             ),
           ],
         ),
@@ -127,8 +131,8 @@ class ChoiceWidget extends StatelessWidget {
   }) =>
       ChoiceWidget(
         choice,
-        bgColor: const Color(0xFF2D3645),
-        onTapColor: const Color(0xFF3E6199),
+        bgColor: choiceBgColor,
+        onTapColor: successColor,
         onTap: onTap,
       );
 
@@ -137,24 +141,32 @@ class ChoiceWidget extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
+        hoverColor: onTapColor,
+        splashColor: onTapColor,
         onTap: () {
           Future.delayed(const Duration(milliseconds: 500), () {
             onTap(context, choice);
           });
         },
-        child: Ink(
-          color: bgColor,
-          padding: const EdgeInsets.all(16),
-          child: Text(
-            choice.text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
+        child: LayoutBuilder(builder: (context, constraints) {
+          return Ink(
+            width: constraints.maxWidth,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              color: bgColor,
             ),
-          ),
-        ),
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              choice.text,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

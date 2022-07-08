@@ -5,16 +5,14 @@
 class ChoiceItem {
   String id;
   String text;
+
   ChoiceItem({
     required this.id,
     required this.text,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'text': text,
-    };
+  MapEntry toMap() {
+    return MapEntry(id, text);
   }
 
   factory ChoiceItem.fromMap(Map<String, dynamic> map) {
@@ -55,17 +53,21 @@ class Survey {
   Map<String, dynamic> toMap() {
     return {
       'question': question,
-      'choices': choices?.map((x) => x.toMap()).toList(),
+      'choices': {for (var v in choices!) v.id: v.text},
     };
   }
 
   factory Survey.fromMap(Map<String, dynamic> map) {
+    final List<ChoiceItem> choices = [];
+    if (map.containsKey('choices')) {
+      final choiceMap = map['choices'] as Map<String, String>;
+      choiceMap.forEach(
+        (key, value) => choices.add(ChoiceItem(id: key, text: value)),
+      );
+    }
     return Survey(
       question: map['question'] ?? '',
-      choices: map['choices'] != null
-          ? List<ChoiceItem>.from(
-              map['choices']?.map((x) => ChoiceItem.fromMap(x)))
-          : null,
+      choices: choices,
     );
   }
 

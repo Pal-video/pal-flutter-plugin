@@ -120,7 +120,8 @@ class _HomePageState extends State<HomePage> {
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
-      question: 'my question lorem ipsum lorem',
+      question:
+          'Choisissez la prochaine feature qui pourrait vous intéresser ?',
       choices: const [
         Choice(id: 'a', text: 'lorem A'),
         Choice(id: 'b', text: 'lorem B'),

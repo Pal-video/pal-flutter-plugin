@@ -83,6 +83,10 @@ class Pal {
     throw "not implemented yet";
   }
 
+  Future<void> logButtonClick(BuildContext buildContext, String name) {
+    throw "not implemented yet";
+  }
+
   /// send the screen view event to the server
   /// if a video is triggered, it will be returned
   /// depending on configuration
@@ -104,9 +108,16 @@ class Pal {
           _sessionApi!.session,
           name,
         );
-        if (screenTriggeredVideo != null) {
-          triggeredVideo = screenTriggeredVideo;
+        if (screenTriggeredVideo == null) {
+          return;
+        }
+        if (screenTriggeredVideo.isTalkType) {
           await _showVideo(
+            context: buildContext,
+            trigger: screenTriggeredVideo,
+          );
+        } else if (screenTriggeredVideo.isSurveyType) {
+          await _showSurvey(
             context: buildContext,
             trigger: screenTriggeredVideo,
           );
@@ -128,7 +139,23 @@ class Pal {
     );
   }
 
-  Future<void> logButtonClick(BuildContext buildContext, String name) {
+  /// returns the current session UID used by Pal to identify the current user
+  ///
+  /// for more informations about sessions please check our documentation
+  Future<String?> getSession() {
+    if (_sessionApi!.hasSession) {
+      return Future.value(_sessionApi!.session.uid);
+    }
+    return Future.value(null);
+  }
+
+  /// bind the user to an existing session id
+  /// - the session id must exists on Pal server
+  /// - the session id exists on current project
+  /// You can use this when one of your users logs in again after a logout
+  ///
+  /// for more informations about sessions please check our documentation
+  Future<void> setSession(String sessionId) {
     throw "not implemented yet";
   }
 
@@ -149,25 +176,25 @@ class Pal {
     );
   }
 
-  // Future<void> _showSurvey({
-  //   required BuildContext context,
-  //   required PalVideoTrigger trigger,
-  // }) {
-  //   return _palSdk!.showSingleChoiceSurvey(
-  //     context: context,
-  //     videoAsset: trigger.videoUrl,
-  //     userName: trigger.author.userName,
-  //     companyTitle: trigger.author.companyTitle,
-  //     question: trigger.survey!.question,
-  //     choices: trigger.survey!.choices!
-  //         .map((e) => Choice(id: e.id, text: e.text))
-  //         .toList(),
-  //     onTapChoice: (choice) => _onTapChoice(trigger, choice),
-  //     onVideoEndAction: () => _onVideoViewed(trigger),
-  //     onSkip: () => _onVideoSkipped(trigger),
-  //     onExpand: () => _onVideoExpand(trigger),
-  //   );
-  // }
+  Future<void> _showSurvey({
+    required BuildContext context,
+    required PalVideoTrigger trigger,
+  }) {
+    return _palSdk!.showSingleChoiceSurvey(
+      context: context,
+      videoAsset: trigger.videoUrl,
+      userName: trigger.author.userName,
+      companyTitle: trigger.author.companyTitle,
+      question: trigger.survey!.question,
+      choices: trigger.survey!.choices!
+          .map((e) => Choice(id: e.id, text: e.text))
+          .toList(),
+      onTapChoice: (choice) => _onTapChoice(trigger, choice),
+      onVideoEndAction: () => _onVideoViewed(trigger),
+      onSkip: () => _onVideoSkipped(trigger),
+      onExpand: () => _onVideoExpand(trigger),
+    );
+  }
 
   Future<void> _onVideoExpand(PalVideoTrigger trigger) async {
     try {
@@ -183,19 +210,19 @@ class Pal {
     }
   }
 
-  // Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {
-  //   try {
-  //     final event = VideoTriggerEvent.singleChoice(
-  //       choice.id,
-  //       _sessionApi!.session.uid,
-  //     );
-  //     _triggeredEventApi!.save(trigger.eventLogId, event);
-  //     _triggeredEventApi!.send();
-  //   } catch (err, stack) {
-  //     debugPrint("Pal error");
-  //     debugPrintStack(stackTrace: stack);
-  //   }
-  // }
+  Future<void> _onTapChoice(PalVideoTrigger trigger, Choice choice) async {
+    try {
+      final event = VideoTriggerEvent.singleChoice(
+        choice.id,
+        _sessionApi!.session.uid,
+      );
+      _triggeredEventApi!.save(trigger.eventLogId, event);
+      _triggeredEventApi!.send();
+    } catch (err, stack) {
+      debugPrint("Pal error");
+      debugPrintStack(stackTrace: stack);
+    }
+  }
 
   Future<void> _onVideoViewed(PalVideoTrigger trigger) async {
     try {

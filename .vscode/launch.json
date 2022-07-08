@@ -21,8 +21,8 @@
             "request": "launch",
             "program": "example/lib/main.dart",
             "args": [
-                "--dart-define=SERVER_URL=http://192.168.8.168:8080",
-                // "--dart-define=SERVER_URL=http://192.168.1.21:8080",
+                // "--dart-define=SERVER_URL=http://192.168.8.168:8080",
+                "--dart-define=SERVER_URL=http://192.168.1.21:8080",
                 "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjFiMzNjZGI0LWQ2NDEtNGE2MS04NGE0LTk3ZjZlZjdiY2EyOUBwYWwuaW8iLCJzdWIiOiIxYjMzY2RiNC1kNjQxLTRhNjEtODRhNC05N2Y2ZWY3YmNhMjkiLCJpYXQiOjE2NTQ4ODk2NTgsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IkRFVkVMT1BNRU5UIiwiZXhwIjoxMDI5NDg4OTY1OCwianRpIjoiZjI1ZWE3ZjAtM2M2MC00NTgzLTk0NmQtN2RmZDYxMTk5YzliIn0.gVcm8A98FOkyncDby5x2wTsOhwPFOd7rGCJYALtyrHuTGqO_VsV_5r0okndlwICIHkDS_thjMSF4dCuHYwsOftgSX4DEAH2hltT1WFmizMqbMeTLjZ083NLRS6Ies11ZZIhZKelYMLONmyXDYmRUqthCmOS3g5QIpgUhMzJ6Zrm_WT9IRvg1-oH9jHPgp_djidaHeyBP4VNdlEvdJUJAZlAGemG7M1LgLBloee9ZW92rLIpDhd8-ao8xZsLbLkdav0YbXz0cwvZ0yAB9Km8MBs-M2IKwhK-Z2gehcrnL0x1vlgkAwQ8v823s2KqDayK0jA5M03XbHMfFBYRHmkojeQ"
             ]
         },
