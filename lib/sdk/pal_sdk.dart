@@ -72,21 +72,22 @@ class PalSdk {
     Function? onSkip,
   }) async {
     return showVideoAsset(
-        context: context,
-        videoAsset: videoUrl,
-        userName: userName,
-        companyTitle: companyTitle,
-        avatarUrl: avatarUrl,
-        animateOnVideoEnd: true,
-        onVideoEndAction: () {
-          _overlayHelper.popHelper();
-          if (onVideoEnd != null) {
-            onVideoEnd();
-          }
-        },
-        onSkip: onSkip,
-        onClose: onVideoEnd,
-        onExpand: onExpand);
+      context: context,
+      videoAsset: videoUrl,
+      userName: userName,
+      companyTitle: companyTitle,
+      avatarUrl: avatarUrl,
+      animateOnVideoEnd: true,
+      onVideoEndAction: () {
+        _overlayHelper.popHelper();
+        if (onVideoEnd != null) {
+          onVideoEnd();
+        }
+      },
+      onSkip: onSkip,
+      onClose: onVideoEnd,
+      onExpand: onExpand,
+    );
   }
 
   Future<void> showVideoAsset({
@@ -170,21 +171,18 @@ class PalSdk {
       (context) => Material(
         color: Colors.transparent,
         type: MaterialType.transparency,
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: VideoExpanded(
-            videoAsset: videoAsset,
-            companyTitle: companyTitle,
-            userName: userName,
-            avatarUrl: avatarUrl,
-            onEndAction: onVideoEndAction,
-            animateOnVideoEnd: animateOnVideoEnd,
-            triggerEndRemaining: const Duration(seconds: 1),
-            onSkip: onSkip,
-            close: close,
-            bgColor: const Color(0xFF191E26).withOpacity(.82),
-            child: child,
-          ),
+        child: VideoExpanded(
+          videoAsset: videoAsset,
+          companyTitle: companyTitle,
+          userName: userName,
+          avatarUrl: avatarUrl,
+          onEndAction: onVideoEndAction,
+          animateOnVideoEnd: animateOnVideoEnd,
+          triggerEndRemaining: const Duration(seconds: 1),
+          onSkip: onSkip,
+          close: close,
+          bgColor: const Color(0xFF191E26).withOpacity(.82),
+          child: child,
         ),
       ),
     );

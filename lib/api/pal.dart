@@ -199,11 +199,7 @@ class Pal {
 
   Future<void> _onVideoExpand(PalVideoTrigger trigger) async {
     try {
-      final event = VideoTriggerEvent(
-        time: DateTime.now(),
-        sessionId: _sessionApi!.session.uid,
-        type: VideoTriggerEvents.minVideoOpen,
-      );
+      final event = VideoTriggerEvent.videoOpen(_sessionApi!.session.uid);
       _triggeredEventApi!.save(trigger.eventLogId, event);
     } catch (err, stack) {
       debugPrint("Pal error");
@@ -229,11 +225,7 @@ class Pal {
   Future<void> _onVideoViewed(PalVideoTrigger trigger) async {
     try {
       triggeredVideo = null;
-      final event = VideoTriggerEvent(
-        time: DateTime.now(),
-        sessionId: _sessionApi!.session.uid,
-        type: VideoTriggerEvents.videoViewed,
-      );
+      final event = VideoTriggerEvent.videoViewed(_sessionApi!.session.uid);
       _triggeredEventApi!.save(trigger.eventLogId, event);
       _triggeredEventApi!.send();
     } catch (err, stack) {
@@ -245,11 +237,7 @@ class Pal {
   Future<void> _onVideoSkipped(PalVideoTrigger trigger) async {
     try {
       triggeredVideo = null;
-      final event = VideoTriggerEvent(
-        time: DateTime.now(),
-        type: VideoTriggerEvents.videoSkip,
-        sessionId: _sessionApi!.session.uid,
-      );
+      final event = VideoTriggerEvent.videoSkipped(_sessionApi!.session.uid);
       _triggeredEventApi!.save(trigger.eventLogId, event);
       _triggeredEventApi!.send();
     } catch (err, stack) {

@@ -26,4 +26,22 @@ class VideoContainer extends StatelessWidget {
       ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ClipRRect(
+  //     borderRadius: const BorderRadius.only(
+  //       topLeft: Radius.circular(16),
+  //       topRight: Radius.circular(16),
+  //     ),
+  //     child: FractionallySizedBox(
+  //       widthFactor: .8,
+  //       heightFactor: .8,
+  //       child: AspectRatio(
+  //         aspectRatio: ratio,
+  //         child: child,
+  //       ),
+  //     ),
+  //   );
+  // }
 }

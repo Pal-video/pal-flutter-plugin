@@ -27,6 +27,24 @@ class VideoTriggerEvent {
     this.args,
   });
 
+  factory VideoTriggerEvent.videoViewed(String sessionId) => VideoTriggerEvent(
+        time: DateTime.now(),
+        sessionId: sessionId,
+        type: VideoTriggerEvents.videoViewed,
+      );
+
+  factory VideoTriggerEvent.videoSkipped(String sessionId) => VideoTriggerEvent(
+        time: DateTime.now(),
+        sessionId: sessionId,
+        type: VideoTriggerEvents.videoSkip,
+      );
+
+  factory VideoTriggerEvent.videoOpen(String sessionId) => VideoTriggerEvent(
+        time: DateTime.now(),
+        sessionId: sessionId,
+        type: VideoTriggerEvents.minVideoOpen,
+      );
+
   factory VideoTriggerEvent.singleChoice(
     String choiceId,
     String sessionId,

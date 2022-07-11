@@ -16,9 +16,9 @@
             "request": "launch",
             "program": "example/lib/main.dart",
             "args": [
-                "--dart-define=SERVER_URL=http://192.168.8.168:8080",
+                "--dart-define=SERVER_URL=http://192.168.50.122:8080",
                 // "--dart-define=SERVER_URL=http://192.168.1.21:8080",
-                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjFiMzNjZGI0LWQ2NDEtNGE2MS04NGE0LTk3ZjZlZjdiY2EyOUBwYWwuaW8iLCJzdWIiOiIxYjMzY2RiNC1kNjQxLTRhNjEtODRhNC05N2Y2ZWY3YmNhMjkiLCJpYXQiOjE2NTQ4ODk2NTgsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMjk0ODg5NjU4LCJqdGkiOiIyMzgxMzJiZC0wMTllLTQ4YjYtYmMyNy0zZWU5YjY5NDIzMmIifQ.gIvhyZyw9-XTHN_S_rZ8fqtatjLXpZ7cIPRTcvGP3bGlHBG4lXN_dAZ-xoEbV9vEawpYzusRn8bPlJ_Ksjos2loJC6GWRnFHw76heg3qMUsurywXtEcDQc1_27pNfWi2R7s7xgazFUILiZJ1DqzNZw5NUAn_a4d7AT2L49ambiLG2et2Yum2gWYJbVLNY140f8I99XLmP8tWLissFU5ucRgKw7DuZteEg521KoVSI0AeW2hPEn3KMOHMqtZqPje-SV_yGytzUcflEMEFThLg97Uz4GBLTOhRb6byu60Wbw12CcVbtoG6UuHR5J1oFGCxqDX0k9Qf45g6oVTb9DFIjw"
+                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjZjMzYwNmIyLTI0M2UtNDJkMy04YTYzLWYzNzkwY2MwN2FiOUBwYWwuaW8iLCJzdWIiOiI2YzM2MDZiMi0yNDNlLTQyZDMtOGE2My1mMzc5MGNjMDdhYjkiLCJpYXQiOjE2NTcyMDkwOTAsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMjk3MjA5MDkwLCJqdGkiOiIwZmU4ZTI4Ny03MTM2LTQzMWUtYmM3Zi01MGJjY2FhYmQ4OWUifQ.JnHe0YPkWCnn5CVkx2oc8tQh907uCipWKqdvSBjuQeU1XPHy9UC2kEQp4_PUhuw3NnC3u6nfOCTf6Z0F0810Swhd7M_3_PzM1gqlkm8MHm5C2hShENo5c2CLqhzAgdVITnMT_Wsh3f4D2sBafxileQ6BIXPYFv8TrGWXdNaTntOoXmwnMW1fMwQoU0D_-DGWC450wa0SkHN0vRcMY3vaEs7324FQ8CQa1ccx7lc6pkF5osEEPBUBz0syNY1Ip3K91XnrihbGnagvKxqTNAoraOKxecfnLo3HWsYvLXDpxWqc7VofwKNGpmm0QLNhvfJR_XEIM1_iao498GMkyJfx2A"
             ]
         },
         {
@@ -27,9 +27,9 @@
             "request": "launch",
             "program": "example/lib/main.dart",
             "args": [
-                // "--dart-define=SERVER_URL=http://192.168.8.168:8080",
-                "--dart-define=SERVER_URL=http://192.168.1.21:8080",
-                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjFiMzNjZGI0LWQ2NDEtNGE2MS04NGE0LTk3ZjZlZjdiY2EyOUBwYWwuaW8iLCJzdWIiOiIxYjMzY2RiNC1kNjQxLTRhNjEtODRhNC05N2Y2ZWY3YmNhMjkiLCJpYXQiOjE2NTQ4ODk2NTgsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IkRFVkVMT1BNRU5UIiwiZXhwIjoxMDI5NDg4OTY1OCwianRpIjoiZjI1ZWE3ZjAtM2M2MC00NTgzLTk0NmQtN2RmZDYxMTk5YzliIn0.gVcm8A98FOkyncDby5x2wTsOhwPFOd7rGCJYALtyrHuTGqO_VsV_5r0okndlwICIHkDS_thjMSF4dCuHYwsOftgSX4DEAH2hltT1WFmizMqbMeTLjZ083NLRS6Ies11ZZIhZKelYMLONmyXDYmRUqthCmOS3g5QIpgUhMzJ6Zrm_WT9IRvg1-oH9jHPgp_djidaHeyBP4VNdlEvdJUJAZlAGemG7M1LgLBloee9ZW92rLIpDhd8-ao8xZsLbLkdav0YbXz0cwvZ0yAB9Km8MBs-M2IKwhK-Z2gehcrnL0x1vlgkAwQ8v823s2KqDayK0jA5M03XbHMfFBYRHmkojeQ"
+                "--dart-define=SERVER_URL=http://192.168.50.122:8080",
+                // "--dart-define=SERVER_URL=http://192.168.1.21:8080",
+                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjZjMzYwNmIyLTI0M2UtNDJkMy04YTYzLWYzNzkwY2MwN2FiOUBwYWwuaW8iLCJzdWIiOiI2YzM2MDZiMi0yNDNlLTQyZDMtOGE2My1mMzc5MGNjMDdhYjkiLCJpYXQiOjE2NTcyMDkwOTAsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IkRFVkVMT1BNRU5UIiwiZXhwIjoxMDI5NzIwOTA5MCwianRpIjoiMzI4ZWNiZjctOTAxNy00MzA1LWI0MGYtZDQxODJmMzhiNmI0In0.dB5U1ZKRhWIgiX2xDDsPXhJBeiyq_pQT0UNwnkBcBkOdo7ADrMdsYWwVEmcm8neSfOx1F337dNd3ljF4ooLUTcVKPtGTW3EZwOCsDegjh7SOdW9GzxQ_zFEF4nAwuWAy5HFZjKBZXSVyXT_9BxFzAmLHoLU6cRvFNbNGXGdwnrojzevcp2ctr2mhVyiKT14io-4SLhxXFjOvJdO_QSVT7xd5vuWsgfFurk6ihUp0F19OnPJEzekn1N3sVOjCCjNyWcD1R9RJ-e_j3On43XjPGfy2np3dmTWNBs_bV2vvdtoKBcrX2nq5rkbpAESW91kRrEiR4ykmY8eptsllWgH6rw"
             ]
         },
     ]
