@@ -17,10 +17,10 @@ void main() {
           body: SingleChoiceForm(
             question: 'my question lorem ipsum lorem',
             choices: const [
-              Choice(id: 'a', text: 'lorem A'),
-              Choice(id: 'b', text: 'lorem B'),
-              Choice(id: 'c', text: 'lorem C'),
-              Choice(id: 'd', text: 'lorem D'),
+              Choice(code: 'a', text: 'lorem A'),
+              Choice(code: 'b', text: 'lorem B'),
+              Choice(code: 'c', text: 'lorem C'),
+              Choice(code: 'd', text: 'lorem D'),
             ],
             onTap: (_, choice) => tapedChoice = choice,
           ),
@@ -36,7 +36,7 @@ void main() {
       // tap on choice A and check onTap is triggered with it
       await tester.tap(find.text('lorem A'));
       await tester.pump(const Duration(milliseconds: 500));
-      expect(tapedChoice!.id, equals('a'));
+      expect(tapedChoice!.code, equals('a'));
     },
   );
 }

@@ -46,15 +46,15 @@ class VideoTriggerEvent {
       );
 
   factory VideoTriggerEvent.singleChoice(
-    String choiceId,
     String sessionId,
+    String choiceCode,
   ) =>
       VideoTriggerEvent(
         time: DateTime.now(),
         type: VideoTriggerEvents.answer,
         sessionId: sessionId,
         args: <String, dynamic>{
-          'answer': choiceId,
+          'answer': choiceCode,
         },
       );
 

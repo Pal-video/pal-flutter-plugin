@@ -123,10 +123,10 @@ class _HomePageState extends State<HomePage> {
       question:
           'Choisissez la prochaine feature qui pourrait vous intéresser ?',
       choices: const [
-        Choice(id: 'a', text: 'lorem A'),
-        Choice(id: 'b', text: 'lorem B'),
-        Choice(id: 'c', text: 'lorem C'),
-        Choice(id: 'd', text: 'lorem D'),
+        Choice(code: 'a', text: 'lorem A'),
+        Choice(code: 'b', text: 'lorem B'),
+        Choice(code: 'c', text: 'lorem C'),
+        Choice(code: 'd', text: 'lorem D'),
       ],
       onTapChoice: (choice) {},
       onVideoEndAction: () {},
@@ -141,9 +141,9 @@ class _HomePageState extends State<HomePage> {
       companyTitle: 'Product manager - Meeriad',
       question: 'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
       choices: const [
-        Choice(id: 'a', text: 'La gestion des challenges'),
-        Choice(id: 'b', text: 'L\'ajout de thématiques'),
-        Choice(id: 'c', text: 'L\'amélioration des événements'),
+        Choice(code: 'a', text: 'La gestion des challenges'),
+        Choice(code: 'b', text: 'L\'ajout de thématiques'),
+        Choice(code: 'c', text: 'L\'amélioration des événements'),
       ],
       onTapChoice: (choice) {},
       onVideoEndAction: () {},
@@ -164,9 +164,9 @@ class _HomePageState extends State<HomePage> {
               question:
                   'Quelle fonctionnalité aimeriez-vous avoir prochainement ?',
               choices: const [
-                Choice(id: 'a', text: 'Ajouter des liens d’annonces'),
-                Choice(id: 'b', text: 'Créer un dossier de demande de prêt '),
-                Choice(id: 'c', text: 'Gestion des propositions faites'),
+                Choice(code: 'a', text: 'Ajouter des liens d’annonces'),
+                Choice(code: 'b', text: 'Créer un dossier de demande de prêt '),
+                Choice(code: 'c', text: 'Gestion des propositions faites'),
               ],
               onTapChoice: (choice) {},
               onVideoEndAction: () {},

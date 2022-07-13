@@ -188,7 +188,7 @@ class Pal {
       companyTitle: trigger.author.companyTitle,
       question: trigger.survey!.question,
       choices: trigger.survey!.choices!
-          .map((e) => Choice(id: e.id, text: e.text))
+          .map((e) => Choice(code: e.id, text: e.text))
           .toList(),
       onTapChoice: (choice) => _onTapChoice(trigger, choice),
       onVideoEndAction: () => _onVideoViewed(trigger),
@@ -211,8 +211,8 @@ class Pal {
     try {
       triggeredVideo = null;
       final event = VideoTriggerEvent.singleChoice(
-        choice.id,
         _sessionApi!.session.uid,
+        choice.code,
       );
       _triggeredEventApi!.save(trigger.eventLogId, event);
       _triggeredEventApi!.send();

@@ -2,45 +2,6 @@
 
 // import 'package:collection/collection.dart';
 
-class ChoiceItem {
-  String id;
-  String text;
-
-  ChoiceItem({
-    required this.id,
-    required this.text,
-  });
-
-  MapEntry toMap() {
-    return MapEntry(id, text);
-  }
-
-  factory ChoiceItem.fromMap(Map<String, dynamic> map) {
-    return ChoiceItem(
-      id: map['id'] ?? '',
-      text: map['text'] ?? '',
-    );
-  }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory ChoiceItem.fromJson(String source) =>
-  //     ChoiceItem.fromMap(json.decode(source));
-
-  // @override
-  // String toString() => 'ChoiceItem(id: $id, text: $text)';
-
-  // @override
-  // bool operator ==(Object other) {
-  //   if (identical(this, other)) return true;
-
-  //   return other is ChoiceItem && other.id == id && other.text == text;
-  // }
-
-  // @override
-  // int get hashCode => id.hashCode ^ text.hashCode;
-}
-
 class Survey {
   String question;
   List<ChoiceItem>? choices;
@@ -90,4 +51,43 @@ class Survey {
 
   // @override
   // int get hashCode => question.hashCode ^ choices.hashCode;
+}
+
+class ChoiceItem {
+  String id;
+  String text;
+
+  ChoiceItem({
+    required this.id,
+    required this.text,
+  });
+
+  MapEntry toMap() {
+    return MapEntry(id, text);
+  }
+
+  factory ChoiceItem.fromMap(Map<String, dynamic> map) {
+    return ChoiceItem(
+      id: map['id'] ?? '',
+      text: map['text'] ?? '',
+    );
+  }
+
+  // String toJson() => json.encode(toMap());
+
+  // factory ChoiceItem.fromJson(String source) =>
+  //     ChoiceItem.fromMap(json.decode(source));
+
+  // @override
+  // String toString() => 'ChoiceItem(id: $id, text: $text)';
+
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
+
+  //   return other is ChoiceItem && other.id == id && other.text == text;
+  // }
+
+  // @override
+  // int get hashCode => id.hashCode ^ text.hashCode;
 }

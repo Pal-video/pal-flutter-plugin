@@ -1,9 +1,11 @@
+import 'dart:collection';
+
 class Choice {
-  final String id;
+  final String code;
   final String text;
 
   const Choice({
-    required this.id,
+    required this.code,
     required this.text,
   });
 }
