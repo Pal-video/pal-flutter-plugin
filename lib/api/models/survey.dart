@@ -20,8 +20,8 @@ class Survey {
 
   factory Survey.fromMap(Map<String, dynamic> map) {
     final List<ChoiceItem> choices = [];
-    if (map.containsKey('choices')) {
-      final choiceMap = map['choices'] as Map<String, String>;
+    if (map.containsKey('options')) {
+      final choiceMap = map['options'] as Map<String, dynamic>;
       choiceMap.forEach(
         (key, value) => choices.add(ChoiceItem(id: key, text: value)),
       );
