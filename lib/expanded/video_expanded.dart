@@ -202,6 +202,29 @@ class VideoExpandedState extends State<VideoExpanded>
                     },
                   ),
           ),
+          Positioned(
+            left: 24,
+            right: 24,
+            bottom: 64,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return AnimatedBuilder(
+                  animation: userCardFadeAnimation,
+                  builder: (context, child) {
+                    return Opacity(
+                      opacity: userCardFadeAnimation.value,
+                      child: child,
+                    );
+                  },
+                  child: UserCard.black(
+                    userName: widget.userName,
+                    companyTitle: widget.companyTitle,
+                    imageUrl: widget.avatarUrl,
+                  ),
+                );
+              },
+            ),
+          ),
           Positioned.fill(
             child: FadeTransition(
               opacity: contentFadeAnimation,
@@ -231,29 +254,6 @@ class VideoExpandedState extends State<VideoExpanded>
                 ),
               ),
             ),
-          Positioned(
-            left: 24,
-            right: 24,
-            bottom: 64,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return AnimatedBuilder(
-                  animation: userCardFadeAnimation,
-                  builder: (context, child) {
-                    return Opacity(
-                      opacity: userCardFadeAnimation.value,
-                      child: child,
-                    );
-                  },
-                  child: UserCard.black(
-                    userName: widget.userName,
-                    companyTitle: widget.companyTitle,
-                    imageUrl: widget.avatarUrl,
-                  ),
-                );
-              },
-            ),
-          ),
           StreamBuilder<VideoProgression>(
             stream: videoListener$,
             builder: (context, snapshot) {
