@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pal/api/http_client.dart';
-import 'package:pal/api/models/author.dart';
-import 'package:pal/api/models/video_trigger.dart';
-import 'package:pal/miniature/video_miniature.dart';
+import 'package:pal_video/api/http_client.dart';
+import 'package:pal_video/api/models/author.dart';
+import 'package:pal_video/api/models/video_trigger.dart';
+import 'package:pal_video/miniature/video_miniature.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'test_utils.dart';

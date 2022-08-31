@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pal/expanded/video_expanded.dart';
-import 'package:pal/pal.dart';
+import 'package:pal_video/expanded/video_expanded.dart';
+import 'package:pal_video/pal.dart';
 
 import '../animations/bouncing_background.dart';
 import '../expanded/state_actions.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pal/expanded/video_expanded.dart';
+import 'package:pal_video/expanded/video_expanded.dart';
 import 'package:video_player/video_player.dart';
 
 import 'expanded_video_test.mocks.dart';

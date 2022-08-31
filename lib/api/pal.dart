@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pal/api/event_api.dart';
-import 'package:pal/api/models/video_trigger.dart';
-import 'package:pal/pal.dart';
+import 'package:pal_video/pal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'event_api.dart';
 import 'http_client.dart';
-import 'models/pal_options.dart';
+import 'models/video_trigger.dart';
 import 'models/video_trigger_event.dart';
 import 'session_api.dart';
 import 'triggered_event_api.dart';
@@ -32,7 +31,7 @@ class Pal {
 
   String get _serverUrl => const String.fromEnvironment(
         "SERVER_URL",
-        defaultValue: "https://app.pal.io/api",
+        defaultValue: "https://pal-server-prod.cleverapps.io",
       );
 
   @visibleForTesting

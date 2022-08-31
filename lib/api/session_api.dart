@@ -1,5 +1,5 @@
 // import 'package:device_info_plus/device_info_plus.dart';
-import 'package:pal/api/http_client.dart';
+import 'package:pal_video/api/http_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 

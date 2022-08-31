@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pal/api/http_client.dart';
+import 'package:pal_video/api/http_client.dart';
 
 import 'http_client_test.mocks.dart';
 

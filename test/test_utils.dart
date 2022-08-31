@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pal/api/http_client.dart';
-import 'package:pal/api/models/pal_options.dart';
-import 'package:pal/api/pal.dart';
-import 'package:pal/api/session_api.dart';
-import 'package:pal/sdk/navigation_observer.dart';
+import 'package:pal_video/api/session_api.dart';
+import 'package:pal_video/pal.dart';
+import 'package:pal_video/api/http_client.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesMock extends Mock implements SharedPreferences {}

@@ -5,12 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pal/api/http_client.dart';
-import 'package:pal/api/models/pal_options.dart';
-import 'package:pal/api/models/session.dart';
-import 'package:pal/api/pal.dart';
-import 'package:pal/api/session_api.dart';
-import 'package:pal/pal.dart';
+import 'package:pal_video/api/http_client.dart';
+import 'package:pal_video/api/models/session.dart';
+import 'package:pal_video/api/session_api.dart';
+import 'package:pal_video/pal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/event_api_test.mocks.dart';

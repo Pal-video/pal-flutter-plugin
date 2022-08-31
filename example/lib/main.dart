@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pal/api/models/pal_options.dart';
-import 'package:pal/api/pal.dart';
-import 'package:pal/pal.dart';
-import 'package:pal/sdk/navigation_observer.dart';
+import 'package:pal_video/pal.dart';
+
 import 'package:pal_plugin_example/page_fake.dart';
 
 import 'page1.dart';

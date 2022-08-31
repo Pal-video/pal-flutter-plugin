@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pal/expanded/video_container.dart';
-import 'package:pal/widgets/user_card/user_card.dart';
 import 'package:video_player/video_player.dart';
 
 import '../overlays/pal_banner.dart';
+import '../widgets/user_card/user_card.dart';
 import 'state_actions.dart';
+import 'video_container.dart';
 import 'video_listener.dart';
 import 'video_progress.dart';
 

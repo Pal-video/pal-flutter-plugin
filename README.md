@@ -6,5 +6,3 @@
 # pal_plugin
 
 Get feedbacks in your app using the power of videos. 
-
-

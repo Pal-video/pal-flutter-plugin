@@ -1,5 +1,5 @@
-name: pal
-description: A new flutter plugin project.
+name: pal_video
+description: Your in-app friend that creates a real link with your users. 
 version: 0.0.1
 
 environment:

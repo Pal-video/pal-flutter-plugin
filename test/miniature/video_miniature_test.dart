@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pal/pal.dart';
+import 'package:pal_video/pal.dart';
 
 void main() {
   Future beforeEach(WidgetTester tester) async {

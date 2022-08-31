@@ -8,7 +8,7 @@ import 'dart:typed_data' as _i6;
 
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:pal/api/http_client.dart' as _i3;
+import 'package:pal_video/api/http_client.dart' as _i3;
 import 'package:shared_preferences/shared_preferences.dart' as _i7;
 
 // ignore_for_file: type=lint

@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:pal/api/models/session.dart';
+
+import 'session.dart';
 
 enum PalEvents {
   login,

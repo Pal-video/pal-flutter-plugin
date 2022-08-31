@@ -1,5 +1,4 @@
-import 'package:pal/api/http_client.dart';
-
+import 'package:pal_video/api/http_client.dart';
 import 'models/event.dart';
 import 'models/session.dart';
 import 'models/video_trigger.dart';

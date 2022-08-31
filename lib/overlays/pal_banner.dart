@@ -26,9 +26,10 @@ class PalBanner extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 5),
-            const Image(
+            Image(
               image: logo,
               height: 16,
+              errorBuilder: (_, __, ___) => Container(),
             )
             //Image.asset("assets/logo.png", package: "pal"),
           ],
@@ -38,4 +39,4 @@ class PalBanner extends StatelessWidget {
   }
 }
 
-const logo = AssetImage('packages/pal/assets/logo.png');
+const logo = AssetImage('packages/pal_video/assets/logo.png');

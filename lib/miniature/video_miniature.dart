@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pal/animations/pop_anim.dart';
 import 'package:video_player/video_player.dart';
 
+import '../animations/pop_anim.dart';
 import '../expanded/video_listener.dart';
 
 class VideoMiniature extends StatefulWidget {

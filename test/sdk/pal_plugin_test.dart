@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pal/expanded/video_expanded.dart';
-import 'package:pal/miniature/video_miniature.dart';
-import 'package:pal/sdk/pal_sdk.dart';
+import 'package:pal_video/expanded/video_expanded.dart';
+import 'package:pal_video/miniature/video_miniature.dart';
+import 'package:pal_video/sdk/pal_sdk.dart';
 
 import '../test_utils.dart';
 

@@ -1,4 +1,4 @@
-import 'package:pal/api/http_client.dart';
+import 'package:pal_video/api/http_client.dart';
 import 'models/video_trigger_event.dart';
 
 class PalTriggeredEventApi {

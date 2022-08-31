@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:pal/api/models/author.dart';
-import 'package:pal/api/models/survey.dart';
+import 'author.dart';
+import 'survey.dart';
 
 enum PalVideos {
   survey,

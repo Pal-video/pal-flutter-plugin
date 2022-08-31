@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pal/expanded/video_expanded.dart';
-import 'package:pal/pal.dart';
-import 'package:pal/surveys/single_choice/single_choice.dart';
+import 'package:pal_video/expanded/video_expanded.dart';
+import 'package:pal_video/pal.dart';
+import 'package:pal_video/surveys/single_choice/single_choice.dart';
 
 void main() {
   group('miniature > video > single choice', () {
