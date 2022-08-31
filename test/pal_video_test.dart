@@ -25,7 +25,7 @@ void main() {
 
   MaterialApp? app;
 
-  Future _createApp(WidgetTester tester) async {
+  Future createApp(WidgetTester tester) async {
     navigatorKey = GlobalKey<NavigatorState>();
     when(() => sharedPreferencesMock.getString('sessionId'))
         .thenReturn('803238203D');
@@ -46,7 +46,7 @@ void main() {
     registerFallbackValue(Uri.parse('/eventlogs'));
   });
 
-  Future<void> _startApp(WidgetTester tester) async {
+  Future<void> startApp(WidgetTester tester) async {
     await tester.pumpWidget(app!);
     await tester.pump(const Duration(milliseconds: 500));
     await tester.pumpAndSettle();
@@ -58,7 +58,7 @@ void main() {
     => shows nothing 
     ''',
     (WidgetTester tester) async {
-      await _createApp(tester);
+      await createApp(tester);
       when(() => httpClient.post(
             any(),
             body: any(named: 'body'),
@@ -66,7 +66,7 @@ void main() {
             '',
             200,
           )));
-      await _startApp(tester);
+      await startApp(tester);
 
       expect(find.byType(VideoMiniature), findsNothing);
     },
@@ -76,7 +76,7 @@ void main() {
     '''start app on home page, shows a video, replace page with page 1 
     => palPlugin don't call eventlogs api as a video is already present''',
     (WidgetTester tester) async {
-      await _createApp(tester);
+      await createApp(tester);
       PalVideoTrigger videoTriggerResponse = _createVideoOnlyAnswer();
       when(() => httpClient.post(
             any(),
@@ -85,7 +85,7 @@ void main() {
             videoTriggerResponse.toJson(),
             200,
           )));
-      await _startApp(tester);
+      await startApp(tester);
       expect(find.byType(VideoMiniature), findsOneWidget);
       navigatorKey!.currentState!.pushReplacementNamed('/page1');
       await tester.pumpAndSettle();

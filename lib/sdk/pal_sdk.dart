@@ -51,7 +51,7 @@ class PalSdk {
         choices: choices,
         onTap: (ctx, choice) {
           onTapChoice(choice);
-          Actions?.maybeInvoke(ctx, const CloseVideoIntent());
+          Actions.maybeInvoke(ctx, const CloseVideoIntent());
           Future.delayed(const Duration(milliseconds: 500), () {
             _overlayHelper.popHelper();
           });

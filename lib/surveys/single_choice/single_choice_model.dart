@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 class Choice {
   final String code;
   final String text;
