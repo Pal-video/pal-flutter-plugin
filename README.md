@@ -4,7 +4,7 @@
 </p>
 
 # Pal (beta)
-**Your new in app friend.**<br/>
+**Your new in app friend.** <br>
 Get feedbacks in your app using the power of videos. 
 
 *More explanations coming soon*
