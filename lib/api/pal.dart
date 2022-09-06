@@ -1,4 +1,5 @@
 import 'dart:async';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pal_video/pal.dart';
@@ -31,7 +32,7 @@ class Pal {
 
   String get _serverUrl => const String.fromEnvironment(
         "SERVER_URL",
-        defaultValue: "https://pal-server-prod.cleverapps.io",
+        defaultValue: "https://back.pal.video",
       );
 
   @visibleForTesting

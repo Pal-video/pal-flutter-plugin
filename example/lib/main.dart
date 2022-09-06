@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pal_video/pal.dart';
-
 import 'package:pal_plugin_example/page_fake.dart';
 
 import 'page1.dart';
@@ -8,8 +7,8 @@ import 'page1.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  final Pal pal = Pal.instance;
   WidgetsFlutterBinding.ensureInitialized();
+  final Pal pal = Pal.instance;
   await pal.initialize(
     PalOptions(
       apiKey: const String.fromEnvironment('PAL_TOKEN'),

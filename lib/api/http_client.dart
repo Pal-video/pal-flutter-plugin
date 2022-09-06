@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -32,6 +33,7 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
   @override
   Future<http.StreamedResponse> send(final http.BaseRequest request) async {
     request.headers['Authorization'] = 'Bearer $_token';
+    // request.headers['Host'] = 'stagingback.pal.video';
     return _client.send(request);
   }
 
@@ -40,9 +42,6 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
       return response;
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       String? errorCode;
-      // try {
-      //   errorCode = response.statusCode;
-      // } catch (_) {}
       throw UnreachableHttpError(
           'Http ${response.statusCode} error, network or bad gateway : ${response.request?.url}',
           code: errorCode);
@@ -63,9 +62,8 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
     final Encoding? encoding,
   }) async {
     headers = _initHeader(headers);
-    // debugPrint('... ==> POST ${Uri.parse('$_baseUrl$url')}');
-    // debugPrint('... ==> headers $headers');
-    // debugPrint('... ==> body $body');
+    debugPrint('... ==> POST ${Uri.parse('$_baseUrl$url')}');
+    debugPrint('... ==> body $body');
     final response = await super.post(
       Uri.parse('$_baseUrl$url'),
       headers: headers,
@@ -129,7 +127,8 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
 
   Map<String, String> _initHeader(Map<String, String>? headers) {
     headers ??= {};
-    headers.putIfAbsent('Content-Type', () => 'application/json');
+    headers.putIfAbsent(
+        HttpHeaders.contentTypeHeader, () => 'application/json; charset=UTF-8');
     return headers;
   }
 

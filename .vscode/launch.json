@@ -18,7 +18,7 @@
             "args": [
                 "--dart-define=SERVER_URL=http://192.168.50.122:8080",
                 // "--dart-define=SERVER_URL=http://192.168.1.21:8080",
-                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjZjMzYwNmIyLTI0M2UtNDJkMy04YTYzLWYzNzkwY2MwN2FiOUBwYWwuaW8iLCJzdWIiOiI2YzM2MDZiMi0yNDNlLTQyZDMtOGE2My1mMzc5MGNjMDdhYjkiLCJpYXQiOjE2NTcyMDkwOTAsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMjk3MjA5MDkwLCJqdGkiOiIwZmU4ZTI4Ny03MTM2LTQzMWUtYmM3Zi01MGJjY2FhYmQ4OWUifQ.JnHe0YPkWCnn5CVkx2oc8tQh907uCipWKqdvSBjuQeU1XPHy9UC2kEQp4_PUhuw3NnC3u6nfOCTf6Z0F0810Swhd7M_3_PzM1gqlkm8MHm5C2hShENo5c2CLqhzAgdVITnMT_Wsh3f4D2sBafxileQ6BIXPYFv8TrGWXdNaTntOoXmwnMW1fMwQoU0D_-DGWC450wa0SkHN0vRcMY3vaEs7324FQ8CQa1ccx7lc6pkF5osEEPBUBz0syNY1Ip3K91XnrihbGnagvKxqTNAoraOKxecfnLo3HWsYvLXDpxWqc7VofwKNGpmm0QLNhvfJR_XEIM1_iao498GMkyJfx2A"
+                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjAyNjFjZWU2LTJiYTMtNDhjYi1iZDM3LWVlNTE4NzZkMmM2N0BwYWwuaW8iLCJzdWIiOiIwMjYxY2VlNi0yYmEzLTQ4Y2ItYmQzNy1lZTUxODc2ZDJjNjciLCJpYXQiOjE2NjIxMzI2NjMsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMzAyMTMyNjYzLCJqdGkiOiIwYmE0NjdhYS1iZGIxLTRjMDYtYmU4Zi1iMDUwZTgzOTAxNDgifQ.IRKujkPUpsbYbTpf7ymE759lSCVyuGuhZGdLG_DKqEjfG6Pg0oKITGs5bMe5GliGprfT2ytke_k35LPUDi1qyx17JxoMXxq0sEzwczAKfNCrJoOe-wmDWX25r2UK03lG4Ltvk0pIsZ5YhsuNaA8YmwG7YW3T9Fg85nvzzMyZfqr551STxeq15dI973QnbhfjeY33sYD6eVxDnXq1Bo2LMwQA2Oiczs5ij6c6Q0RHLJbH-iF-v__zLmiq8LJPDkX4KxoaM-QP3XT7ZEn_vyy2wFBCAy_6eLknDTOARa0L-9rBgYNvFzEIfHLrVLkqHukFOm_FKZdYLAMfm6U3WD1mPg"
             ]
         },
         {
@@ -28,18 +28,19 @@
             "program": "example/lib/main.dart",
             "args": [
                 "--dart-define=SERVER_URL=http://192.168.50.122:8080",
+                // "--dart-define=SERVER_URL=http://localhost:8080",
                 // "--dart-define=SERVER_URL=http://192.168.1.21:8080",
-                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjZjMzYwNmIyLTI0M2UtNDJkMy04YTYzLWYzNzkwY2MwN2FiOUBwYWwuaW8iLCJzdWIiOiI2YzM2MDZiMi0yNDNlLTQyZDMtOGE2My1mMzc5MGNjMDdhYjkiLCJpYXQiOjE2NTcyMDkwOTAsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IkRFVkVMT1BNRU5UIiwiZXhwIjoxMDI5NzIwOTA5MCwianRpIjoiMzI4ZWNiZjctOTAxNy00MzA1LWI0MGYtZDQxODJmMzhiNmI0In0.dB5U1ZKRhWIgiX2xDDsPXhJBeiyq_pQT0UNwnkBcBkOdo7ADrMdsYWwVEmcm8neSfOx1F337dNd3ljF4ooLUTcVKPtGTW3EZwOCsDegjh7SOdW9GzxQ_zFEF4nAwuWAy5HFZjKBZXSVyXT_9BxFzAmLHoLU6cRvFNbNGXGdwnrojzevcp2ctr2mhVyiKT14io-4SLhxXFjOvJdO_QSVT7xd5vuWsgfFurk6ihUp0F19OnPJEzekn1N3sVOjCCjNyWcD1R9RJ-e_j3On43XjPGfy2np3dmTWNBs_bV2vvdtoKBcrX2nq5rkbpAESW91kRrEiR4ykmY8eptsllWgH6rw"
+                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjQxOWJjMGVjLTFkZjgtNDQyNS1iN2MwLWI5ZDA5NGYyNDM0OEBwYWwuaW8iLCJzdWIiOiI0MTliYzBlYy0xZGY4LTQ0MjUtYjdjMC1iOWQwOTRmMjQzNDgiLCJpYXQiOjE2NjExNzM5MTUsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IkRFVkVMT1BNRU5UIiwiZXhwIjoxMDMwMTE3MzkxNSwianRpIjoiMDFkYWFkNDktM2YwYi00OGE4LTkzNTMtNGY1MTM1M2FmZTNlIn0.npmLpRrAg0l0jj8wqI_U8yfZMkFF2Lokk0Bix1wUES9jLHYUonxGDpx0KpVlnos8oQgo4pVcBWevaL9t_0ZSHo256Wp6gjeSkXnPalHuXUG6jTOR7aNEXgvNYFjrvCP_95Yhn0nIQKLgP2xECvJYr2AlJCZh7xNOEByyU8mjzrCgLp2TCumt_augm6Ng-dlpD0ZCa5BaMouiFRdsKoNxvTP-3R7HCW0fyPrXUHMtaa6N95CQR__bvNd5uxJPliB2ptChECdoTVD9Uy_f1fQZYosYpDOM5JyvtbWUPM7Vuplsx_Fvld-Ar6zUlewEAREcEF8I5tVJoGDu4Xl1l-2LsQ"
             ]
         },
         {
-            "name": "[staging][Production] Pal démo",
+            "name": "[staging][Production] Pal démo (London)",
             "type": "dart",
             "request": "launch",
             "program": "example/lib/main.dart",
             "args": [
-                "--dart-define=SERVER_URL=https://pal-server.cleverapps.io",
-                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjM1MDYyZjZhLTZhZjItNGM5NC05ODM1LWZkM2FiMDU1N2ZkYkBwYWwuaW8iLCJzdWIiOiIzNTA2MmY2YS02YWYyLTRjOTQtOTgzNS1mZDNhYjA1NTdmZGIiLCJpYXQiOjE2NTgyNDMyNTIsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMjk4MjQzMjUyLCJqdGkiOiJjY2I1Y2ZkOC0xMTUxLTRkZTQtYjkzYi0zMWZjZWU2ZmUzMTEifQ.uhGXHadsGMoqQWH1lFnKwS2pYnMhijyF3iSUYNG1iZmdaQEmR7J0Rh04qTo1xswKOI7lCRwqVfCXJLdbioQG_N6jry1KbLaj4IP0-OxdlP23NwWL45h2NKrFbZUiXXnbCjk4L3FGsRjDhuhY09ud_rqToX3HumKHLiCimwnIXMYusT2lC63Q8F3YHfxY5oeUV2YpC9HuM3j2inMNripzIpbGLiabAv6O5G-bf8_M4BOTmCO9KqhZGCv4YqDaPUMH-9hQJO7SBULm6biwNn9RdwK-gYp4vDvJoVI4W4k_P-Z3mar1DrNUfkFEs4nbXP9t1TVAJ5Ow5TXZANQ_UA_ayg"
+                "--dart-define=SERVER_URL=https://stagingback.pal.video",
+                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjE0Yjk2NWRlLWJiNzMtNDcyOS05Y2U5LTdhYTcwODk1YzgyMUBwYWwuaW8iLCJzdWIiOiIxNGI5NjVkZS1iYjczLTQ3MjktOWNlOS03YWE3MDg5NWM4MjEiLCJpYXQiOjE2NjIwNjI4ODgsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMzAyMDYyODg4LCJqdGkiOiI4YWJmZWM0Ny0wM2Y0LTQzZTEtODdjMC1jNTEyN2ViMWMxN2UifQ.K3936mbFDmsrvmRXTP-3a0XoH7ORyiH4B3C9LqCG_xsMbEzGIh5a8_ujp5m47BNEHMc19qB1Ez0LJXn-R0zq7qxDYf6JjrjUSpGNnbu97yBvU2jyZcP63kfApPCIIlgq-HijmqwHvXoBla8t65RcAE4QuqGK3MlcWo9JFWW1lEUBvBRWtMQV8vj9ZdD3Xb5EbfUrS9yUUOgl2jNfPGe_mFlAbEePk6nhRYWaAJHpj_ddZyKNmESPMxYmN09ntZbsPogpGosXK3tB4CTelCYPRu3WjpKs8MyvDl5kK3c4_UkIG9gZO9zM9hcadEMuMv4gtHKa99OP0UWbDupVILIUIw"
             ]
         },
     ]
