@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pal_video/pal.dart';
 import 'package:pal_plugin_example/page_fake.dart';
 
-import 'page1.dart';
+import 'custom_page.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -34,7 +34,10 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const HomePage(),
-        '/page1_2': (context) => const Page1(),
+        '/page1_2': (context) => const CustomPage(),
+        '/user/account/contact': (context) => const CustomPage(
+              title: '/user/account/contact',
+            ),
       },
     );
   }
@@ -103,6 +106,16 @@ class _HomePageState extends State<HomePage> {
             ),
             leading: const Icon(Icons.remove_red_eye),
             onTap: () => _showFridaDemo(),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Complete Demo'),
+            subtitle: const Text(
+              'Dynamic link',
+            ),
+            leading: const Icon(Icons.dynamic_feed),
+            onTap: () =>
+                Navigator.of(context).pushNamed('/user/account/contact'),
           ),
         ],
       ),

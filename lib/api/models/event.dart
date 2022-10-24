@@ -54,9 +54,12 @@ class PalEventContext extends PalEvent {
   }
 
   Map<String, dynamic> toMap() {
+    // var uri = Uri.http('', name, attrs);
+    // var pathWithParams = '${uri.path}?${uri.query}';
     return {
       'sessionUId': session.uid,
-      'name': name,
+      'name': name, // only path
+      // 'url': pathWithParams, // with query params
       'type': type.name,
       'attrs': attrs != null ? jsonEncode(attrs) : null,
     };
