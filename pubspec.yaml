@@ -9,7 +9,7 @@ environment:
   flutter: ">=2.5.0"
 
 dependencies:
-  device_info_plus: ^4.1.2
+  device_info_plus: ^7.0.1
   flutter:
     sdk: flutter
   google_fonts: ^3.0.1

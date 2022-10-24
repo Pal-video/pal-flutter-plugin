@@ -1,10 +1,23 @@
-<p align="center">
+<!-- <p align="center">
     <img src="https://gitlab.com/apparence/pal-2/pal2-plugin/badges/master/pipeline.svg"/>
     <img src="https://gitlab.com/apparence/pal-2/pal2-plugin/badges/master/coverage.svg?job=test"/>
-</p>
+</p> -->
 
-# Pal (beta)
-**Your new in app friend.** <br>
-Get feedbacks in your app using the power of videos. 
+# Pal.video (beta)
+**Your new in app friend.** <br/>
 
-*More explanations coming soon*
+Integrate video story within your app.  
+
+- Get feedbacks in your app using the power of videos. 
+- Onboard your users
+
+
+<br/>
+
+[📍 Check demo and use cases](https://pal.video)
+
+[📍 Check documentation](https://doc.pal.video)
+
+
+
+
