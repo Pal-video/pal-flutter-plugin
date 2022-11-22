@@ -34,6 +34,16 @@
             ]
         },
         {
+            "name": "[staging][Production] Pal démo",
+            "type": "dart",
+            "request": "launch",
+            "program": "example/lib/main.dart",
+            "args": [
+                "--dart-define=SERVER_URL=https://stagingback.pal.video",
+                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjQ4YzA4Mjk1LTdhNGEtNGE1Mi1hZDY0LWU5ZGYzYzU0ZDcyMUBwYWwuaW8iLCJzdWIiOiI0OGMwODI5NS03YTRhLTRhNTItYWQ2NC1lOWRmM2M1NGQ3MjEiLCJpYXQiOjE2NTkxMDI1MTcsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMjk5MTAyNTE3LCJqdGkiOiIwODA1YzZkMC00NTNjLTRjODMtYjRjYi1iZGJhYTJlNWFlNDUifQ.OyUO1c0GPQU-dHle_L03PWZUE08y8tSZEOH1wI9MWbmJwXEbOtO8LUe0cl5owgr3Aw9R9r-23BywGj3p7VzukxBZ2ZG07Y30dOld4uWg-UZCKpmmAu6eF8t_DXdCq17_qicjbjhym_c-lQd0hvoqaLOcquoBm33d9wh5kriUgMw7ttfAMr7P3CScADUlfeQSIK0TeCF7dt6br1qqFb1FQWFRKnWZQ9aBF3Bc_euua6T4Fu4O44Jty36MaLa6pBXJf1AavTihm8fh0DHe8WIrNjfXdHenRQYN-CXQWcBpMGCGV0EiciMblkU2kyp3gO4X_e1zIasdSQ9Xdzf1TsH3fQ"
+            ]
+        },
+        {
             "name": "[staging][Production] Pal démo (London)",
             "type": "dart",
             "request": "launch",

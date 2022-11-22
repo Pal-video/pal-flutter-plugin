@@ -99,11 +99,12 @@ class Pal {
       ''');
       return;
     }
-    if (triggeredVideo != null) {
-      return;
-    }
     runZonedGuarded(
       () async {
+        if (triggeredVideo != null) {
+          await _palSdk!.clearAnyVideo();
+          triggeredVideo = null;
+        }
         final screenTriggeredVideo = await _eventApi!.logCurrentScreen(
           _sessionApi!.session,
           name,

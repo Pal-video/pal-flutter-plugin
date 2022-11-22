@@ -187,4 +187,8 @@ class PalSdk {
       ),
     );
   }
+
+  Future<void> clearAnyVideo() async {
+    _overlayHelper.popHelper();
+  }
 }

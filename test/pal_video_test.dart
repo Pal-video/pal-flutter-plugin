@@ -74,7 +74,7 @@ void main() {
 
   testWidgets(
     '''start app on home page, shows a video, replace page with page 1 
-    => palPlugin don't call eventlogs api as a video is already present''',
+    => palPlugin remove video from screen''',
     (WidgetTester tester) async {
       await createApp(tester);
       PalVideoTrigger videoTriggerResponse = _createVideoOnlyAnswer();
@@ -87,6 +87,11 @@ void main() {
           )));
       await startApp(tester);
       expect(find.byType(VideoMiniature), findsOneWidget);
+
+      when(() => httpClient.post(
+            any(),
+            body: any(named: 'body'),
+          )).thenAnswer((_) => Future.value(Response('', 200)));
       navigatorKey!.currentState!.pushReplacementNamed('/page1');
       await tester.pumpAndSettle();
 
@@ -97,7 +102,8 @@ void main() {
           body: captureAny(named: 'body'),
         ),
       ).captured;
-      expect(captured.length, 1);
+      expect(captured.length, 2);
+      expect(find.byType(VideoMiniature), findsNothing);
     },
   );
 
