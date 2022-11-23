@@ -56,22 +56,22 @@ class BouncingCircleBgState extends State<BouncingCircleBg>
     return AnimatedBouncingBackground(
       circles: [
         BouncingCircle(
-          Colors.blueGrey.withOpacity(.1),
+          Colors.blueGrey.withOpacity(.05),
           widget.radius + 2,
-          widget.radius + 2,
-          52,
+          widget.radius / 2,
+          widget.radius + 4,
         ),
         BouncingCircle(
           Colors.blueGrey.withOpacity(.05),
           widget.radius,
-          widget.radius,
-          64,
+          widget.radius / 2,
+          widget.radius + 12,
         ),
         BouncingCircle(
-          Colors.blueGrey.withOpacity(.01),
+          Colors.blueGrey.withOpacity(.05),
           widget.radius,
-          widget.radius,
-          80,
+          widget.radius / 2,
+          widget.radius + 24,
         ),
       ],
       listenable: animationController!,

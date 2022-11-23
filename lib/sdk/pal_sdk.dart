@@ -114,10 +114,10 @@ class PalSdk {
             child: Padding(
               padding: const EdgeInsets.only(left: 32.0),
               child: BouncingCircleBg(
-                radius: 40,
+                radius: 50,
                 child: VideoMiniature(
                   videoAsset: videoAsset,
-                  radius: 80,
+                  radius: 100,
                   onTap: () {
                     if (onExpand != null) {
                       onExpand();
