@@ -1,7 +1,7 @@
 name: pal_video
 description: Your in-app friend that creates a real link with your users. 
-version: 0.0.1
-repository: https://gitlab.com/pal.video/pal2-plugin
+version: 1.0.0
+repository: https://github.com/Pal-video/pal-flutter-plugin
 homepage: https://pal.video
 
 environment:
