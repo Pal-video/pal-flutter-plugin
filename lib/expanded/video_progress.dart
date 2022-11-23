@@ -13,13 +13,18 @@ class VideoProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: const BoxDecoration(
+        color: Colors.black87,
+        borderRadius: BorderRadius.all(Radius.circular(32)),
+      ),
       child: Text(
         "${formatDuration(current)} / ${formatDuration(total)}",
         style: GoogleFonts.inter(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
     );

@@ -244,13 +244,14 @@ class VideoExpandedState extends State<VideoExpanded>
           if (widget.onSkip != null)
             Positioned(
               right: 24,
-              top: 60,
+              top: 64,
               child: InkWell(
                 key: const ValueKey("palVideoSkip"),
                 onTap: _skipVideo,
                 child: const Icon(
                   Icons.close,
                   color: Colors.white,
+                  size: 32,
                 ),
               ),
             ),
@@ -262,8 +263,7 @@ class VideoExpandedState extends State<VideoExpanded>
               }
               return Positioned(
                 top: 64,
-                left: 0,
-                right: 0,
+                left: 32,
                 child: VideoProgress(
                   current: snapshot.data!.current,
                   total: snapshot.data!.total,
