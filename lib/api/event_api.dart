@@ -46,6 +46,6 @@ class PalEventApi {
     if (response.body.isEmpty || response.body == 'null') {
       return null;
     }
-    return PalVideoTrigger.fromJson(response.body);
+    return PalVideoTrigger.fromJsonBytes(response.bodyBytes);
   }
 }

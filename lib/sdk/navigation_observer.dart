@@ -37,6 +37,7 @@ class PalNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
   }
 
   _logRoute(Route<dynamic> route) {
+    debugPrint("PalNavigatorObserver: ${route.settings.name}");
     if (route.settings.name != null && navigator?.context != null) {
       _pal.logCurrentScreen(
         navigator!.context,

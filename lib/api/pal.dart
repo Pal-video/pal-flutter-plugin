@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 // import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -57,7 +58,10 @@ class Pal {
   ) async {
     try {
       _palSdk ??= PalSdk.fromKey(navigatorKey: navigatorKey);
-      _httpClient ??= HttpClient.create(_serverUrl, palOptions.apiKey);
+      _httpClient ??= HttpClient.create(
+        palOptions.serverUrl ?? _serverUrl,
+        palOptions.apiKey,
+      );
       _eventApi ??= PalEventApi(_httpClient!);
       _sessionApi ??= PalSessionApi(
         _httpClient!,

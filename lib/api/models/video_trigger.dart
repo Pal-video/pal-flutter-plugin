@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'author.dart';
 import 'survey.dart';
@@ -67,8 +68,13 @@ class PalVideoTrigger {
 
   String toJson() => json.encode(toMap());
 
-  factory PalVideoTrigger.fromJson(String source) =>
-      PalVideoTrigger.fromMap(json.decode(source));
+  factory PalVideoTrigger.fromJson(String source) {
+    return PalVideoTrigger.fromMap(json.decode(source));
+  }
+
+  factory PalVideoTrigger.fromJsonBytes(Uint8List source) {
+    return PalVideoTrigger.fromMap(json.decode(utf8.decode(source)));
+  }
 
   static PalVideos parseType(String data) {
     final search = PalVideos.values.where((element) => element.name == data);

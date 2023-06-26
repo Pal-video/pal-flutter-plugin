@@ -62,8 +62,8 @@ class HttpClient extends http.BaseClient implements BaseHttpClient {
     final Encoding? encoding,
   }) async {
     headers = _initHeader(headers);
-    debugPrint('... ==> POST ${Uri.parse('$_baseUrl$url')}');
-    debugPrint('... ==> body $body');
+    // debugPrint('... ==> POST ${Uri.parse('$_baseUrl$url')}');
+    // debugPrint('... ==> body $body');
     final response = await super.post(
       Uri.parse('$_baseUrl$url'),
       headers: headers,
