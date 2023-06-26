@@ -22,7 +22,6 @@ class PalSdk {
   }) : _overlayHelper = OverlayHelper(navigatorKey);
 
   Future<void> showSingleChoiceSurvey({
-    required BuildContext context,
     required String videoAsset,
     required String userName,
     required String companyTitle,
@@ -36,7 +35,6 @@ class PalSdk {
     Function? onSkip,
   }) async {
     return showVideoAsset(
-      context: context,
       videoAsset: videoAsset,
       userName: userName,
       companyTitle: companyTitle,
@@ -61,7 +59,6 @@ class PalSdk {
   }
 
   Future<void> showVideoOnly({
-    required BuildContext context,
     required String videoUrl,
     required String minVideoUrl,
     required String userName,
@@ -72,7 +69,6 @@ class PalSdk {
     Function? onSkip,
   }) async {
     return showVideoAsset(
-      context: context,
       videoAsset: videoUrl,
       userName: userName,
       companyTitle: companyTitle,
@@ -91,7 +87,6 @@ class PalSdk {
   }
 
   Future<void> showVideoAsset({
-    required BuildContext context,
     required String videoAsset,
     required String userName,
     required String companyTitle,
@@ -104,7 +99,6 @@ class PalSdk {
     Function? onSkip,
   }) async {
     _overlayHelper.showHelper(
-      context,
       (ctx) => Material(
         color: Colors.transparent,
         type: MaterialType.transparency,
@@ -124,7 +118,6 @@ class PalSdk {
                     }
                     _overlayHelper.popHelper();
                     showExpandedVideoAsset(
-                      context: ctx,
                       videoAsset: videoAsset,
                       userName: userName,
                       companyTitle: companyTitle,
@@ -155,7 +148,6 @@ class PalSdk {
   }
 
   Future<void> showExpandedVideoAsset({
-    required BuildContext context,
     required String videoAsset,
     required String userName,
     required String companyTitle,
@@ -167,7 +159,6 @@ class PalSdk {
     Widget? child,
   }) async {
     _overlayHelper.showHelper(
-      context,
       (context) => Material(
         color: Colors.transparent,
         type: MaterialType.transparency,

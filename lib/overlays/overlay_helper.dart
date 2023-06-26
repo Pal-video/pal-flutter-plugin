@@ -6,7 +6,7 @@ class OverlayHelper {
 
   OverlayHelper(this.navigatorKey);
 
-  showHelper(BuildContext context, WidgetBuilder widgetBuilder) {
+  showHelper(WidgetBuilder widgetBuilder) {
     popHelper();
     overlayEntry = OverlayEntry(
       opaque: false,

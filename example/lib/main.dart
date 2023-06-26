@@ -126,7 +126,6 @@ class _HomePageState extends State<HomePage> {
 
   Future _showSingleChoiceDemoPopup() {
     return palSdk.showSingleChoiceSurvey(
-      context: context,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
@@ -145,7 +144,6 @@ class _HomePageState extends State<HomePage> {
 
   Future _showMeeriadDemoPopup() {
     return palSdk.showSingleChoiceSurvey(
-      context: context,
       videoAsset: 'assets/meeriad.mp4',
       userName: 'David',
       companyTitle: 'Product manager - Meeriad',
@@ -167,7 +165,6 @@ class _HomePageState extends State<HomePage> {
           assetImgUrl: "assets/background1.jpeg",
           onTap: () async {
             await palSdk.showSingleChoiceSurvey(
-              context: context,
               videoAsset: 'assets/fridaa.mp4',
               userName: 'David',
               companyTitle: 'Product manager - Fridaa',
@@ -184,7 +181,6 @@ class _HomePageState extends State<HomePage> {
           },
           onTapBottom: () async {
             await palSdk.showVideoOnly(
-              context: context,
               minVideoUrl: 'assets/fridaa.mp4',
               videoUrl: 'assets/fridaa.mp4',
               userName: 'David',

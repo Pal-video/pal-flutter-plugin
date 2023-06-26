@@ -35,7 +35,6 @@ void main() {
       (WidgetTester tester) async {
     await beforeEach(tester);
     await palSdk.showVideoAsset(
-      context: navigatorKey.currentState!.context,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
@@ -52,7 +51,6 @@ void main() {
       (WidgetTester tester) async {
     await beforeEach(tester);
     await palSdk.showVideoAsset(
-      context: navigatorKey.currentContext!,
       videoAsset: 'assets/me.mp4',
       userName: 'Gautier',
       companyTitle: 'Apparence.io CTO',
@@ -76,7 +74,6 @@ void main() {
       (WidgetTester tester) async {
     await beforeEach(tester);
     await palSdk.showVideoOnly(
-      context: navigatorKey.currentContext!,
       videoUrl: 'assets/me.mp4',
       minVideoUrl: 'assets/minme.mp4',
       userName: 'Gautier',

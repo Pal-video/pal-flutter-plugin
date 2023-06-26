@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-// import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pal_video/pal.dart';
@@ -119,12 +117,10 @@ class Pal {
         triggeredVideo = screenTriggeredVideo;
         if (screenTriggeredVideo.isTalkType) {
           await _showVideo(
-            context: buildContext,
             trigger: screenTriggeredVideo,
           );
         } else if (screenTriggeredVideo.isSurveyType) {
           await _showSurvey(
-            context: buildContext,
             trigger: screenTriggeredVideo,
           );
         }
@@ -167,11 +163,9 @@ class Pal {
 
   /// shows a video miniature on the client app
   Future<void>? _showVideo({
-    required BuildContext context,
     required PalVideoTrigger trigger,
   }) {
     return _palSdk!.showVideoOnly(
-      context: context,
       videoUrl: trigger.videoUrl,
       minVideoUrl: trigger.videoThumbUrl,
       userName: trigger.author.userName,
@@ -183,11 +177,9 @@ class Pal {
   }
 
   Future<void> _showSurvey({
-    required BuildContext context,
     required PalVideoTrigger trigger,
   }) {
     return _palSdk!.showSingleChoiceSurvey(
-      context: context,
       videoAsset: trigger.videoUrl,
       userName: trigger.author.userName,
       companyTitle: trigger.author.companyTitle,
