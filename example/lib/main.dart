@@ -109,14 +109,14 @@ class _HomePageState extends State<HomePage> {
           ),
           const Divider(),
           ListTile(
-            title: const Text('Complete Demo'),
-            subtitle: const Text(
-              'Dynamic link',
-            ),
-            leading: const Icon(Icons.dynamic_feed),
-            onTap: () =>
-                Navigator.of(context).pushNamed('/user/account/contact'),
-          ),
+              title: const Text('Complete Demo'),
+              subtitle: const Text(
+                'Dynamic link',
+              ),
+              leading: const Icon(Icons.dynamic_feed),
+              onTap: () {
+                Navigator.of(context).pushNamed('/user/account/contact');
+              }),
         ],
       ),
     );

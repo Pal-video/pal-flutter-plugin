@@ -64,12 +64,12 @@
             ]
         },
         {
-            "name": "[production][token:Production] Pal project (PAL)",
+            "name": "[production][token:Dev] Pal project (PAL)",
             "type": "dart",
             "request": "launch",
             "program": "example/lib/main.dart",
             "args": [
-                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjJlYjk5MTNiLTNhZDEtNDAzZC04YmIyLTNlZGU3MmVlZGUwN0BwYWwuaW8iLCJzdWIiOiIyZWI5OTEzYi0zYWQxLTQwM2QtOGJiMi0zZWRlNzJlZWRlMDciLCJpYXQiOjE2NjIxMzIwNDYsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMzAyMTMyMDQ2LCJqdGkiOiJlMTZhOTA2Yy01OTYwLTRiZGItYTlhZS0yZGJhOTkxOWIxYjIifQ.Y-y9IUnfBHMB4x9xWVnNjGdnLucdKatDQCrnz57rvdSKjzY5Ty4NPznExNtTr1vm_iwUroxullnz8okFc6-R7N4YCCDU23Zysd6lTWcrYFvypYZcEMUL1a3Dz-LbbHOz7_2sotPFqPzoJzYUG_2A1_3-So0duM78UNyCEvh_30t0PbWbmNFM8ma5qrAuX2JVwJv4ZoFa_Cya9JG84g3WbB5zuoHmVsan2bkln1mnVN8zHpwJDUWmgTo-qOVIYBMZOgNUv7_6xFM1_MUQJsuJw3JdycfpQR1-m76rRzvepv7Vv6aZIfULdsy0M1DmZyDMxX3kvBwgG8AYOReNUpEUcA"
+                "--dart-define=PAL_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6ImJiMjMzMDlhLWMxMTEtNDExZC05ZDk4LTQwNTdiZWJhZmVkYkBwYWwuaW8iLCJzdWIiOiJiYjIzMzA5YS1jMTExLTQxMWQtOWQ5OC00MDU3YmViYWZlZGIiLCJpYXQiOjE2ODg0NTcxNDYsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IkRFVkVMT1BNRU5UIiwiZXhwIjoxMDMyODQ1NzE0NiwianRpIjoiZGNiZDFhNmUtZDBhMS00MDlkLWE1NDktNTIzMGVlNGQ1NjBlIn0.aimOBiMgp_5ImilROa1zPAp5k1eagZkOxR8G4kI1p49bXsqOfcQyOzDCmEB-HMpEFixdSA9j5yHHLBTP6KpyOCPomyKWYMjG5PcnV74JAng2Gti1bzRVejkqYLJbGgy5B2lNuK3EZ_QzwSy2-CzvXDb33hKgrA-ukAplFexAqEQJujHESehxaJySqwE42lHx4CIQVQq9MS312PJW8EwXaYBzFj3QXWFDIG1KJQv10lfNjKt9b1ZENq78iR6EItsNrR3iUv0o41z5_Ckq2wR26DtuAiFlyjFkBfjXoHeODAx-dJehDx9JNA-0cEHDJyLEuDOiZS6tJOEMytHSPQcvAA"
             ]
         },
     ]
